@@ -5,285 +5,339 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>一品九型 · 脐橙心理 | 官方门户</title>
     <style>
+        /* Google Material Design 3 (MD3) Dark Theme Design Tokens */
         :root {
-            --bg: #090d16;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --card-hover: rgba(255, 255, 255, 0.07);
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --accent-orange: #f97316;
-            --accent-teal: #14b8a6;
+            /* Surface & Background (MD3 Dark Baseline) */
+            --md-sys-color-background: #111318;
+            --md-sys-color-surface: #111318;
+            --md-sys-color-surface-container: #1e2025;
+            --md-sys-color-surface-container-high: #282a2f;
+            --md-sys-color-surface-container-highest: #33353a;
+            --md-sys-color-outline-variant: #44474e;
+            
+            /* Typography Colors */
+            --md-sys-color-on-surface: #e2e2e9;
+            --md-sys-color-on-surface-variant: #c4c6d0;
+            --md-sys-color-inverse-on-surface: #2e3036;
+
+            /* Brand 1: 一品九型 - Primary (MD3 Warm Amber / Tone 80) */
+            --md-yipin-primary: #ffb77b;
+            --md-yipin-on-primary: #4d2600;
+            --md-yipin-container: #6d3a00;
+            --md-yipin-on-container: #ffdcc1;
+            
+            /* Brand 2: 脐橙心理 - Secondary/Tertiary (MD3 Teal / Tone 80) */
+            --md-qicheng-primary: #80d5cb;
+            --md-qicheng-on-primary: #003733;
+            --md-qicheng-container: #00504a;
+            --md-qicheng-on-container: #9cf1e7;
+
+            /* MD3 Elevation Shadows */
+            --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.25), 0px 1px 2px 0px rgba(0, 0, 0, 0.40);
+            --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.30), 0px 1px 2px 0px rgba(0, 0, 0, 0.45);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Segoe UI", Roboto, sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-surface);
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 80%, rgba(20, 184, 166, 0.08) 0%, transparent 40%);
         }
+
         .container {
-            max-width: 1100px;
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 40px 24px;
+            padding: 24px 20px;
             width: 100%;
         }
 
-        /* 顶部微导航 */
+        /* MD3 Top App Bar (Center Aligned) */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0 60px;
-        }
-        .brand-badge {
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--accent-orange);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .brand-badge::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            background: var(--accent-orange);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-orange);
-        }
-        .header-tagline {
-            font-size: 13px;
-            color: var(--text-sub);
-            letter-spacing: 1px;
+            height: 64px;
+            margin-bottom: 40px;
         }
 
-        /* 核心标语 */
+        /* MD3 Filter Chip / Badge */
+        .md3-chip {
+            display: inline-flex;
+            align-items: center;
+            height: 32px;
+            padding: 0 16px;
+            border-radius: 9999px;
+            background-color: var(--md-sys-color-surface-container-high);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+            letter-spacing: 0.25px;
+        }
+
+        .header-location {
+            font-size: 13px;
+            color: var(--md-sys-color-on-surface-variant);
+            letter-spacing: 0.4px;
+        }
+
+        /* MD3 Display Headline */
         .hero {
             text-align: center;
-            margin-bottom: 70px;
-        }
-        .hero h1 {
-            font-size: clamp(32px, 5vw, 54px);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            line-height: 1.25;
-            margin-bottom: 20px;
-            background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: clamp(15px, 2vw, 18px);
-            color: var(--text-sub);
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 300;
-            letter-spacing: 0.5px;
+            margin-bottom: 56px;
         }
 
-        /* 双品牌核心卡片布局 */
-        .brands-grid {
+        .hero h1 {
+            font-size: clamp(30px, 4.5vw, 48px);
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: -0.25px;
+            margin-bottom: 16px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .hero p {
+            font-size: clamp(15px, 1.8vw, 18px);
+            color: var(--md-sys-color-on-surface-variant);
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* MD3 Cards Grid */
+        .brands-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-            margin-bottom: 80px;
+            gap: 28px;
+            margin-bottom: 64px;
         }
-        .brand-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 48px 40px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            backdrop-blur: 10px;
+
+        /* MD3 Card (Elevated & Outlined Hybrid) */
+        .md3-card {
+            background-color: var(--md-sys-color-surface-container);
+            border-radius: 28px; /* MD3 Extra-Large Shape */
+            border: 1px solid var(--md-sys-color-outline-variant);
+            padding: 36px 32px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        }
-        .brand-card:hover {
-            transform: translateY(-4px);
-            background: var(--card-hover);
-        }
-        .card-yipin:hover {
-            border-color: rgba(249, 115, 22, 0.4);
-            box-shadow: 0 20px 40px -15px rgba(249, 115, 22, 0.15);
-        }
-        .card-qicheng:hover {
-            border-color: rgba(20, 184, 166, 0.4);
-            box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.15);
+            position: relative;
+            box-shadow: var(--md-elevation-1);
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
 
-        .card-header {
-            margin-bottom: 28px;
+        .md3-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--md-elevation-2);
+            background-color: var(--md-sys-color-surface-container-high);
         }
-        .card-type {
-            font-size: 12px;
+
+        /* Card 1 Specific (一品九型) */
+        .card-yipin .brand-badge {
+            background-color: var(--md-yipin-container);
+            color: var(--md-yipin-on-container);
+        }
+        .card-yipin .bullet-icon {
+            color: var(--md-yipin-primary);
+        }
+
+        /* Card 2 Specific (脐橙心理) */
+        .card-qicheng .brand-badge {
+            background-color: var(--md-qicheng-container);
+            color: var(--md-qicheng-on-container);
+        }
+        .card-qicheng .bullet-icon {
+            color: var(--md-qicheng-primary);
+        }
+
+        .card-top {
+            margin-bottom: 24px;
+        }
+
+        .brand-badge {
+            display: inline-block;
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 12px;
-            display: block;
+            letter-spacing: 0.8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            margin-bottom: 16px;
         }
-        .card-yipin .card-type { color: var(--accent-orange); }
-        .card-qicheng .card-type { color: var(--accent-teal); }
 
-        .brand-card h2 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ffffff;
+        .md3-card h2 {
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
             margin-bottom: 12px;
+            letter-spacing: 0;
         }
+
         .brand-desc {
             font-size: 14px;
-            color: var(--text-sub);
-            line-height: 1.7;
-            margin-bottom: 32px;
+            line-height: 1.6;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 28px;
         }
 
-        /* 标签栏目 */
-        .feature-list {
+        /* MD3 List Items */
+        .service-list {
             list-style: none;
             display: flex;
             flex-direction: column;
             gap: 14px;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
-        .feature-item {
-            font-size: 14px;
-            color: #cbd5e1;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .feature-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-        .card-yipin .feature-dot { background: var(--accent-orange); }
-        .card-qicheng .feature-dot { background: var(--accent-teal); }
 
-        .card-footer-info {
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 13px;
-            color: var(--text-sub);
+        .service-item {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            line-height: 1.5;
+        }
+
+        .bullet-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* Card Bottom Metadata */
+        .card-bottom {
+            padding-top: 20px;
+            border-top: 1px solid var(--md-sys-color-surface-container-highest);
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .leader-tag {
-            color: #ffffff;
-            font-weight: 500;
+            font-size: 13px;
         }
 
-        /* 页脚极简信息 */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 40px 0;
-            text-align: center;
-            font-size: 13px;
-            color: #64748b;
+        .card-bottom .label {
+            color: var(--md-sys-color-on-surface-variant);
         }
+
+        .card-bottom .value {
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        /* MD3 Footer */
+        footer {
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            padding: 32px 0 24px;
+            text-align: center;
+            background-color: var(--md-sys-color-surface);
+        }
+
         .footer-meta {
             display: flex;
             justify-content: center;
             gap: 24px;
-            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 12px;
             flex-wrap: wrap;
         }
-        .footer-meta span {
-            color: #94a3b8;
+
+        .footer-copyright {
+            font-size: 12px;
+            color: #72767e;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- 顶栏 -->
+        <!-- MD3 Top App Bar -->
         <header>
-            <div class="brand-badge">ARCHIPELAGO</div>
-            <div class="header-tagline">深圳 · 蛇口</div>
+            <div class="md3-chip">
+                <span>ARCHIPELAGO</span>
+            </div>
+            <div class="header-location">深圳 · 蛇口</div>
         </header>
 
-        <!-- 主标语 -->
+        <!-- MD3 Display Headline -->
         <section class="hero">
             <h1>让每一份情绪被看见<br>让每一个组织更有力量</h1>
-            <p>融汇心理科学与管理实践，以精准洞察赋能组织与家庭。</p>
+            <p>融汇心理科学与现代组织管理实践，以精准的人格与心理赋能服务大湾区。</p>
         </section>
 
-        <!-- 双品牌核心区 -->
-        <section class="brands-grid">
+        <!-- MD3 双品牌核心卡片区 -->
+        <section class="brands-container">
             
             <!-- 品牌一：一品九型 -->
-            <div class="brand-card card-yipin">
+            <div class="md3-card card-yipin">
                 <div>
-                    <div class="card-header">
-                        <span class="card-type">METHODOLOGY & ENTERPRISE</span>
+                    <div class="card-top">
+                        <span class="brand-badge">EAP & Leadership</span>
                         <h2>一品九型</h2>
                     </div>
                     <p class="brand-desc">
-                        以九型人格为特色方法论的组织与管理者赋能品牌。专注政企EAP体系构建、高管领导力心智发展与高效团队协同。
+                        以九型人格为特色方法论的组织与管理者赋能品牌[cite: 5]。专注政企规范化EAP体系构建与高绩效团队协同[cite: 3, 5, 6]。
                     </p>
-                    <ul class="feature-list">
-                        <li class="feature-item"><span class="feature-dot"></span>政企EAP全链条服务方案（筛查·咨询·干预）</li>
-                        <li class="feature-item"><span class="feature-dot"></span>《谈心谈话赋能卡》管理层与骨干实训体系</li>
-                        <li class="feature-item"><span class="feature-dot"></span>九型人格领导力与高绩效团队协同构建</li>
-                        <li class="feature-item"><span class="feature-dot"></span>南方电网等大型国企长期服务沉淀</li>
+                    <ul class="service-list">
+                        <li class="service-item"><span class="bullet-icon">◆</span>政企EAP全链条服务方案（筛查 · 咨询 · 干预）[cite: 5, 6]</li>
+                        <li class="service-item"><span class="bullet-icon">◆</span>《谈心谈话赋能卡》管理层与基层骨干实训体系[cite: 5, 6]</li>
+                        <li class="service-item"><span class="bullet-icon">◆</span>九型人格领导力与团队协同配置[cite: 3, 5]</li>
+                        <li class="service-item"><span class="bullet-icon">◆</span>南方电网等大型国企长期服务标杆实践[cite: 5]</li>
                     </ul>
                 </div>
-                <div class="card-footer-info">
-                    <span>首席导师</span>
-                    <span class="leader-tag">刘毅平 (刘一品) 博士</span>
+                <div class="card-bottom">
+                    <span class="label">首席导师</span>
+                    <span class="value">刘毅平 (刘一品) 博士</span>
                 </div>
             </div>
 
             <!-- 品牌二：脐橙心理 -->
-            <div class="brand-card card-qicheng">
+            <div class="md3-card card-qicheng">
                 <div>
-                    <div class="card-header">
-                        <span class="card-type">PLATFORM & CLINICAL CARE</span>
+                    <div class="card-top">
+                        <span class="brand-badge">Care & Consulting</span>
                         <h2>脐橙心理</h2>
                     </div>
                     <p class="brand-desc">
-                        高品质心理健康与成长平台。汇聚高校学者、心身医学专家与资深调解团队，护航个体身心平衡与家庭韧性成长。
+                        高品质心理健康服务与家庭成长平台[cite: 5]。汇聚高校学者、心身医学专家与资深调解团队[cite: 1, 4]，护航个体与家庭成长。
                     </p>
-                    <ul class="feature-list">
-                        <li class="feature-item"><span class="feature-dot"></span>《贝校护航》国际学校家庭学术韧性支持系统</li>
-                        <li class="feature-item"><span class="feature-dot"></span>婚恋情感、家庭系统重构与金牌调解服务</li>
-                        <li class="feature-item"><span class="feature-dot"></span>五感艺术疗愈、音乐治疗与情绪减压工坊</li>
-                        <li class="feature-item"><span class="feature-dot"></span>权威智库与三甲医院绿色转诊保障</li>
+                    <ul class="service-list">
+                        <li class="service-item"><span class="bullet-icon">◆</span>《贝校护航》国际学校家庭学术韧性支持系统[cite: 2]</li>
+                        <li class="service-item"><span class="bullet-icon">◆</span>婚恋情感、家庭系统重构与金牌调解服务[cite: 1, 2, 4]</li>
+                        <li class="service-item"><span class="bullet-icon">◆</span>五感艺术疗愈、音乐治疗与情绪减压工坊[cite: 1, 5, 6]</li>
+                        <li class="service-item"><span class="bullet-icon">◆</span>权威专家智库与三甲医院绿色转诊保障[cite: 1, 2, 4]</li>
                     </ul>
                 </div>
-                <div class="card-footer-info">
-                    <span>服务定位</span>
-                    <span class="leader-tag">橙心为你每一天</span>
+                <div class="card-bottom">
+                    <span class="label">服务定位</span>
+                    <span class="value">橙心为你每一天[cite: 1]</span>
                 </div>
             </div>
 
         </section>
     </div>
 
-    <!-- 极简页脚 -->
+    <!-- MD3 底部区域 -->
     <footer>
         <div class="container" style="padding-top: 0; padding-bottom: 0;">
             <div class="footer-meta">
-                <span>中心地址：深圳市南山区蛇口美年广场</span>
-                <span>学术领衔 · 媒体共识 · 专业解忧</span>
+                <span>中心地址：深圳市南山区蛇口美年广场[cite: 2]</span>
+                <span>学术领衔 · 媒体共识 · 专业解忧[cite: 1]</span>
             </div>
-            <p>© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
+            <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
         </div>
     </footer>
 
+</body>
+</html>
 </body>
 </html>
