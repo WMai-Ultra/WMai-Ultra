@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一品九型 | 政企EAP · 领导力实训 · 人格解码</title>
+    <style>
+        :root {
+            --md-surface: #121316;
+            --md-surface-container: #1e2023;
+            --md-surface-container-high: #292a2d;
+            --md-surface-container-highest: #333538;
+            --md-on-surface: #e2e2e5;
+            --md-on-surface-variant: #a0a3a9;
+            --md-outline-variant: #43474e;
+
+            /* Brand 1 MD3 Tonal Palette (低饱和暖杏沙) */
+            --md-primary: #e5bfa7;
+            --md-container: #3d2c22;
+            --md-on-container: #ebd0bf;
+
+            --md-shape-corner-full: 9999px;
+            --md-shape-corner-xl: 28px;
+            --md-shape-corner-m: 16px;
+            --md-elevation-1: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        body {
+            background-color: var(--md-surface);
+            color: var(--md-on-surface);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1024px; margin: 0 auto; padding: 24px 20px 80px; width: 100%; }
+
+        /* MD3 Top App Bar */
+        header { display: flex; justify-content: space-between; align-items: center; height: 64px; margin-bottom: 36px; }
+        .back-link {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            height: 36px;
+            padding: 0 16px;
+            border-radius: var(--md-shape-corner-full);
+            background-color: var(--md-surface-container-high);
+            border: 1px solid var(--md-outline-variant);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--md-on-surface);
+            transition: background 0.2s;
+        }
+        .back-link:hover { background-color: var(--md-surface-container-highest); }
+        .header-tag { font-size: 13px; color: var(--md-on-surface-variant); }
+
+        /* Hero */
+        .section-hero { margin-bottom: 48px; }
+        .badge {
+            display: inline-block;
+            background: var(--md-container);
+            color: var(--md-on-container);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 14px;
+            border-radius: var(--md-shape-corner-full);
+            margin-bottom: 16px;
+        }
+        h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 500; margin-bottom: 12px; color: var(--md-on-surface); }
+        .hero-desc { font-size: 15px; color: var(--md-on-surface-variant); max-width: 680px; font-weight: 300; }
+
+        /* MD3 Card */
+        .md3-card {
+            background-color: var(--md-surface-container);
+            border: 1px solid var(--md-outline-variant);
+            border-radius: var(--md-shape-corner-xl);
+            padding: 32px 28px;
+            margin-bottom: 32px;
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .card-header { margin-bottom: 20px; }
+        .card-header h2 { font-size: 20px; font-weight: 500; color: var(--md-primary); margin-bottom: 6px; }
+        .card-header p { font-size: 13px; color: var(--md-on-surface-variant); }
+
+        /* 导师信息排版 */
+        .leader-intro { display: flex; flex-direction: column; gap: 20px; }
+        .leader-title { font-size: 14px; color: var(--md-on-surface); font-weight: 500; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+        .item-text { font-size: 13px; color: var(--md-on-surface-variant); display: flex; align-items: baseline; gap: 8px; }
+        .item-text::before { content: "▪"; color: var(--md-primary); font-size: 10px; }
+
+        /* 产品与课程网格 */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+        .inner-card {
+            background-color: var(--md-surface-container-high);
+            border: 1px solid var(--md-outline-variant);
+            border-radius: var(--md-shape-corner-m);
+            padding: 24px;
+        }
+        .inner-card h3 { font-size: 16px; font-weight: 500; color: var(--md-on-surface); margin-bottom: 8px; }
+        .inner-card p { font-size: 13px; color: var(--md-on-surface-variant); line-height: 1.6; }
+
+        /* 流程与阶梯 */
+        .steps-box { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .step-pill {
+            background: var(--md-surface-container-highest);
+            padding: 6px 14px;
+            border-radius: var(--md-shape-corner-full);
+            font-size: 12px;
+            color: var(--md-on-surface);
+        }
+
+        footer { border-top: 1px solid var(--md-outline-variant); padding-top: 24px; text-align: center; font-size: 12px; color: #6a6d74; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 顶栏 -->
+        <header>
+            <a href="index.html" class="back-link">← 返回门户</a>
+            <span class="header-tag">深圳 · 蛇口</span>
+        </header>
+
+        <!-- 首屏 -->
+        <section class="section-hero">
+            <span class="badge">METHODOLOGY & ENTERPRISE</span>
+            <h1>一品九型 · 政企EAP与领导力实训</h1>
+            <p class="hero-desc">
+                21年企业EAP深耕，以九型人格为特色方法论，提供从组织诊断、全员测评、团队赋能到危机干预的全链条规范化服务体系[cite: 5]。
+            </p>
+        </section>
+
+        <!-- 核心领衔导师：刘毅平（刘一品）博士 -->
+        <section class="md3-card">
+            <div class="card-header">
+                <h2>核心领衔专家 · 刘毅平 (刘一品) 博士</h2>
+                <p>哲学博士 Ph.D. ｜ 国家二级心理咨询师 ｜ 21年EAP从业经验 ｜ 5000+小时个案咨询[cite: 4, 5]</p>
+            </div>
+            <div class="leader-intro">
+                <div class="grid-2">
+                    <div class="item-text">凤凰卫视《社会正能量》特约心理学家[cite: 4]</div>
+                    <div class="item-text">深圳都市频道《第一调解》常驻调解员[cite: 4]</div>
+                    <div class="item-text">央视《赢家大讲堂》九型组织绩效特邀专家[cite: 4]</div>
+                    <div class="item-text">原中国移动某省公司人力资源部经理[cite: 4]</div>
+                    <div class="item-text">加拿大多伦多大学SFBC国际认证心理教练[cite: 4]</div>
+                    <div class="item-text">中科院心理所后现代心理教练[cite: 4]</div>
+                    <div class="item-text">九型人格全球学EPTP认证导师 · 中国区教学督导[cite: 4]</div>
+                    <div class="item-text">江西财经大学深圳研究院特聘客座教授[cite: 4]</div>
+                </div>
+                <div style="background: var(--md-surface-container-high); padding: 18px 20px; border-radius: var(--md-shape-corner-m); margin-top: 10px;">
+                    <p style="font-size: 13px; color: var(--md-on-surface); line-height: 1.7;">
+                        <strong>核心成果与专著：</strong>著有《九型人格重塑你的职场优势》、《中坚力量——中层管理者的九力修炼》[cite: 4]；主持研发的《谈心谈话赋能卡》课题荣获第十一届中国EAP学术年会论文二等奖[cite: 5]；累计带领超358期心理学深度工作坊[cite: 4]。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 三大主打标品 -->
+        <section class="md3-card">
+            <div class="card-header">
+                <h2>主打核心产品与赋能体系</h2>
+                <p>将传统的“散装”讲座转变为工具化、场景化、可落地的组织产品[cite: 6]</p>
+            </div>
+            <div class="grid-cards">
+                <div class="inner-card">
+                    <h3>《谈心谈话赋能卡》实训</h3>
+                    <p>面向管理者、工会干部、网格员与调解员[cite: 6]。破解“不会谈、不敢谈、谈不深”痛点，形成“工具+课程+实训+团辅+督导”五位一体能力转移[cite: 6]。</p>
+                </div>
+                <div class="inner-card">
+                    <h3>《性格分析与情绪减压》</h3>
+                    <p>以九型人格为切入点，通过性格体检看清团队底层驱动力，改善跨部门协同壁垒与内耗，建立全员心理韧性与减压工作闭环[cite: 6]。</p>
+                </div>
+                <div class="inner-card">
+                    <h3>九型人格与管理协同课程</h3>
+                    <p>包含中高层《性格管理领导力》、青年干部《职场局中局》心理剧本杀、高压销售团队《战狼特训营》等爆款实训课程[cite: 6]。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EAP规范化服务流程 -->
+        <section class="md3-card">
+            <div class="card-header">
+                <h2>规范化 EAP 全流程服务闭环</h2>
+                <p>严格参照深圳市《企业社会工作服务指南》标准执行[cite: 5]</p>
+            </div>
+            <div class="steps-box">
+                <span class="step-pill">1. 服务示意</span>
+                <span class="step-pill">2. 需求调研</span>
+                <span class="step-pill">3. 方案定制</span>
+                <span class="step-pill">4. 启动宣导</span>
+                <span class="step-pill">5. 干预实施</span>
+                <span class="step-pill">6. 督导管理</span>
+                <span class="step-pill">7. 效果评估</span>
+                <span class="step-pill">8. 组织造血</span>
+            </div>
+            <div style="margin-top: 20px; font-size: 13px; color: var(--md-on-surface-variant); line-height: 1.7;">
+                <strong>标杆实践：</strong>长期深度服务南方电网等大型国企，开展班组九型团队融合与减压团辅，建立企业内部复合型调解员队伍，提供一对一保密咨询与快速危机介入[cite: 5]。
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 一品九型 · 脐橙心理. All Rights Reserved. ｜ 深圳市南山区蛇口美年广场[cite: 2]</p>
+        </footer>
+    </div>
+
+</body>
+</html>
