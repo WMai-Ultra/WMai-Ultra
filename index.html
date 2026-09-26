@@ -19,8 +19,9 @@
             --md-sys-color-on-surface: #381a04;              /* 饱满深焦栗色 */
             --md-sys-color-on-surface-variant: #381a04;
 
-            /* 统一的胶囊框背景色 */
-            --md-badge-container: #fedfc6;
+            /* 胶囊框颜色：背景与大标题同色，字与页面背景同色 */
+            --md-badge-bg: #381a04;
+            --md-badge-text: #D9CCA9;
 
             /* 品牌主辅强调色 */
             --md-yipin-primary: #a33e00;
@@ -156,7 +157,7 @@
             border-color: var(--md-qicheng-secondary);
         }
 
-        /* MD3 Badge - 统一使用相同的背景色 */
+        /* MD3 Badge - 背景与大标题同色，文字与页面主背景同色 */
         .brand-badge {
             display: inline-block;
             font-size: 12px;
@@ -165,8 +166,8 @@
             padding: 6px 14px;
             border-radius: var(--md-shape-corner-m);
             margin-bottom: 20px;
-            color: var(--md-sys-color-on-surface);
-            background-color: var(--md-badge-container);
+            background-color: var(--md-badge-bg);
+            color: var(--md-badge-text);
         }
 
         .md3-card h2 {
