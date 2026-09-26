@@ -5,33 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>一品九型 · 脐橙心理 | 官方门户</title>
     <style>
-        /* Google Material Design 3 (MD3) Dark Theme - Strict Tonal Palette Specification */
+        /* Google Material Design 3 (MD3) Dark Theme Design Tokens */
         :root {
-            /* 1. Neutral Surfaces (低饱和中性灰底) */
             --md-surface: #121316;
-            --md-surface-dim: #121316;
-            --md-surface-container-low: #1a1c1e;
             --md-surface-container: #1e2023;
             --md-surface-container-high: #292a2d;
             --md-surface-container-highest: #333538;
+            --md-on-surface: #e2e2e5;
+            --md-on-surface-variant: #a0a3a9;
+            --md-outline-variant: #43474e;
 
-            /* 2. Text & Content Contrast */
-            --md-on-surface: #e2e2e5;           /* 主要文字: 柔白低眩光 */
-            --md-on-surface-variant: #a0a3a9;   /* 次级文字: 灰度适中 */
-            --md-outline: #8a8d93;             /* 边界线 */
-            --md-outline-variant: #43474e;     /* 极细微结构线 */
-
-            /* 3. Brand 1: 一品九型 (MD3 Tone 80 低饱和暖杏沙 - 严控Chroma) */
-            --md-yipin-primary: #e5bfa7;        /* 灰调暖杏，绝不刺眼 */
-            --md-yipin-container: #3d2c22;      /* 暗调基底容器 */
+            /* 一品九型 - 低饱和暖杏沙 */
+            --md-yipin-primary: #e5bfa7;
+            --md-yipin-container: #3d2c22;
             --md-yipin-on-container: #ebd0bf;
 
-            /* 4. Brand 2: 脐橙心理 (MD3 Tone 80 低饱和灰青玉 - 严控Chroma) */
-            --md-qicheng-primary: #a1cfc8;      /* 柔和灰青 */
-            --md-qicheng-container: #223734;    /* 暗调基底容器 */
+            /* 脐橙心理 - 低饱和灰青玉 */
+            --md-qicheng-primary: #a1cfc8;
+            --md-qicheng-container: #223734;
             --md-qicheng-on-container: #bce3dc;
 
-            /* 5. MD3 Elevation & Shape Tokens */
             --md-shape-corner-full: 9999px;
             --md-shape-corner-xl: 28px;
             --md-elevation-1: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
@@ -62,7 +55,6 @@
             width: 100%;
         }
 
-        /* MD3 Top App Bar */
         header {
             display: flex;
             justify-content: space-between;
@@ -91,7 +83,6 @@
             letter-spacing: 0.25px;
         }
 
-        /* Headline Section */
         .hero {
             text-align: center;
             margin-bottom: 56px;
@@ -115,7 +106,6 @@
             font-weight: 300;
         }
 
-        /* Cards Layout */
         .brands-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -123,14 +113,12 @@
             margin-bottom: 60px;
         }
 
-        /* 可点击的卡片包装链接 */
         .card-link {
             text-decoration: none;
             display: flex;
             outline: none;
         }
 
-        /* MD3 Card (Tonal/Elevated) */
         .md3-card {
             flex: 1;
             background-color: var(--md-surface-container);
@@ -152,7 +140,6 @@
             box-shadow: var(--md-elevation-2);
         }
 
-        /* 焦点与悬停状态下的微弱轮廓增强 */
         .card-link:hover .card-yipin {
             border-color: rgba(229, 191, 167, 0.4);
         }
@@ -205,7 +192,6 @@
             margin-bottom: 24px;
         }
 
-        /* Service List */
         .service-list {
             list-style: none;
             display: flex;
@@ -230,7 +216,6 @@
         .card-yipin .bullet-icon { color: var(--md-yipin-primary); }
         .card-qicheng .bullet-icon { color: var(--md-qicheng-primary); }
 
-        /* Card Bottom */
         .card-bottom {
             padding-top: 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -249,7 +234,6 @@
             color: var(--md-on-surface);
         }
 
-        /* Footer */
         footer {
             border-top: 1px solid var(--md-outline-variant);
             padding: 24px 0 20px;
@@ -275,7 +259,6 @@
 <body>
 
     <div class="container">
-        <!-- MD3 Top App Bar -->
         <header>
             <div class="md3-chip">
                 <span>PORTAL</span>
@@ -283,17 +266,15 @@
             <div class="header-location">深圳 · 蛇口</div>
         </header>
 
-        <!-- Headline -->
         <section class="hero">
             <h1>让每一份情绪被看见<br>让每一个组织更有力量</h1>
             <p>融汇心理科学与现代组织管理实践，以精准的人格与心理赋能服务大湾区。</p>
         </section>
 
-        <!-- 双品牌核心区（支持点击跳转） -->
         <section class="brands-container">
             
-            <!-- 品牌一：一品九型（点击跳转到 yipin.html） -->
-            <a href="yipin.html" class="card-link">
+            <!-- 品牌一：一品九型（使用相对路径 ./yipin.html） -->
+            <a href="./yipin.html" class="card-link">
                 <div class="md3-card card-yipin">
                     <div>
                         <span class="brand-badge">EAP & Leadership</span>
@@ -302,13 +283,13 @@
                             <span class="arrow-icon">→</span>
                         </h2>
                         <p class="brand-desc">
-                            以九型人格为特色方法论的组织与管理者赋能品牌[cite: 5]。专注政企规范化EAP体系构建与高绩效团队协同[cite: 3, 5, 6]。
+                            以九型人格为特色方法论的组织与管理者赋能品牌。专注政企规范化EAP体系构建与高绩效团队协同。
                         </p>
                         <ul class="service-list">
-                            <li class="service-item"><span class="bullet-icon">■</span>政企EAP全链条服务方案（筛查 · 咨询 · 干预）[cite: 5, 6]</li>
-                            <li class="service-item"><span class="bullet-icon">■</span>《谈心谈话赋能卡》管理层与基层实训体系[cite: 5, 6]</li>
-                            <li class="service-item"><span class="bullet-icon">■</span>九型人格领导力与团队协同配置[cite: 3, 5]</li>
-                            <li class="service-item"><span class="bullet-icon">■</span>南方电网等大型国企长期服务标杆实践[cite: 5]</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>政企EAP全链条服务方案（筛查 · 咨询 · 干预）</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>《谈心谈话赋能卡》管理层与基层实训体系</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>九型人格领导力与团队协同配置</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>南方电网等大型国企长期服务标杆实践</li>
                         </ul>
                     </div>
                     <div class="card-bottom">
@@ -318,8 +299,8 @@
                 </div>
             </a>
 
-            <!-- 品牌二：脐橙心理（点击跳转到 qicheng.html） -->
-            <a href="qicheng.html" class="card-link">
+            <!-- 品牌二：脐橙心理（使用相对路径 ./qicheng.html） -->
+            <a href="./qicheng.html" class="card-link">
                 <div class="md3-card card-qicheng">
                     <div>
                         <span class="brand-badge">Care & Growth</span>
@@ -328,18 +309,18 @@
                             <span class="arrow-icon">→</span>
                         </h2>
                         <p class="brand-desc">
-                            高品质心理健康服务与家庭成长平台[cite: 5]。汇聚高校学者、心身医学专家与资深调解团队[cite: 1, 4]，护航个体与家庭成长。
+                            高品质心理健康服务与家庭成长平台。汇聚高校学者、心身医学专家与资深调解团队，护航个体与家庭成长。
                         </p>
                         <ul class="service-list">
-                            <li class="service-item"><span class="bullet-icon">■</span>《贝校护航》国际学校家庭学术韧性支持系统[cite: 2]</li>
-                            <li class="service-item"><span class="bullet-icon">■</span>婚恋情感、家庭系统重构与金牌调解服务[cite: 1, 2, 4]</li>
-                            <li class="service-item"><span class="bullet-icon">■</span>五感艺术疗愈、音乐治疗与情绪减压工坊[cite: 1, 5, 6]</li>
-                            <li class="service-item"><span class="bullet-icon">■</span>权威专家智库与三甲医院绿色转诊保障[cite: 1, 2, 4]</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>《贝校护航》国际学校家庭学术韧性支持系统</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>婚恋情感、家庭系统重构与金牌调解服务</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>五感艺术疗愈、音乐治疗与情绪减压工坊</li>
+                            <li class="service-item"><span class="bullet-icon">■</span>权威专家智库与三甲医院绿色转诊保障</li>
                         </ul>
                     </div>
                     <div class="card-bottom">
                         <span class="label">服务定位</span>
-                        <span class="value">橙心为你每一天[cite: 1]</span>
+                        <span class="value">橙心为你每一天</span>
                     </div>
                 </div>
             </a>
@@ -347,12 +328,11 @@
         </section>
     </div>
 
-    <!-- MD3 底部 -->
     <footer>
         <div class="container" style="padding-top: 0; padding-bottom: 0;">
             <div class="footer-meta">
-                <span>中心地址：深圳市南山区蛇口美年广场[cite: 2]</span>
-                <span>学术领衔 · 媒体共识 · 专业解忧[cite: 1]</span>
+                <span>中心地址：深圳市南山区蛇口美年广场</span>
+                <span>学术领衔 · 媒体共识 · 专业解忧</span>
             </div>
             <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
         </div>
