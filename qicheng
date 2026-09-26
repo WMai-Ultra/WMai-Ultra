@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脐橙心理 | 贝校护航 · 家庭学术韧性 · 艺术疗愈</title>
+    <style>
+        :root {
+            --md-surface: #121316;
+            --md-surface-container: #1e2023;
+            --md-surface-container-high: #292a2d;
+            --md-surface-container-highest: #333538;
+            --md-on-surface: #e2e2e5;
+            --md-on-surface-variant: #a0a3a9;
+            --md-outline-variant: #43474e;
+
+            /* Brand 2 MD3 Tonal Palette (低饱和灰青玉) */
+            --md-primary: #a1cfc8;
+            --md-container: #223734;
+            --md-on-container: #bce3dc;
+
+            --md-shape-corner-full: 9999px;
+            --md-shape-corner-xl: 28px;
+            --md-shape-corner-m: 16px;
+            --md-elevation-1: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        body {
+            background-color: var(--md-surface);
+            color: var(--md-on-surface);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1024px; margin: 0 auto; padding: 24px 20px 80px; width: 100%; }
+
+        header { display: flex; justify-content: space-between; align-items: center; height: 64px; margin-bottom: 36px; }
+        .back-link {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            height: 36px;
+            padding: 0 16px;
+            border-radius: var(--md-shape-corner-full);
+            background-color: var(--md-surface-container-high);
+            border: 1px solid var(--md-outline-variant);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--md-on-surface);
+            transition: background 0.2s;
+        }
+        .back-link:hover { background-color: var(--md-surface-container-highest); }
+        .header-tag { font-size: 13px; color: var(--md-on-surface-variant); }
+
+        .section-hero { margin-bottom: 48px; }
+        .badge {
+            display: inline-block;
+            background: var(--md-container);
+            color: var(--md-on-container);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 14px;
+            border-radius: var(--md-shape-corner-full);
+            margin-bottom: 16px;
+        }
+        h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 500; margin-bottom: 12px; color: var(--md-on-surface); }
+        .hero-desc { font-size: 15px; color: var(--md-on-surface-variant); max-width: 680px; font-weight: 300; }
+
+        .md3-card {
+            background-color: var(--md-surface-container);
+            border: 1px solid var(--md-outline-variant);
+            border-radius: var(--md-shape-corner-xl);
+            padding: 32px 28px;
+            margin-bottom: 32px;
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .card-header { margin-bottom: 20px; }
+        .card-header h2 { font-size: 20px; font-weight: 500; color: var(--md-primary); margin-bottom: 6px; }
+        .card-header p { font-size: 13px; color: var(--md-on-surface-variant); }
+
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+        .inner-card {
+            background-color: var(--md-surface-container-high);
+            border: 1px solid var(--md-outline-variant);
+            border-radius: var(--md-shape-corner-m);
+            padding: 24px;
+        }
+        .inner-card h3 { font-size: 16px; font-weight: 500; color: var(--md-on-surface); margin-bottom: 8px; }
+        .inner-card p { font-size: 13px; color: var(--md-on-surface-variant); line-height: 1.6; }
+
+        /* 智库网格 */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .team-item {
+            background-color: var(--md-surface-container-high);
+            border: 1px solid var(--md-outline-variant);
+            border-radius: var(--md-shape-corner-m);
+            padding: 20px;
+        }
+        .team-item h4 { font-size: 15px; font-weight: 500; color: var(--md-on-surface); }
+        .team-item .role { font-size: 12px; color: var(--md-primary); margin: 4px 0 8px; }
+        .team-item p { font-size: 12.5px; color: var(--md-on-surface-variant); line-height: 1.5; }
+
+        footer { border-top: 1px solid var(--md-outline-variant); padding-top: 24px; text-align: center; font-size: 12px; color: #6a6d74; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 顶栏 -->
+        <header>
+            <a href="index.html" class="back-link">← 返回门户</a>
+            <span class="header-tag">深圳 · 蛇口</span>
+        </header>
+
+        <!-- 首屏 -->
+        <section class="section-hero">
+            <span class="badge">CARE & CLINICAL WELLNESS</span>
+            <h1>脐橙心理 · 橙心为你每一天</h1>
+            <p class="hero-desc">
+                高品质心理健康服务与家庭成长平台[cite: 5]。专注于国际学校家庭学术韧性支持、婚恋家庭调解以及多感官艺术疗愈工坊[cite: 1, 2, 5]。
+            </p>
+        </section>
+
+        <!-- 贝校护航专属支持系统 -->
+        <section class="md3-card">
+            <div class="card-header">
+                <h2>《贝校护航》国际学校家庭学术韧性支持系统</h2>
+                <p>针对深圳蛇口贝赛思（BASIS）、SIS等顶尖国际学校家庭的学术休克与适应瓶颈[cite: 2]</p>
+            </div>
+            <div class="grid-cards">
+                <div class="inner-card">
+                    <h3>01 入学前适配评估</h3>
+                    <p>通过MAP阅读能力解读与家庭教养方式深度访谈，提供客观的学术适应风险书面报告，助力理性教育决策[cite: 2]。</p>
+                </div>
+                <div class="inner-card">
+                    <h3>02 学术休克分阶干预</h3>
+                    <p>化解全英文学术环境与高压GPA带来的作息失调、作业拖延及回避上学，通过个体陪跑帮孩子重拾自信[cite: 2]。</p>
+                </div>
+                <div class="inner-card">
+                    <h3>03 家庭治疗与意义重构</h3>
+                    <p>化解教育分歧，消除父母“高昂投入孩子却不快乐”的内疚与焦虑，协助家庭重新建构温暖的心理避风港[cite: 2]。</p>
+                </div>
+                <div class="inner-card">
+                    <h3>04 学期全程护航包</h3>
+                    <p>8次个体支持 + 2次家长会谈 + 1次校方Counselor书面沟通 + 期中期末两次复盘，搭好家校沟通的桥梁[cite: 2]。</p>
+                </div>
+            </div>
+            <div style="background: var(--md-surface-container-high); padding: 16px 20px; border-radius: var(--md-shape-corner-m); margin-top: 20px; font-size: 13px; color: var(--md-on-surface-variant);">
+                🛡️ <strong>服务承诺：</strong>7日冷静期全额退款 ｜ 第4次强制节点复盘 ｜ 不换人不失联 ｜ 与康宁医院建立重度情绪48小时绿色转诊通道[cite: 2]。
+            </div>
+        </section>
+
+        <!-- 跨学科专家智库 -->
+        <section class="md3-card">
+            <div class="card-header">
+                <h2>权威跨学科专家团队</h2>
+                <p>医学心理专家、博导教授、科技高管与资深调解团队跨界护航[cite: 1, 4]</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-item">
+                    <h4>杨秋莉 教授</h4>
+                    <div class="role">中国中医科学院研究员 · 主任医师 · 博士生导师[cite: 1, 4]</div>
+                    <p>原中医临床基础所医学心理室主任；首创《五态人格测验》载入《心理学大辞典》，国家卫健委首批健康科普专家[cite: 1, 4]。</p>
+                </div>
+                <div class="team-item">
+                    <h4>戴烽 教授</h4>
+                    <div class="role">北大/清华双博士后 · 人大心理学博士[cite: 1, 4]</div>
+                    <p>江西师大传播学院教授，著有《每天五分钟，遇见更好的父母》，深耕青少年健康成长与家庭系统教养[cite: 1, 4]。</p>
+                </div>
+                <div class="team-item">
+                    <h4>袁菲</h4>
+                    <div class="role">鸿普森(873873)董事副总裁 · 脑科学探索者[cite: 1, 4]</div>
+                    <p>深圳市江西财经大学校友会执行会长，主导云计算与AI布局，探索脑科学与前沿科技在心理健康领域的深度结合[cite: 1, 4]。</p>
+                </div>
+                <div class="team-item">
+                    <h4>胡剑云 老师</h4>
+                    <div class="role">江西卫视《金牌调解》原首席调解员[cite: 1, 4]</div>
+                    <p>江西省家庭教育指导中心理事长，专注婚姻家庭矛盾调解、情感关系梳理及少年天赋开发[cite: 1, 4]。</p>
+                </div>
+                <div class="team-item">
+                    <h4>陈彦霏</h4>
+                    <div class="role">音乐心理治疗师 · 艺术疗愈督导[cite: 1, 4]</div>
+                    <p>广东省音乐心理研究会副主任，融合钢琴、芳香、颂钵与精神分析，擅长女性成长与情绪疗愈[cite: 1, 4]。</p>
+                </div>
+                <div class="team-item">
+                    <h4>江裕阳 & 栾永明 团队</h4>
+                    <div class="role">财税法律 · 正念禅修 · 婚姻辅导专家[cite: 1, 4]</div>
+                    <p>涵盖5A级税务所合伙人与资深律师背景的心理专家，提供跨界综合法律调解与正念心理支持[cite: 1, 4]。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 一品九型 · 脐橙心理. All Rights Reserved. ｜ 中心地址：蛇口美年广场（四海站）[cite: 2]</p>
+        </footer>
+    </div>
+
+</body>
+</html>
