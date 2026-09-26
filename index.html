@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一品九型 · 脐橙心理 | 政企EAP · 心理咨询 · 家庭学术韧性支持</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#F97316',
+                            darkOrange: '#EA580C',
+                            teal: '#0D9488',
+                            darkTeal: '#0F766E',
+                            dark: '#0F172A',
+                            soft: '#FFF7ED'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(13, 148, 136, 0.85) 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="w-10 h-10 rounded-full bg-brand-orange text-white flex items-center justify-center font-bold text-xl shadow-md">橙</span>
+                <div>
+                    <span class="text-xl font-bold text-slate-900 tracking-tight">脐橙心理 <span class="text-brand-orange">·</span> 一品九型</span>
+                    <p class="text-xs text-slate-500 hidden sm:block">橙心为你每一天 · 21年组织与个人心理赋能</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#home" class="hover:text-brand-orange transition">首页</a>
+                <a href="#founder" class="hover:text-brand-orange transition">核心导师</a>
+                <a href="#eap" class="hover:text-brand-orange transition">政企EAP</a>
+                <a href="#basis" class="hover:text-brand-orange transition">贝校护航</a>
+                <a href="#courses" class="hover:text-brand-orange transition">课程与服务</a>
+                <a href="#team" class="hover:text-brand-orange transition">专家团队</a>
+                <a href="#contact" class="px-5 py-2.5 rounded-full bg-brand-orange text-white hover:bg-brand-darkOrange transition shadow">立即咨询</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero 视觉区 -->
+    <section id="home" class="hero-bg text-white pt-36 pb-24 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-orange-200 text-xs sm:text-sm font-medium mb-6 backdrop-blur">
+                <i class="fa-solid fa-certificate text-brand-orange"></i> 21年深耕 · 南方电网等大型国企长期服务伙伴
+            </div>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+                让每一份情绪被看见<br class="hidden sm:inline"> 让每一个组织更有力量
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto mb-10 leading-relaxed">
+                扎根深圳，辐射粤港澳大湾区。以“心理科学 × 企业管理”为理念，提供政企规范化EAP解决方案、九型人格领导力与国际学校家庭学术韧性支持系统。
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#founder" class="px-8 py-3.5 rounded-full bg-brand-orange hover:bg-brand-darkOrange font-semibold shadow-lg shadow-orange-500/30 transition">走近刘一品博士</a>
+                <a href="#eap" class="px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 font-semibold backdrop-blur transition">政企EAP方案</a>
+                <a href="#basis" class="px-8 py-3.5 rounded-full bg-brand-teal hover:bg-brand-darkTeal font-semibold transition">贝校护航计划</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心领衔人物：刘毅平（刘一品）博士 -->
+    <section id="founder" class="py-24 px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-brand-orange font-semibold text-sm uppercase tracking-wider">LEADERSHIP</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">核心发起人 · 首席专家</h2>
+                <div class="w-16 h-1 bg-brand-orange mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-brand-soft/40 p-8 sm:p-12 rounded-3xl border border-orange-100 shadow-sm">
+                <!-- 头像及称号 -->
+                <div class="lg:col-span-4 text-center">
+                    <div class="relative w-56 h-56 mx-auto mb-6">
+                        <div class="w-full h-full rounded-full border-4 border-brand-orange overflow-hidden shadow-2xl bg-white flex items-center justify-center">
+                            <!-- 占位示意图，部署后可将图片放置在img文件夹并替换src -->
+                            <div class="text-center p-4">
+                                <i class="fa-solid fa-user-tie text-6xl text-brand-orange/40 mb-2"></i>
+                                <p class="text-sm font-bold text-slate-700">刘毅平 (刘一品)</p>
+                                <p class="text-xs text-slate-400">哲学博士 Ph.D.</p>
+                            </div>
+                        </div>
+                        <span class="absolute bottom-2 right-4 bg-brand-orange text-white text-xs px-3 py-1 rounded-full shadow font-semibold">21年EAP深耕</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900">刘毅平 <span class="text-base text-slate-500 font-normal">（刘一品）</span></h3>
+                    <p class="text-brand-darkOrange font-medium text-sm mt-1">哲学博士 Ph.D. ｜ 国家二级心理咨询师</p>
+                    <p class="text-slate-500 text-xs mt-2">九型人格全球学EPTP认证导师 · 中国区教学督导</p>
+                </div>
+
+                <!-- 资历与专长 -->
+                <div class="lg:col-span-8 space-y-6">
+                    <div>
+                        <h4 class="text-lg font-bold text-slate-800 flex items-center gap-2 mb-3">
+                            <i class="fa-solid fa-award text-brand-orange"></i> 资历与社会任职
+                        </h4>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-600">
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 凤凰卫视《社会正能量》特约心理学家</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 深圳都市频道《第一调解》常驻调解员</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 央视《赢家大讲堂》九型提升组织绩效专家</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 原中国移动某省公司人力资源部经理</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 加拿大多伦多大学SFBC国际认证心理教练</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 中科院心理所“叙事/合作对话/焦点解决”教练</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 国际中华九型应用研究会(ICEAA)副理事长</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> 江西财经大学深圳研究院特聘客座教授</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-orange-100">
+                        <h4 class="text-lg font-bold text-slate-800 flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-book-open text-brand-orange"></i> 核心代表作与科研荣誉
+                        </h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            著作：《九型人格重塑你的职场优势》、《中坚力量——中层管理者的九力修炼》；《谈心谈话赋能卡》研发成果获第十一届中国EAP学术年会论文二等奖。累积主持358期工作坊、5000+小时个案咨询。
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-white rounded-xl border border-orange-200">
+                        <h5 class="text-sm font-bold text-brand-darkOrange mb-1">专业方向与咨询专长</h5>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            性格心理、赋能对话、绘画解读、小物件排列、催眠、后现代心理教练；擅长青少年学习动力与学业生涯规划、婚恋家庭矛盾化解、职场高管压力与管理心理学课程。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 政企 EAP 整体解决方案 -->
+    <section id="eap" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-brand-teal font-semibold text-sm uppercase tracking-wider">ENTERPRISE EAP</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">一品九型 · 政企EAP规范化服务体系</h2>
+                <p class="text-slate-600 text-sm mt-3">严格遵循深圳市《企业社会工作服务指南》，打造“评估-预防-赋能-咨询-干预-督导-管理-评估”8步服务闭环</p>
+            </div>
+
+            <!-- 三大主打标品 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-orange-100 text-brand-orange flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">《谈心谈话赋能卡》</h3>
+                    <p class="text-xs font-semibold text-brand-orange mb-3">工具 + 课程 + 实训 + 团辅 + 督导</p>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">面向管理层、工会干部、调解员。破解“不会谈、不敢谈、谈不深”痛点，将经验转化为标准能力。</p>
+                    <span class="inline-block text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full">全国EAP年会二等奖成果</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-brand-teal flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">《性格分析与情绪减压》</h3>
+                    <p class="text-xs font-semibold text-brand-teal mb-3">九型人格测评 + 减压工作坊</p>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">通过九型性格识别，认识自我驱动力，化解团队冲突，改善沟通壁垒，大幅度提升组织心理资本与韧性。</p>
+                    <span class="inline-block text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full">测评+解读+团辅闭环</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">《艺术疗愈与心理集市》</h3>
+                    <p class="text-xs font-semibold text-purple-600 mb-3">多元体验 + 剧本杀 + 五感疗愈</p>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">融合绘画、OH卡、音乐、颂钵与《职场局中局》心理剧本杀，提供低门槛、高参与度的沉浸式职工关爱。</p>
+                    <span class="inline-block text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full">女工关爱 / 青年团建首选</span>
+                </div>
+            </div>
+
+            <!-- 标杆客户与服务阶梯 -->
+            <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="text-xs font-bold text-brand-teal uppercase">CASE STUDY</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1 mb-4">标杆实践：南方电网长期伙伴</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            深入一线班组场景，开展九型人格团队融合与减压团辅；搭建企业内部“心理+调解”复合型调解员队伍；提供一对一全密闭式个体咨询与突发事件危机干预，助力组织工程体系化落地。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-teal-50 text-teal-700 px-3 py-1 rounded-lg">班组心理关爱</span>
+                            <span class="text-xs bg-teal-50 text-teal-700 px-3 py-1 rounded-lg">调解员体系培养</span>
+                            <span class="text-xs bg-teal-50 text-teal-700 px-3 py-1 rounded-lg">48h危机响应</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                            <p class="text-xs text-slate-500">基础型EAP</p>
+                            <p class="text-lg font-bold text-slate-900 my-1">10万级</p>
+                            <p class="text-xs text-slate-400">体检+讲座+基础咨询</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-orange-50 border border-orange-100">
+                            <p class="text-xs text-brand-orange font-semibold">标准型EAP</p>
+                            <p class="text-lg font-bold text-brand-darkOrange my-1">30万级</p>
+                            <p class="text-xs text-slate-500">标品+心理集市+常驻</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                            <p class="text-xs text-slate-500">综合型EAP</p>
+                            <p class="text-lg font-bold text-slate-900 my-1">50万级</p>
+                            <p class="text-xs text-slate-400">全套服务+队伍建设</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 贝校护航专项支持系统 -->
+    <section id="basis" class="py-24 px-6 bg-teal-900 text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-teal-300 font-semibold text-sm uppercase tracking-wider">INTERNATIONAL SCHOOL SUPPORT</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2">《贝校护航》国际学校家庭学术韧性支持系统</h2>
+                <p class="text-teal-100 text-sm mt-3 max-w-2xl mx-auto">专注深圳蛇口国际学校（贝赛思、SIS等）。懂你的期待，更懂孩子的不易；我们不治病，我们只做孩子成长路上的韧性陪跑者。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/10">
+                    <div class="text-orange-400 text-2xl mb-4 font-bold">01</div>
+                    <h3 class="text-lg font-bold mb-2">入学前适配评估</h3>
+                    <p class="text-xs text-teal-100 leading-relaxed">通过MAP阅读能力解读、家庭教养方式访谈，提供客观的“是否适合BASIS”风险提示与书面报告，避免盲目入局。</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/10">
+                    <div class="text-orange-400 text-2xl mb-4 font-bold">02</div>
+                    <h3 class="text-lg font-bold mb-2">学术休克干预</h3>
+                    <p class="text-xs text-teal-100 leading-relaxed">针对孩子在全英文学术环境与高强度GPA考核下的适应困难、拖延与回避上学，提供分阶个体支持与自信重塑。</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/10">
+                    <div class="text-orange-400 text-2xl mb-4 font-bold">03</div>
+                    <h3 class="text-lg font-bold mb-2">家庭治疗与重构</h3>
+                    <p class="text-xs text-teal-100 leading-relaxed">化解因学业压力带来的父母理念冲突，消除“花了300万孩子却不快乐”的内疚与焦虑，让家庭重构为避风港。</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/10">
+                    <div class="text-orange-400 text-2xl mb-4 font-bold">04</div>
+                    <h3 class="text-lg font-bold mb-2">学期全程护航包</h3>
+                    <p class="text-xs text-teal-100 leading-relaxed">8次个体支持 + 2次家长会谈 + 1次校方Counselor书面沟通 + 期中期末两次复盘，搭起家校顺畅沟通的桥梁。</p>
+                </div>
+            </div>
+
+            <div class="p-6 bg-teal-800/80 rounded-2xl border border-teal-700 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap gap-6 text-xs text-teal-100">
+                    <span><i class="fa-solid fa-shield-halved text-orange-400 mr-1"></i> 7日冷静期全额退款</span>
+                    <span><i class="fa-solid fa-arrows-rotate text-orange-400 mr-1"></i> 第4次强制节点复盘</span>
+                    <span><i class="fa-solid fa-lock text-orange-400 mr-1"></i> 不换人不失联保障</span>
+                    <span><i class="fa-solid fa-hospital text-orange-400 mr-1"></i> 康宁医院48h绿色转诊通道</span>
+                </div>
+                <span class="text-xs text-teal-300">地点：蛇口美年广场（四海站）</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专家智库团队 -->
+    <section id="team" class="py-24 px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-brand-orange font-semibold text-sm uppercase tracking-wider">EXPERT TEAM</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2">跨界赋能 · 权威专家团队</h2>
+                <p class="text-slate-600 text-sm mt-3">医学心理研究员、高校博导、科技高管、调解专家组成的复合型智囊矩阵</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 杨秋莉 -->
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:border-orange-200 transition">
+                    <h3 class="text-lg font-bold text-slate-900">杨秋莉 教授</h3>
+                    <p class="text-xs text-brand-orange font-medium mt-0.5 mb-3">中国中医科学院研究员 · 主任医师 · 博士生导师</p>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">原中国中医科学院临床基础所医学心理室主任；首创《五态人格测验》载入《心理学大辞典》，国家卫健委首批健康科普专家。</p>
+                    <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-500">心身医学 / 五态人格</span>
+                </div>
+
+                <!-- 戴烽 -->
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:border-orange-200 transition">
+                    <h3 class="text-lg font-bold text-slate-900">戴烽 教授</h3>
+                    <p class="text-xs text-brand-orange font-medium mt-0.5 mb-3">北大/清华双博士后 · 人大心理学博士</p>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">江西师范大学传播学院教授，国家二级心理咨询师，著有《每天五分钟，遇见更好的父母》，擅长青少年健康成长与家庭教育。</p>
+                    <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-500">家庭教育 / 青少年成长</span>
+                </div>
+
+                <!-- 袁菲 -->
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:border-orange-200 transition">
+                    <h3 class="text-lg font-bold text-slate-900">袁菲</h3>
+                    <p class="text-xs text-brand-orange font-medium mt-0.5 mb-3">科技高管 · 人工智能与脑科学创新者</p>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">深圳市江西财经大学校友会执行会长；鸿普森(873873)董事、副总裁，华为合作超15年团队成员，推动AI与心理脑科学深度结合。</p>
+                    <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-500">AI+脑科学 / 数字心理</span>
+                </div>
+
+                <!-- 杜正平 -->
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:border-orange-200 transition">
+                    <h3 class="text-lg font-bold text-slate-900">杜正平</h3>
+                    <p class="text-xs text-brand-orange font-medium mt-0.5 mb-3">原华为云副总裁 · 原京东集团副总裁</p>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">中国移动通信联合会首席数字战略官兼执行副会长，“华为云”“京东云”筹建人，负责落地近百亿规模产业云合作项目。</p>
+                    <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-500">企业数字战略 / 产业赋能</span>
+                </div>
+
+                <!-- 胡剑云 -->
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:border-orange-200 transition">
+                    <h3 class="text-lg font-bold text-slate-900">胡剑云</h3>
+                    <p class="text-xs text-brand-orange font-medium mt-0.5 mb-3">江西卫视《金牌调解》原首席调解员</p>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">江西省家庭教育指导中心理事长，被观众誉为“最懂女人心”的金牌调解员；擅长家庭矛盾调解、情感关系梳理与少年天赋开发。</p>
+                    <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-500">金牌调解 / 家庭诊断</span>
+                </div>
+
+                <!-- 跨界团队代表 -->
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:border-orange-200 transition">
+                    <h3 class="text-lg font-bold text-slate-900">咨询与调解专委团队</h3>
+                    <p class="text-xs text-brand-orange font-medium mt-0.5 mb-3">跨界多学科专业梯队支持</p>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">包括音乐心理治疗师陈彦霏、青少年教练吴静、律师及正念教练栾永明、财税法金融专家江裕阳等资深名师。</p>
+                    <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-500">艺术疗愈 / 法律 / 财税心理</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系与咨询 -->
+    <section id="contact" class="py-20 px-6 bg-slate-900 text-white">
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">开启组织与个人的心向阳光之旅</h2>
+            <p class="text-slate-400 text-sm max-w-xl mx-auto mb-10">无论是政企EAP年度招标规划、管理层九型领导力培训，还是国际学校家庭与个人咨询，我们均提供全流程保密专业支持。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto text-left mb-12">
+                <div class="p-6 bg-slate-800 rounded-xl border border-slate-700">
+                    <i class="fa-solid fa-location-dot text-brand-orange text-xl mb-3"></i>
+                    <h4 class="font-bold text-white text-sm mb-1">服务中心地址</h4>
+                    <p class="text-xs text-slate-400">深圳市南山区蛇口美年广场（地铁四海站）</p>
+                </div>
+                <div class="p-6 bg-slate-800 rounded-xl border border-slate-700">
+                    <i class="fa-solid fa-phone text-brand-teal text-xl mb-3"></i>
+                    <h4 class="font-bold text-white text-sm mb-1">商务与预约热线</h4>
+                    <p class="text-xs text-slate-400">请扫码添加客服企业微信进行专人沟通</p>
+                </div>
+                <div class="p-6 bg-slate-800 rounded-xl border border-slate-700">
+                    <i class="fa-solid fa-lock text-purple-400 text-xl mb-3"></i>
+                    <h4 class="font-bold text-white text-sm mb-1">严格保密机制</h4>
+                    <p class="text-xs text-slate-400">严格遵守第三方保密协议与心理伦理标准</p>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-500">© 2026 一品九型 · 脐橙心理. 保留所有权利. | 学术领衔 · 媒体共识 · 专业解忧 · 橙心服务</p>
+        </div>
+    </section>
+
+</body>
+</html>
