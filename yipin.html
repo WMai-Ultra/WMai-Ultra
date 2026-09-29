@@ -5,112 +5,465 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>一品九型 | 政企EAP · 领导力实训 · 人格解码</title>
     <style>
+        /* Google Material Design 3 (MD3) - Customized Tonal System with #D9CCA9 Background */
         :root {
-            --md-surface: #121316;
-            --md-surface-container: #1e2023;
-            --md-surface-container-high: #292a2d;
-            --md-surface-container-highest: #333538;
-            --md-on-surface: #e2e2e5;
-            --md-on-surface-variant: #a0a3a9;
-            --md-outline-variant: #43474e;
-            --md-primary: #e5bfa7;
-            --md-container: #3d2c22;
-            --md-on-container: #ebd0bf;
+            /* 1. 主背景：与门户主页完全一致的 #D9CCA9 */
+            --md-sys-color-surface: #D9CCA9;
+
+            /* 2. MD3 派生表面层级 */
+            --md-sys-color-surface-container-low: #E4D9B8;
+            --md-sys-color-surface-container: #EEE4C6;
+            --md-sys-color-surface-container-high: #F3EBD3;
+            --md-sys-color-outline-variant: #C2B48F;
+
+            /* 3. 全局文字统一颜色（深焦栗色） */
+            --md-sys-color-on-surface: #381a04;
+            --md-sys-color-on-surface-variant: #381a04;
+
+            /* 胶囊框颜色：背景与大标题同色，字与页面背景同色 */
+            --md-badge-bg: #381a04;
+            --md-badge-text: #D9CCA9;
+
+            /* 品牌强调色 */
+            --md-yipin-primary: #a33e00;
+            --md-qicheng-secondary: #00665b;
+
+            /* MD3 形状与阴影系统 */
             --md-shape-corner-full: 9999px;
             --md-shape-corner-xl: 28px;
             --md-shape-corner-m: 16px;
-            --md-elevation-1: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+            --md-elevation-1: 0px 2px 6px 1px rgba(56, 26, 4, 0.12), 0px 1px 3px 0px rgba(56, 26, 4, 0.16);
+            --md-elevation-2: 0px 4px 12px 2px rgba(56, 26, 4, 0.18), 0px 2px 4px 0px rgba(56, 26, 4, 0.22);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
-            background-color: var(--md-surface);
-            color: var(--md-on-surface);
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             line-height: 1.6;
         }
 
-        .container { max-width: 1024px; margin: 0 auto; padding: 24px 20px 80px; width: 100%; }
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 24px 20px 48px;
+            width: 100%;
+        }
 
-        header { display: flex; justify-content: space-between; align-items: center; height: 64px; margin-bottom: 36px; }
+        /* MD3 Top App Bar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            margin-bottom: 36px;
+        }
+
         .back-link {
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            height: 36px;
-            padding: 0 16px;
+            gap: 6px;
+            height: 38px;
+            padding: 0 18px;
             border-radius: var(--md-shape-corner-full);
-            background-color: var(--md-surface-container-high);
-            border: 1px solid var(--md-outline-variant);
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--md-on-surface);
-            transition: background 0.2s;
+            background-color: var(--md-sys-color-surface-container-low);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            box-shadow: var(--md-elevation-1);
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
-        .back-link:hover { background-color: var(--md-surface-container-highest); }
-        .header-tag { font-size: 13px; color: var(--md-on-surface-variant); }
 
-        .section-hero { margin-bottom: 48px; }
+        .back-link:hover {
+            background-color: var(--md-sys-color-surface-container);
+            transform: translateY(-2px);
+            box-shadow: var(--md-elevation-2);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-tag {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            letter-spacing: 0.3px;
+        }
+
+        /* MD3 Contact Button */
+        .md3-contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 38px;
+            padding: 0 18px;
+            border-radius: var(--md-shape-corner-full);
+            background-color: var(--md-badge-bg);
+            color: var(--md-badge-text);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            font-size: 13.5px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            box-shadow: var(--md-elevation-1);
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            font-family: inherit;
+        }
+
+        .md3-contact-btn:hover {
+            background-color: #4a2408;
+            transform: translateY(-2px);
+            box-shadow: var(--md-elevation-2);
+        }
+
+        .md3-contact-btn:active {
+            transform: translateY(0);
+        }
+
+        .md3-contact-btn svg {
+            width: 17px;
+            height: 17px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* Hero */
+        .section-hero {
+            margin-bottom: 40px;
+        }
+
         .badge {
             display: inline-block;
-            background: var(--md-container);
-            color: var(--md-on-container);
+            background: var(--md-badge-bg);
+            color: var(--md-badge-text);
             font-size: 12px;
-            font-weight: 500;
-            padding: 4px 14px;
-            border-radius: var(--md-shape-corner-full);
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            padding: 6px 14px;
+            border-radius: var(--md-shape-corner-m);
             margin-bottom: 16px;
         }
-        h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 500; margin-bottom: 12px; color: var(--md-on-surface); }
-        .hero-desc { font-size: 15px; color: var(--md-on-surface-variant); max-width: 680px; font-weight: 300; }
 
+        h1 {
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--md-sys-color-on-surface);
+            letter-spacing: -0.5px;
+        }
+
+        .hero-desc {
+            font-size: clamp(14px, 1.8vw, 16px);
+            color: var(--md-sys-color-on-surface);
+            max-width: 780px;
+            font-weight: 600;
+            line-height: 1.65;
+        }
+
+        /* MD3 Cards */
         .md3-card {
-            background-color: var(--md-surface-container);
-            border: 1px solid var(--md-outline-variant);
+            background-color: var(--md-sys-color-surface-container-low);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
             border-radius: var(--md-shape-corner-xl);
             padding: 32px 28px;
             margin-bottom: 32px;
             box-shadow: var(--md-elevation-1);
+            color: var(--md-sys-color-on-surface);
         }
 
-        .card-header { margin-bottom: 20px; }
-        .card-header h2 { font-size: 20px; font-weight: 500; color: var(--md-primary); margin-bottom: 6px; }
-        .card-header p { font-size: 13px; color: var(--md-on-surface-variant); }
+        .card-header {
+            margin-bottom: 20px;
+        }
 
-        .leader-intro { display: flex; flex-direction: column; gap: 20px; }
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
-        .item-text { font-size: 13px; color: var(--md-on-surface-variant); display: flex; align-items: baseline; gap: 8px; }
-        .item-text::before { content: "▪"; color: var(--md-primary); font-size: 10px; }
+        .card-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 6px;
+        }
 
-        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+        .card-header p {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.9;
+        }
+
+        .leader-intro {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .item-text {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .item-text::before {
+            content: "■";
+            color: var(--md-yipin-primary);
+            font-size: 10px;
+        }
+
+        .highlight-box {
+            background: var(--md-sys-color-surface-container);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            padding: 18px 20px;
+            border-radius: var(--md-shape-corner-m);
+            margin-top: 10px;
+            box-shadow: 0 1px 3px rgba(56, 26, 4, 0.08);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 20px;
+        }
+
         .inner-card {
-            background-color: var(--md-surface-container-high);
-            border: 1px solid var(--md-outline-variant);
+            background-color: var(--md-sys-color-surface-container);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
             border-radius: var(--md-shape-corner-m);
             padding: 24px;
+            box-shadow: 0 1px 3px rgba(56, 26, 4, 0.08);
         }
-        .inner-card h3 { font-size: 16px; font-weight: 500; color: var(--md-on-surface); margin-bottom: 8px; }
-        .inner-card p { font-size: 13px; color: var(--md-on-surface-variant); line-height: 1.6; }
 
-        .steps-box { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .inner-card h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 8px;
+        }
+
+        .inner-card p {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.65;
+            opacity: 0.95;
+        }
+
+        .steps-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
         .step-pill {
-            background: var(--md-surface-container-highest);
-            padding: 6px 14px;
+            background: var(--md-sys-color-surface-container);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            padding: 8px 16px;
             border-radius: var(--md-shape-corner-full);
-            font-size: 12px;
-            color: var(--md-on-surface);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            box-shadow: 0 1px 3px rgba(56, 26, 4, 0.06);
         }
 
-        footer { border-top: 1px solid var(--md-outline-variant); padding-top: 24px; text-align: center; font-size: 12px; color: #6a6d74; }
+        /* Footer */
+        footer {
+            border-top: 1.5px solid var(--md-sys-color-outline-variant);
+            padding: 28px 0 24px;
+            text-align: center;
+            background-color: var(--md-sys-color-surface-container-low);
+            margin-top: auto;
+        }
+
+        .footer-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-copyright {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        /* MD3 Dialog Modal */
+        .md3-dialog-scrim {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(56, 26, 4, 0.48);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s cubic-bezier(0.2, 0, 0, 1), visibility 0.25s;
+            padding: 20px;
+        }
+
+        .md3-dialog-scrim.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .md3-dialog {
+            background-color: var(--md-sys-color-surface-container);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-shape-corner-xl);
+            box-shadow: 0 16px 40px rgba(56, 26, 4, 0.28);
+            width: 100%;
+            max-width: 380px;
+            padding: 28px 24px;
+            transform: scale(0.92);
+            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+            text-align: center;
+            position: relative;
+        }
+
+        .md3-dialog-scrim.open .md3-dialog {
+            transform: scale(1);
+        }
+
+        .dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .dialog-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .dialog-close-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--md-shape-corner-full);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--md-sys-color-on-surface);
+            transition: background 0.2s;
+        }
+
+        .dialog-close-btn:hover {
+            background-color: var(--md-sys-color-surface-container-low);
+        }
+
+        .dialog-subtitle {
+            font-size: 13.5px;
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.9;
+            margin-bottom: 20px;
+            text-align: left;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .qr-card {
+            background: #ffffff;
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-shape-corner-m);
+            padding: 16px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .qr-image {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .dialog-hint {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        @media (max-width: 480px) {
+            .header-tag {
+                display: none;
+            }
+            .md3-contact-btn {
+                padding: 0 14px;
+                font-size: 12.5px;
+                height: 34px;
+            }
+            .back-link {
+                padding: 0 14px;
+                font-size: 12.5px;
+                height: 34px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <a href="./index.html" class="back-link">← 返回门户</a>
-            <span class="header-tag">深圳 · 蛇口</span>
+            <a href="./index.html" class="back-link">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                <span>返回门户</span>
+            </a>
+            <div class="header-right">
+                <span class="header-tag">政企服务专区</span>
+                <button class="md3-contact-btn" id="contactBtn" aria-label="联系我们">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                    </svg>
+                    <span>联系我们</span>
+                </button>
+            </div>
         </header>
 
         <section class="section-hero">
@@ -138,8 +491,8 @@
                     <div class="item-text">九型人格全球学EPTP认证导师 · 中国区教学督导</div>
                     <div class="item-text">江西财经大学深圳研究院特聘客座教授</div>
                 </div>
-                <div style="background: var(--md-surface-container-high); padding: 18px 20px; border-radius: var(--md-shape-corner-m); margin-top: 10px;">
-                    <p style="font-size: 13px; color: var(--md-on-surface); line-height: 1.7;">
+                <div class="highlight-box">
+                    <p style="font-size: 13.5px; color: var(--md-sys-color-on-surface); line-height: 1.7;">
                         <strong>核心成果与专著：</strong>著有《九型人格重塑你的职场优势》、《中坚力量——中层管理者的九力修炼》；主持研发的《谈心谈话赋能卡》课题荣获第十一届中国EAP学术年会论文二等奖；累计带领超358期心理学深度工作坊。
                     </p>
                 </div>
@@ -184,15 +537,76 @@
                 <span class="step-pill">7. 效果评估</span>
                 <span class="step-pill">8. 组织造血</span>
             </div>
-            <div style="margin-top: 20px; font-size: 13px; color: var(--md-on-surface-variant); line-height: 1.7;">
+            <div style="margin-top: 20px; font-size: 13.5px; color: var(--md-sys-color-on-surface); line-height: 1.7; font-weight: 600;">
                 <strong>标杆实践：</strong>长期深度服务南方电网等大型国企，开展班组九型团队融合与减压团辅，建立企业内部复合型调解员队伍，提供一对一保密咨询与快速危机介入。
             </div>
         </section>
-
-        <footer>
-            <p>© 2026 一品九型 · 脐橙心理. All Rights Reserved. ｜ 深圳市南山区蛇口美年广场</p>
-        </footer>
     </div>
 
+    <!-- 底部区域 -->
+    <footer>
+        <div class="container" style="padding-top: 0; padding-bottom: 0;">
+            <div class="footer-meta">
+                <span>中心地址：深圳市南山区蛇口美年广场</span>
+                <span>学术领衔 · 媒体共识 · 专业解忧</span>
+            </div>
+            <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MD3 Dialog 弹窗 -->
+    <div class="md3-dialog-scrim" id="contactDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <div class="md3-dialog">
+            <div class="dialog-header">
+                <h3 class="dialog-title" id="dialogTitle">联系我们</h3>
+                <button class="dialog-close-btn" id="closeDialogBtn" aria-label="关闭">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="dialog-subtitle">添加专属顾问微信 · 咨询政企EAP与领导力实训</p>
+            <div class="qr-card">
+                <img src="./contact-qr.jpg" alt="微信联系二维码" class="qr-image" />
+            </div>
+            <p class="dialog-hint">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span>微信扫一扫或长按识别二维码</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const contactBtn = document.getElementById('contactBtn');
+        const contactDialog = document.getElementById('contactDialog');
+        const closeDialogBtn = document.getElementById('closeDialogBtn');
+
+        function openDialog() {
+            contactDialog.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDialog() {
+            contactDialog.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        contactBtn.addEventListener('click', openDialog);
+        closeDialogBtn.addEventListener('click', closeDialog);
+
+        contactDialog.addEventListener('click', (e) => {
+            if (e.target === contactDialog) {
+                closeDialog();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactDialog.classList.contains('open')) {
+                closeDialog();
+            }
+        });
+    </script>
 </body>
 </html>
