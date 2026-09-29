@@ -89,6 +89,175 @@
             letter-spacing: 0.3px;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* MD3 Contact Button */
+        .md3-contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 38px;
+            padding: 0 18px;
+            border-radius: var(--md-shape-corner-full);
+            background-color: var(--md-badge-bg);
+            color: var(--md-badge-text);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            font-size: 13.5px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            box-shadow: var(--md-elevation-1);
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .md3-contact-btn:hover {
+            background-color: #4a2408;
+            transform: translateY(-2px);
+            box-shadow: var(--md-elevation-2);
+        }
+
+        .md3-contact-btn:active {
+            transform: translateY(0);
+        }
+
+        .md3-contact-btn svg {
+            width: 17px;
+            height: 17px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* MD3 Dialog Modal */
+        .md3-dialog-scrim {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(56, 26, 4, 0.48);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s cubic-bezier(0.2, 0, 0, 1), visibility 0.25s;
+            padding: 20px;
+        }
+
+        .md3-dialog-scrim.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .md3-dialog {
+            background-color: var(--md-sys-color-surface-container);
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-shape-corner-xl);
+            box-shadow: 0 16px 40px rgba(56, 26, 4, 0.28);
+            width: 100%;
+            max-width: 380px;
+            padding: 28px 24px;
+            transform: scale(0.92);
+            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+            text-align: center;
+            position: relative;
+        }
+
+        .md3-dialog-scrim.open .md3-dialog {
+            transform: scale(1);
+        }
+
+        .dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .dialog-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .dialog-close-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--md-shape-corner-full);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--md-sys-color-on-surface);
+            transition: background 0.2s;
+        }
+
+        .dialog-close-btn:hover {
+            background-color: var(--md-sys-color-surface-container-low);
+        }
+
+        .dialog-subtitle {
+            font-size: 13.5px;
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.9;
+            margin-bottom: 20px;
+            text-align: left;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .qr-card {
+            background: #ffffff;
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-shape-corner-m);
+            padding: 16px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+            box-shadow: var(--md-elevation-1);
+        }
+
+        .qr-image {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .dialog-hint {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        @media (max-width: 480px) {
+            .header-location {
+                display: none;
+            }
+            .md3-contact-btn {
+                padding: 0 14px;
+                font-size: 12.5px;
+                height: 34px;
+            }
+        }
+
         /* Headline Section */
         .hero {
             text-align: center;
@@ -278,7 +447,15 @@
             <div class="md3-chip">
                 <span>PORTAL</span>
             </div>
-            <div class="header-location">深圳 · 蛇口</div>
+            <div class="header-right">
+                <div class="header-location">深圳 · 蛇口</div>
+                <button class="md3-contact-btn" id="contactBtn" aria-label="联系我们">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                    </svg>
+                    <span>联系我们</span>
+                </button>
+            </div>
         </header>
 
         <!-- Headline -->
@@ -356,5 +533,59 @@
         </div>
     </footer>
 
+    <!-- MD3 Dialog 弹窗 -->
+    <div class="md3-dialog-scrim" id="contactDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <div class="md3-dialog">
+            <div class="dialog-header">
+                <h3 class="dialog-title" id="dialogTitle">联系我们</h3>
+                <button class="dialog-close-btn" id="closeDialogBtn" aria-label="关闭">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="dialog-subtitle">添加专属顾问微信 · 咨询政企EAP与心理服务</p>
+            <div class="qr-card">
+                <img src="./contact-qr.jpg" alt="微信联系二维码" class="qr-image" />
+            </div>
+            <p class="dialog-hint">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span>微信扫一扫或长按识别二维码</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const contactBtn = document.getElementById('contactBtn');
+        const contactDialog = document.getElementById('contactDialog');
+        const closeDialogBtn = document.getElementById('closeDialogBtn');
+
+        function openDialog() {
+            contactDialog.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDialog() {
+            contactDialog.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        contactBtn.addEventListener('click', openDialog);
+        closeDialogBtn.addEventListener('click', closeDialog);
+
+        contactDialog.addEventListener('click', (e) => {
+            if (e.target === contactDialog) {
+                closeDialog();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactDialog.classList.contains('open')) {
+                closeDialog();
+            }
+        });
+    </script>
 </body>
 </html>
