@@ -137,12 +137,12 @@
             z-index: 1;
         }
 
-        /* 动效 1：页面初次加载层级渐入 (Staggered Load-in) */
+        /* 动效 1：页面初次加载层级渐入 (5倍过渡时间，细腻电影级平滑浮现) */
         @keyframes md3StaggerFadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(28px) scale(0.98);
-                filter: blur(5px);
+                transform: translateY(32px) scale(0.975);
+                filter: blur(8px);
             }
             100% {
                 opacity: 1;
@@ -153,24 +153,24 @@
 
         .anim-entry {
             opacity: 0;
-            animation: md3StaggerFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: md3StaggerFadeIn 4.25s cubic-bezier(0.16, 1, 0.3, 1) both;
             will-change: transform, opacity, filter;
         }
 
-        .delay-1 { animation-delay: 0.05s; }
-        .delay-2 { animation-delay: 0.16s; }
-        .delay-3 { animation-delay: 0.28s; }
-        .delay-4 { animation-delay: 0.40s; }
-        .delay-5 { animation-delay: 0.52s; }
+        .delay-1 { animation-delay: 0.25s; }
+        .delay-2 { animation-delay: 0.9s; }
+        .delay-3 { animation-delay: 1.6s; }
+        .delay-4 { animation-delay: 2.3s; }
+        .delay-5 { animation-delay: 3.0s; }
 
         /* 动效 5：手机端滚动视差与液体玻璃进场动效 (Scroll Reveal with Liquid Spring) */
         .scroll-reveal {
             opacity: 0;
-            transform: translateY(32px) scale(0.965);
-            filter: blur(6px);
-            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(36px) scale(0.97);
+            filter: blur(8px);
+            transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 2.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 2.8s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, opacity, filter;
         }
 
@@ -683,8 +683,8 @@
             </p>
         </section>
 
-        <!-- 核心领衔导师：刘毅平（刘一品）博士 (滚动液体进场) -->
-        <section class="md3-card anim-entry delay-3 scroll-reveal">
+        <!-- 核心领衔导师：刘毅平（刘一品）博士 -->
+        <section class="md3-card anim-entry delay-3">
             <div class="card-header">
                 <h2>核心领衔专家<br>刘毅平 (刘一品) 博士</h2>
                 <p>哲学博士 Ph.D. ｜ 国家二级心理咨询师 ｜ 21年EAP从业经验 ｜ 5000+小时个案咨询</p>
