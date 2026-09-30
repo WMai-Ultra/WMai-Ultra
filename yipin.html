@@ -543,19 +543,24 @@
             position: fixed;
             top: 0;
             left: 0;
+        /* 动效 4：Google MD3 容器形变弹窗规范 (Container Transform - Material Motion System) */
+        .md3-dialog-scrim {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(56, 26, 4, 0.48);
-            backdrop-filter: blur(12px) saturate(130%);
-            -webkit-backdrop-filter: blur(12px) saturate(130%);
+            background-color: rgba(29, 27, 22, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.56s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.56s;
-            padding: 20px;
+            transition: opacity 0.38s cubic-bezier(0.2, 0, 0, 1), visibility 0.38s;
+            padding: 16px;
             box-sizing: border-box;
         }
 
@@ -564,75 +569,50 @@
             visibility: visible;
         }
 
+        /* MD3 Dialog 容器：Surface Container High (#FAF7F2), 28px Extra-Large 圆角, Level 3 阴影 */
         .md3-dialog {
-            background: rgba(238, 228, 198, 0.95);
-            backdrop-filter: blur(28px) saturate(160%);
-            -webkit-backdrop-filter: blur(28px) saturate(160%);
-            border: 1.5px solid var(--liquid-glass-border);
+            background: #FAF7F2;
+            border: 1px solid rgba(56, 26, 4, 0.08);
             border-radius: var(--md-shape-corner-xl);
-            box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.75),
-                        0 24px 60px rgba(56, 26, 4, 0.28);
+            box-shadow: 0 16px 40px -4px rgba(56, 26, 4, 0.16),
+                        0 4px 12px -2px rgba(56, 26, 4, 0.08);
             width: 100%;
-            max-width: 380px;
-            padding: 28px 24px;
+            max-width: 350px;
+            padding: 24px;
             text-align: center;
             position: relative;
             box-sizing: border-box;
-            will-change: transform, opacity;
+            will-change: transform, opacity, border-radius, background-color;
             transform-origin: center center;
+            overflow: hidden;
         }
 
-        /* 顶部镜面高光面 */
-        .md3-dialog::before {
-            content: '';
+        /* MD3 容器形变起始态：按钮幽灵镜像 (仅在 0~100ms 呈现) */
+        .dialog-morph-start {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 38%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 100%);
-            pointer-events: none;
-            border-top-left-radius: inherit;
-            border-top-right-radius: inherit;
-            opacity: 0;
-            transition: opacity 0.4s ease 0.2s;
-        }
-
-        .md3-dialog.revealed::before {
-            opacity: 0.9;
-        }
-
-        .dialog-header {
             width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .dialog-title-wrap {
-            display: inline-flex;
-            align-items: center;
+            justify-content: center;
             gap: 8px;
-            color: var(--md-sys-color-on-surface);
-            transition: color 0.45s ease;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #D9CCA9;
+            background-color: #381a04;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.12s ease;
+            z-index: 5;
         }
 
-        .dialog-title-icon {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
-
-        .dialog-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: inherit;
-            margin: 0;
-        }
-
+        /* MD3 标准右上角关闭图标按钮 (Icon Button - 36x36dp, 圆形) */
         .dialog-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
             background: transparent;
             border: none;
             cursor: pointer;
@@ -643,81 +623,139 @@
             align-items: center;
             justify-content: center;
             color: var(--md-sys-color-on-surface);
-            opacity: 0;
-            transform: scale(0.75);
-            transition: opacity 0.15s ease, transform 0.15s ease, background 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .md3-dialog.revealed .dialog-close-btn {
-            opacity: 1;
-            transform: scale(1);
-            transition: opacity 0.35s ease 0.28s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.28s, background 0.2s;
+            opacity: 0.65;
+            transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.15s;
+            z-index: 6;
         }
 
         .dialog-close-btn:hover {
-            background-color: rgba(228, 217, 184, 0.6);
+            background-color: rgba(56, 26, 4, 0.08);
+            opacity: 1;
         }
 
-        /* 方案一：实体外壳内二维码破茧浮现 */
-        .dialog-body-reveal {
+        .dialog-close-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* MD3 弹窗核心内容容器 (MD3 Dialog Body) */
+        .dialog-body {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             opacity: 0;
-            transform: translateY(14px) scale(0.96);
-            transition: opacity 0.18s ease, transform 0.18s ease;
+            transform: translateY(12px);
+            transition: opacity 0.15s ease, transform 0.15s ease;
         }
 
-        .md3-dialog.revealed .dialog-body-reveal {
+        .md3-dialog.revealed .dialog-body {
             opacity: 1;
-            transform: translateY(0) scale(1);
-            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s,
-                        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+            transform: translateY(0);
+            transition: opacity 0.32s cubic-bezier(0.05, 0.7, 0.1, 1) 0.1s,
+                        transform 0.32s cubic-bezier(0.05, 0.7, 0.1, 1) 0.1s;
         }
 
-        .dialog-subtitle {
-            width: 100%;
-            font-size: 13.5px;
-            color: var(--md-sys-color-on-surface);
-            opacity: 0.9;
-            margin-bottom: 20px;
-            text-align: left;
-            line-height: 1.5;
-            font-weight: 600;
-        }
-
-        .qr-card {
-            background: #ffffff;
-            border: 1.5px solid rgba(194, 180, 143, 0.5);
-            border-radius: var(--md-shape-corner-m);
-            padding: 16px;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 16px rgba(56, 26, 4, 0.1);
-        }
-
-        .qr-image {
-            width: 220px;
-            height: 220px;
-            object-fit: contain;
-            display: block;
-            border-radius: 4px;
-        }
-
-        .dialog-hint {
-            width: 100%;
-            font-size: 13px;
-            font-weight: 700;
+        /* 1. MD3 顶部标准语义图标徽章 (Header Icon Badge - 48x48dp, 24dp Icon) */
+        .dialog-icon-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--md-shape-corner-full);
+            background-color: rgba(56, 26, 4, 0.06);
             color: var(--md-sys-color-on-surface);
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 14px;
+            margin-top: 4px;
+        }
+
+        /* 2. MD3 标题: Headline Small (22px/28px, 700 weight) */
+        .dialog-headline {
+            font-size: 22px;
+            line-height: 28px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            margin: 0 0 6px 0;
+            letter-spacing: -0.2px;
+        }
+
+        /* 3. MD3 辅助文本: Body Medium (13.5px/1.45, on-surface-variant) */
+        .dialog-supporting-text {
+            font-size: 13.5px;
+            line-height: 1.45;
+            color: rgba(56, 26, 4, 0.75);
+            margin: 0 0 16px 0;
+            font-weight: 500;
+            max-width: 280px;
+        }
+
+        /* 4. MD3 二维码卡片: Surface Container Lowest (#FFFFFF, 16px 圆角, 极简内敛微边框) */
+        .dialog-qr-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(56, 26, 4, 0.08);
+            border-radius: var(--md-shape-corner-m);
+            padding: 14px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(56, 26, 4, 0.05);
+        }
+
+        .dialog-qr-image {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            display: block;
+            border-radius: 6px;
+        }
+
+        /* 5. 提示说明 (Body Small) */
+        .dialog-hint {
+            width: 100%;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: rgba(56, 26, 4, 0.65);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* 6. MD3 底部操作区 (Dialog Actions) */
+        .dialog-actions {
+            width: 100%;
+        }
+
+        .dialog-confirm-btn {
+            width: 100%;
+            height: 42px;
+            border-radius: var(--md-shape-corner-full);
+            background-color: var(--md-badge-bg);
+            color: #FAF7F2;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(56, 26, 4, 0.15);
+            transition: background-color 0.2s, box-shadow 0.2s, transform 0.15s;
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+        }
+
+        .dialog-confirm-btn:hover {
+            background-color: #4a2408;
+            box-shadow: 0 4px 12px rgba(56, 26, 4, 0.22);
+        }
+
+        .dialog-confirm-btn:active {
+            transform: scale(0.98);
         }
 
         @media (max-width: 480px) {
@@ -730,11 +768,12 @@
                 height: 34px;
             }
             .md3-dialog {
-                padding: 22px 18px;
+                padding: 20px 16px;
+                max-width: calc(100vw - 32px);
             }
-            .qr-image {
-                width: 195px;
-                height: 195px;
+            .dialog-qr-image {
+                width: 185px;
+                height: 185px;
             }
             .back-link {
                 padding: 0 14px;
@@ -870,43 +909,70 @@
         <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
     </footer>
 
-    <!-- MD3 按钮实体双层物理形变弹窗 (方案一：Shared Element Morph) -->
+    <!-- Google Material Design 3 (MD3) Dialog & Container Transform -->
     <div class="md3-dialog-scrim" id="contactDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
         <div class="md3-dialog" id="dialogCard">
-            <div class="dialog-header">
-                <div class="dialog-title-wrap">
-                    <svg class="dialog-title-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <!-- 启动态幽灵镜像（MD3 Container Transform 起始态组件） -->
+            <div class="dialog-morph-start" id="dialogStartContent">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
+                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                </svg>
+                <span>联系我们</span>
+            </div>
+
+            <!-- MD3 标准右上角关闭图标按钮 (Icon Button) -->
+            <button class="dialog-close-btn" id="closeDialogBtn" aria-label="关闭对话框">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+
+            <!-- MD3 弹窗核心内容 (MD3 Dialog Body) -->
+            <div class="dialog-body" id="dialogBody">
+                <!-- 1. MD3 顶部标准语义图标徽章 -->
+                <div class="dialog-icon-badge">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                         <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
                     </svg>
-                    <h3 class="dialog-title" id="dialogTitle">联系我们</h3>
                 </div>
-                <button class="dialog-close-btn" id="closeDialogBtn" aria-label="关闭">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="dialog-body-reveal" id="dialogBodyReveal">
-                <p class="dialog-subtitle">添加专属顾问微信 · 咨询政企EAP与领导力实训</p>
-                <div class="qr-card">
-                    <img src="./contact-qr.jpg" alt="微信联系二维码" class="qr-image" />
+
+                <!-- 2. MD3 标准标题 (Headline Small) -->
+                <h3 class="dialog-headline" id="dialogTitle">联系专属顾问</h3>
+
+                <!-- 3. MD3 标准辅助文本 (Body Medium) -->
+                <p class="dialog-supporting-text">添加专属顾问微信 · 咨询政企EAP与领导力实训</p>
+
+                <!-- 4. MD3 内嵌二维码卡片 (Surface Container Lowest) -->
+                <div class="dialog-qr-card">
+                    <img src="./contact-qr.jpg" alt="微信联系二维码" class="dialog-qr-image" />
                 </div>
-                <p class="dialog-hint">
+
+                <!-- 5. 提示说明 (Body Small) -->
+                <div class="dialog-hint">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                     </svg>
                     <span>微信扫一扫或长按识别二维码</span>
-                </p>
+                </div>
+
+                <!-- 6. MD3 底部标准操作区 (Dialog Actions) -->
+                <div class="dialog-actions">
+                    <button class="dialog-confirm-btn" id="confirmDialogBtn">
+                        <span>我知道了</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 方案一：MD3 按钮实体双层物理蜕变 (Shared Element Morph - 120FPS GPU)
+        // Google MD3 容器形变弹窗标准 (Material Motion - Container Transform)
         const contactBtn = document.getElementById('contactBtn');
         const contactDialog = document.getElementById('contactDialog');
         const dialogCard = document.getElementById('dialogCard');
         const closeDialogBtn = document.getElementById('closeDialogBtn');
+        const confirmDialogBtn = document.getElementById('confirmDialogBtn');
+        const dialogStartContent = document.getElementById('dialogStartContent');
 
         let isAnimating = false;
 
@@ -915,57 +981,55 @@
             isAnimating = true;
 
             const btnRect = contactBtn.getBoundingClientRect();
-            const dialogTitleWrap = dialogCard.querySelector('.dialog-title-wrap');
 
-            // 1. 确保弹窗可见以计算其在屏幕正中央的目标几何位置
+            // 1. 先将弹窗设为可见以便在屏幕正中央计算目标尺寸
             contactDialog.style.visibility = 'visible';
             contactDialog.style.opacity = '0';
             dialogCard.style.transition = 'none';
             dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
-            dialogCard.style.borderRadius = '';
+            dialogCard.style.borderRadius = '28px';
             dialogCard.classList.remove('revealed');
 
             const dialogRect = dialogCard.getBoundingClientRect();
-            const dialogCenterX = dialogRect.left + dialogRect.width / 2;
-            const dialogCenterY = dialogRect.top + dialogRect.height / 2;
-            const btnCenterX = btnRect.left + btnRect.width / 2;
-            const btnCenterY = btnRect.top + btnRect.height / 2;
-
-            const deltaX = btnCenterX - dialogCenterX;
-            const deltaY = btnCenterY - dialogCenterY;
+            const deltaX = (btnRect.left + btnRect.width / 2) - (dialogRect.left + dialogRect.width / 2);
+            const deltaY = (btnRect.top + btnRect.height / 2) - (dialogRect.top + dialogRect.height / 2);
             const scale = Math.max(0.18, btnRect.width / dialogRect.width);
             const startRadius = Math.round((btnRect.height / 2) / scale);
 
-            // 方案一：实体从按钮原位起飞，初始背景设为深焦栗色、文字设为暖金，100%实体不空虚
+            // 2. MD3 起始态设置：定位在按钮原位，显示深色按钮外壳
             dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
             dialogCard.style.borderRadius = `${startRadius}px`;
             dialogCard.style.backgroundColor = '#381a04';
             dialogCard.style.borderColor = 'var(--md-sys-color-outline-variant)';
+            dialogCard.style.boxShadow = 'none';
             dialogCard.style.opacity = '1';
-            if (dialogTitleWrap) dialogTitleWrap.style.color = '#D9CCA9';
+            dialogStartContent.style.opacity = '1';
 
-            // 隐藏原位置按钮，形成实体被直接抽离飞出的连续感
+            // 隐藏触发源按钮，产生无缝拔起连贯感
             contactBtn.style.visibility = 'hidden';
             document.body.style.overflow = 'hidden';
 
-            // 强制重绘，确保起点被浏览器捕捉
+            // 强制重绘
             void dialogCard.offsetWidth;
 
-            // 2. 触发极速流畅的 GPU 硬件加速飞跃展开 (120FPS)
+            // 3. 进入展开动效 (MD3 Emphasized Decelerate: 460ms)
             contactDialog.style.visibility = '';
             contactDialog.style.opacity = '';
             contactDialog.classList.add('open');
 
-            // 动画时间加长一倍 (0.72s)，弹出位移与四边缘圆角收尾时间严格毫秒级同步 (均为 0.72s cubic-bezier(0.16, 1, 0.3, 1))
             requestAnimationFrame(() => {
-                dialogCard.style.transition = 'transform 0.72s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.72s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.58s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.58s ease';
+                // MD3 标准 Emphasized Decelerate 缓动曲线与精准时长 (460ms)
+                dialogCard.style.transition = 'transform 0.46s cubic-bezier(0.05, 0.7, 0.1, 1), border-radius 0.46s cubic-bezier(0.05, 0.7, 0.1, 1), background-color 0.26s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.46s cubic-bezier(0.05, 0.7, 0.1, 1)';
                 dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
                 dialogCard.style.borderRadius = '28px';
-                dialogCard.style.backgroundColor = 'rgba(238, 228, 198, 0.95)';
-                dialogCard.style.borderColor = 'var(--liquid-glass-border)';
-                if (dialogTitleWrap) dialogTitleWrap.style.color = 'var(--md-sys-color-on-surface)';
+                dialogCard.style.backgroundColor = '#FAF7F2';
+                dialogCard.style.borderColor = 'rgba(56, 26, 4, 0.08)';
+                dialogCard.style.boxShadow = '0 16px 40px -4px rgba(56, 26, 4, 0.16), 0 4px 12px -2px rgba(56, 26, 4, 0.08)';
 
-                // 实体展开中段破茧揭晓二维码与关闭按钮
+                // 按钮幽灵层极速隐去 (0-100ms)
+                dialogStartContent.style.opacity = '0';
+
+                // 弹窗主体内容优雅渐入展开 (100-460ms)
                 dialogCard.classList.add('revealed');
 
                 setTimeout(() => {
@@ -973,9 +1037,9 @@
                     dialogCard.style.borderRadius = '';
                     dialogCard.style.backgroundColor = '';
                     dialogCard.style.borderColor = '';
-                    if (dialogTitleWrap) dialogTitleWrap.style.color = '';
+                    dialogCard.style.boxShadow = '';
                     isAnimating = false;
-                }, 750);
+                }, 480);
             });
         }
 
@@ -985,27 +1049,21 @@
 
             const btnRect = contactBtn.getBoundingClientRect();
             const dialogRect = dialogCard.getBoundingClientRect();
-            const dialogTitleWrap = dialogCard.querySelector('.dialog-title-wrap');
-            const dialogCenterX = dialogRect.left + dialogRect.width / 2;
-            const dialogCenterY = dialogRect.top + dialogRect.height / 2;
-            const btnCenterX = btnRect.left + btnRect.width / 2;
-            const btnCenterY = btnRect.top + btnRect.height / 2;
-
-            const deltaX = btnCenterX - dialogCenterX;
-            const deltaY = btnCenterY - dialogCenterY;
+            const deltaX = (btnRect.left + btnRect.width / 2) - (dialogRect.left + dialogRect.width / 2);
+            const deltaY = (btnRect.top + btnRect.height / 2) - (dialogRect.top + dialogRect.height / 2);
             const scale = Math.max(0.18, btnRect.width / dialogRect.width);
             const targetRadius = Math.round((btnRect.height / 2) / scale);
 
-            // 二维码与关闭按钮率先柔和隐去，外壳逆向收缩回深色小胶囊
+            // 弹窗内容率先隐去
             dialogCard.classList.remove('revealed');
 
-            // 逆向收缩回按钮位置：加长一倍时间 (0.56s)，收缩位移与边缘圆角严格同步收尾
-            dialogCard.style.transition = 'transform 0.56s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.56s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.48s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.48s ease, opacity 0.56s cubic-bezier(0.16, 1, 0.3, 1)';
+            // MD3 Container Transform 收缩回弹 (MD3 Emphasized Accelerate: 350ms)
+            dialogCard.style.transition = 'transform 0.35s cubic-bezier(0.3, 0, 0.8, 0.15), border-radius 0.35s cubic-bezier(0.3, 0, 0.8, 0.15), background-color 0.28s ease, opacity 0.35s ease';
             dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
             dialogCard.style.borderRadius = `${targetRadius}px`;
             dialogCard.style.backgroundColor = '#381a04';
             dialogCard.style.borderColor = 'var(--md-sys-color-outline-variant)';
-            if (dialogTitleWrap) dialogTitleWrap.style.color = '#D9CCA9';
+            dialogStartContent.style.opacity = '1';
 
             contactDialog.classList.remove('open');
 
@@ -1017,14 +1075,16 @@
                 dialogCard.style.borderRadius = '';
                 dialogCard.style.backgroundColor = '';
                 dialogCard.style.borderColor = '';
+                dialogCard.style.boxShadow = '';
                 dialogCard.style.opacity = '';
-                if (dialogTitleWrap) dialogTitleWrap.style.color = '';
+                dialogStartContent.style.opacity = '0';
                 isAnimating = false;
-            }, 580);
+            }, 360);
         }
 
         contactBtn.addEventListener('click', openDialog);
         closeDialogBtn.addEventListener('click', closeDialog);
+        if (confirmDialogBtn) confirmDialogBtn.addEventListener('click', closeDialog);
         contactDialog.addEventListener('click', (e) => {
             if (e.target === contactDialog) {
                 closeDialog();
@@ -1061,7 +1121,7 @@
             setTimeout(() => circle.remove(), 600);
         }
 
-        document.querySelectorAll('.md3-contact-btn, .back-link, .dialog-close-btn').forEach(btn => {
+        document.querySelectorAll('.md3-contact-btn, .back-link, .dialog-close-btn, .dialog-confirm-btn').forEach(btn => {
             btn.addEventListener('pointerdown', createRipple);
         });
 
