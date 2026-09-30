@@ -250,65 +250,6 @@
             flex-shrink: 0;
         }
 
-        /* 顶部四方案演示按钮组 (固定于右上角，绝对不消失、不隐藏) */
-        .demo-btn-group {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .demo-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            height: 36px;
-            padding: 0 12px;
-            border-radius: var(--md-shape-corner-full);
-            background-color: var(--md-badge-bg);
-            color: var(--md-badge-text);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
-            font-size: 12.5px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            cursor: pointer;
-            box-shadow: var(--md-elevation-1);
-            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-            font-family: inherit;
-            position: relative;
-            overflow: hidden;
-            user-select: none;
-            white-space: nowrap;
-        }
-
-        .demo-btn:hover {
-            background-color: #4a2408;
-            transform: translateY(-2px);
-            box-shadow: var(--md-elevation-2);
-        }
-
-        .demo-btn:active {
-            transform: translateY(0) scale(0.97);
-        }
-
-        .demo-btn .btn-num {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: rgba(217, 204, 169, 0.28);
-            color: var(--md-badge-text);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .demo-btn .btn-name-short {
-            display: none;
-        }
-
         /* 动效 4：Material Ripple 水波纹 */
         .md3-ripple-wave {
             position: absolute;
@@ -589,21 +530,20 @@
             animation-play-state: paused !important;
         }
 
-        /* 动效 4：Google MD3 容器形变弹窗规范 (Container Transform - Material Motion System) */
+        /* 动效 4：Google MD3 容器形变弹窗规范 (Container Transform - 1.5x 满帧硬件加速) */
         .md3-dialog-scrim {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(29, 27, 22, 0.45);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(29, 27, 22, 0.52);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.32s cubic-bezier(0.2, 0, 0, 1), visibility 0.32s;
+            transition: opacity 0.54s cubic-bezier(0.05, 0.7, 0.1, 1), visibility 0.54s;
             box-sizing: border-box;
+            will-change: opacity;
         }
 
         .md3-dialog-scrim.open {
@@ -611,18 +551,38 @@
             visibility: visible;
         }
 
-        /* MD3 Dialog 容器：Surface Container High (#FAF7F2), 28px Extra-Large 圆角, Level 3 阴影 */
+        /* 动效落定后再开启磨砂玻璃，杜绝动画中全屏高斯卷积抢占 GPU 填色率 */
+        .md3-dialog-scrim.open.frosted {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* 独立硬件加速阴影层：彻底解耦 clip-path，避免每一帧重新栅格化高斯模糊 */
+        .dialog-shadow-layer {
+            position: fixed;
+            border-radius: var(--md-shape-corner-xl, 28px);
+            box-shadow: 0 20px 48px -4px rgba(56, 26, 4, 0.22),
+                        0 6px 16px -2px rgba(56, 26, 4, 0.12);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            will-change: opacity, transform;
+            transform: translateZ(0);
+        }
+
+        /* MD3 Dialog 容器：Surface Container High (#FAF7F2), 28px Extra-Large 圆角 */
         .md3-dialog {
             position: fixed;
             background: #FAF7F2;
             border: 1px solid rgba(56, 26, 4, 0.08);
             border-radius: var(--md-shape-corner-xl, 28px);
-            box-shadow: 0 16px 40px -4px rgba(56, 26, 4, 0.16),
-                        0 4px 12px -2px rgba(56, 26, 4, 0.08);
             padding: 0;
             text-align: center;
             box-sizing: border-box;
-            will-change: left, top, width, height, border-radius, clip-path, background, box-shadow;
+            will-change: clip-path, transform, opacity;
+            transform: translateZ(0); /* 锁定专属 GPU 显存合成层 */
+            backface-visibility: hidden;
             overflow: hidden;
             z-index: 1001;
             opacity: 0;
@@ -633,42 +593,6 @@
         .md3-dialog-scrim.open .md3-dialog {
             visibility: visible;
             pointer-events: auto;
-        }
-
-        /* 弹窗顶部方案调试标识徽章 */
-        .scheme-indicator-tag {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 3px 12px;
-            background: rgba(56, 26, 4, 0.08);
-            color: var(--md-sys-color-on-surface);
-            border: 1px solid rgba(56, 26, 4, 0.12);
-            border-radius: var(--md-shape-corner-full);
-            font-size: 11.5px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            margin-bottom: 10px;
-        }
-
-        /* 方案 2 专用的 Stage 1 迷你胶囊内容 (交织起始态) */
-        .stage1-capsule-content {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: var(--md-badge-text);
-            background-color: var(--md-badge-bg);
-            border-radius: inherit;
-            font-size: 13px;
-            font-weight: 700;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 5;
-            transition: opacity 0.12s ease;
         }
 
         /* MD3 标准右上角关闭图标按钮 (Icon Button - 36x36dp, 圆形) */
@@ -686,14 +610,9 @@
             align-items: center;
             justify-content: center;
             color: var(--md-sys-color-on-surface);
-            opacity: 0;
+            opacity: 0.65;
             transition: opacity 0.2s ease, background-color 0.2s ease, transform 0.15s;
             z-index: 6;
-        }
-
-        .md3-dialog.expanded .dialog-close-btn {
-            opacity: 0.65;
-            transition: opacity 0.32s cubic-bezier(0.05, 0.7, 0.1, 1) 0.16s, background-color 0.2s ease;
         }
 
         .dialog-close-btn:hover {
@@ -713,14 +632,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            opacity: 0;
-            transform: translateY(14px);
-            transition: opacity 0.15s ease, transform 0.15s ease;
-        }
-
-        .md3-dialog.expanded .dialog-body {
-            opacity: 1;
-            transform: translateY(0);
+            will-change: opacity, transform;
         }
 
         /* 1. MD3 顶部标准语义图标徽章 (Header Icon Badge - 48x48dp, 24dp Icon) */
@@ -826,45 +738,14 @@
             transform: scale(0.98);
         }
 
-        @media (max-width: 680px) {
-            header {
-                height: auto;
-                min-height: 56px;
-                padding-top: 8px;
-                padding-bottom: 8px;
-                gap: 10px;
-                flex-wrap: wrap;
-            }
+        @media (max-width: 480px) {
             .header-location {
                 display: none;
             }
-            .demo-btn-group {
-                gap: 6px;
-                justify-content: flex-end;
-            }
-            .demo-btn {
-                height: 32px;
-                padding: 0 9px;
-                font-size: 12px;
-                gap: 4px;
-            }
-            .demo-btn .btn-num {
-                width: 16px;
-                height: 16px;
-                font-size: 10px;
-            }
-        }
-
-        @media (max-width: 440px) {
-            .demo-btn .btn-name-long {
-                display: none;
-            }
-            .demo-btn .btn-name-short {
-                display: inline;
-            }
-            .demo-btn {
-                padding: 0 7px;
-                font-size: 11.5px;
+            .md3-contact-btn {
+                padding: 0 14px;
+                font-size: 12.5px;
+                height: 34px;
             }
             .dialog-body {
                 padding: 20px 16px;
@@ -904,28 +785,12 @@
             </div>
             <div class="header-right">
                 <div class="header-location">深圳 · 蛇口</div>
-                <div class="demo-btn-group" role="group" aria-label="弹窗动画四种方案展示">
-                    <button class="demo-btn" id="demoBtn1" data-scheme="1" aria-label="方案1 光圈视口揭示">
-                        <span class="btn-num">1</span>
-                        <span class="btn-name-long">光圈揭示</span>
-                        <span class="btn-name-short">光圈</span>
-                    </button>
-                    <button class="demo-btn" id="demoBtn2" data-scheme="2" aria-label="方案2 双阶段交织">
-                        <span class="btn-num">2</span>
-                        <span class="btn-name-long">双段交织</span>
-                        <span class="btn-name-short">交织</span>
-                    </button>
-                    <button class="demo-btn" id="demoBtn3" data-scheme="3" aria-label="方案3 卷轴分步展卷">
-                        <span class="btn-num">3</span>
-                        <span class="btn-name-long">卷轴展卷</span>
-                        <span class="btn-name-short">卷轴</span>
-                    </button>
-                    <button class="demo-btn" id="demoBtn4" data-scheme="4" aria-label="方案4 微光流体孕育">
-                        <span class="btn-num">4</span>
-                        <span class="btn-name-long">微光流体</span>
-                        <span class="btn-name-short">微光</span>
-                    </button>
-                </div>
+                <button class="md3-contact-btn" id="contactBtn" aria-label="联系我们">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                    </svg>
+                    <span>联系我们</span>
+                </button>
             </div>
         </header>
 
@@ -1002,17 +867,12 @@
         <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
     </footer>
 
-    <!-- Google Material Design 3 (MD3) Dialog & Multi-Scheme Container Transform -->
+    <!-- Google Material Design 3 (MD3) Dialog & Container Transform -->
     <div class="md3-dialog-scrim" id="contactDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
-        <div class="md3-dialog" id="dialogCard">
-            <!-- 方案 2 专用的 Stage 1 迷你胶囊内容 (交织起始态) -->
-            <div class="stage1-capsule-content" id="stage1Content">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-                </svg>
-                <span>联系专属顾问</span>
-            </div>
+        <!-- 独立硬件加速阴影层（彻底解耦 clip-path 避免每帧重新栅格化高斯模糊） -->
+        <div class="dialog-shadow-layer" id="dialogShadowLayer"></div>
 
+        <div class="md3-dialog" id="dialogCard">
             <!-- MD3 标准右上角关闭图标按钮 (Icon Button) -->
             <button class="dialog-close-btn" id="closeDialogBtn" aria-label="关闭对话框">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -1022,9 +882,6 @@
 
             <!-- MD3 弹窗核心内容 (MD3 Dialog Body) -->
             <div class="dialog-body" id="dialogBody">
-                <!-- 方案当前测试标识徽章 -->
-                <div class="scheme-indicator-tag" id="schemeIndicatorTag">方案 1 · 光圈视口揭示</div>
-
                 <!-- 1. MD3 顶部标准语义图标徽章 -->
                 <div class="dialog-icon-badge">
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
@@ -1062,35 +919,31 @@
     </div>
 
     <script>
-        // Google MD3 容器形变弹窗规范 & 4种根治“前半程长宽比拉伸/空壳感”架构方案
-        // 核心原则：触发源按钮绝对不动、绝不隐藏，弹窗直接从触发源按钮原位丝滑舒展绽放
+        // Google MD3 容器形变弹窗规范 - 1.5x 慢速优雅光圈揭示 (540ms 满帧硬件加速)
+        // 核心技术：
+        // 1. 双驱协同平移 (Focal Point Kinetic Flight)：卡片中心跟随光圈视口自右上角优雅滑入，视线首帧即锚定核心标题，消除偏位感；
+        // 2. 独立硬件阴影层 (Shadow Decoupling)：阴影移至独立图层，彻底杜绝 clip-path 动态重绘高斯模糊造成的掉帧；
+        // 3. 磨砂分步延展 (Blur Offloading)：运动期间避免全屏高斯滤波抢占显存，落地后丝滑生效；
+        // 4. 非对称轻量收束 (Asymmetric Clean Exit - 360ms)：关闭时图文先柔和微隐，卡片轻盈缩回，绝无硬切断二维码的瑕疵。
+        const contactBtn = document.getElementById('contactBtn');
         const contactDialog = document.getElementById('contactDialog');
         const dialogCard = document.getElementById('dialogCard');
+        const dialogShadowLayer = document.getElementById('dialogShadowLayer');
         const dialogBody = document.getElementById('dialogBody');
-        const stage1Content = document.getElementById('stage1Content');
-        const schemeIndicatorTag = document.getElementById('schemeIndicatorTag');
         const closeDialogBtn = document.getElementById('closeDialogBtn');
         const confirmDialogBtn = document.getElementById('confirmDialogBtn');
 
-        const demoBtns = [
-            document.getElementById('demoBtn1'),
-            document.getElementById('demoBtn2'),
-            document.getElementById('demoBtn3'),
-            document.getElementById('demoBtn4')
-        ];
-
-        const SCHEME_LABELS = {
-            1: '方案 1 · 光圈视口揭示 (Aperture Reveal)',
-            2: '方案 2 · 双阶段内容交织 (Cross-Dissolve)',
-            3: '方案 3 · 卷轴分步展卷 (Staggered Axis)',
-            4: '方案 4 · 微光流体孕育 (Liquid Capsule)'
-        };
-
         let isAnimating = false;
-        let activeScheme = 1;
-        let lastTriggerBtn = demoBtns[0];
+        let lastTranslateX = 0;
+        let lastTranslateY = 0;
 
-        // 离屏精准测量弹窗在屏幕居中时的目标尺寸与居中坐标
+        // 1.5倍时间参数定义
+        const DURATION_OPEN = 540;   // 原 360ms * 1.5 = 540ms (MD3 Emphasized Decelerate)
+        const DURATION_CLOSE = 360;  // 原 240ms * 1.5 = 360ms (MD3 Emphasized Accelerate)
+        const EASING_OPEN = 'cubic-bezier(0.05, 0.7, 0.1, 1)';
+        const EASING_CLOSE = 'cubic-bezier(0.3, 0, 0.8, 0.15)';
+
+        // 离屏精准测量弹窗居中坐标与尺寸
         function getTargetMetrics() {
             const isMobile = window.innerWidth <= 480;
             const targetWidth = isMobile ? Math.min(360, window.innerWidth - 32) : 380;
@@ -1102,6 +955,7 @@
             dialogCard.style.width = targetWidth + 'px';
             dialogCard.style.height = 'auto';
             dialogCard.style.clipPath = 'none';
+            dialogCard.style.transform = 'none';
             dialogBody.style.opacity = '1';
             dialogBody.style.transform = 'none';
 
@@ -1113,326 +967,134 @@
             return { targetWidth, targetHeight, targetLeft, targetTop };
         }
 
-        function openScheme(schemeNum, triggerBtn) {
+        function openDialog() {
             if (isAnimating) return;
             if (contactDialog.classList.contains('open')) {
                 closeDialog();
                 return;
             }
-
             isAnimating = true;
-            activeScheme = schemeNum;
-            lastTriggerBtn = triggerBtn;
 
-            schemeIndicatorTag.textContent = SCHEME_LABELS[schemeNum];
-
-            // 1. 暂停背景大面积慢呼吸 blur 光晕，瞬间解放 80% GPU 吞吐量
+            // 1. 暂停背景全屏三层慢呼吸光晕，瞬间解放 80% GPU 算力
             document.body.classList.add('modal-open');
             document.body.style.overflow = 'hidden';
             contactDialog.classList.add('open');
+            contactDialog.classList.remove('frosted');
 
-            const btnRect = triggerBtn.getBoundingClientRect();
+            const btnRect = contactBtn.getBoundingClientRect();
             const { targetWidth, targetHeight, targetLeft, targetTop } = getTargetMetrics();
 
+            // 计算视口焦点（以卡片顶部的图标与标题中心为锚点，Y轴约为卡片顶部 + 50px）
+            const anchorY = 50;
+            const startTranslateX = (btnRect.left + btnRect.width / 2) - (targetLeft + targetWidth / 2);
+            const startTranslateY = (btnRect.top + btnRect.height / 2) - (targetTop + anchorY);
+            lastTranslateX = startTranslateX;
+            lastTranslateY = startTranslateY;
+
+            // 计算对称胶囊初始裁切视口
+            const halfW = btnRect.width / 2;
+            const halfH = btnRect.height / 2;
+            const clipTop = Math.max(0, anchorY - halfH);
+            const clipBottom = Math.max(0, targetHeight - (anchorY + halfH));
+            const clipLeft = Math.max(0, (targetWidth / 2) - halfW);
+            const clipRight = Math.max(0, (targetWidth / 2) - halfW);
+            const pillRadius = Math.round(halfH);
+
+            // 初始化卡片：带有起始平移与胶囊视口，图文内容 100% 高保真在位
             dialogCard.style.transition = 'none';
-            dialogCard.classList.remove('expanded');
+            dialogCard.style.left = `${targetLeft}px`;
+            dialogCard.style.top = `${targetTop}px`;
+            dialogCard.style.width = `${targetWidth}px`;
+            dialogCard.style.height = `${targetHeight}px`;
+            dialogCard.style.transform = `translate3d(${startTranslateX}px, ${startTranslateY}px, 0)`;
+            dialogCard.style.clipPath = `inset(${clipTop}px ${clipRight}px ${clipBottom}px ${clipLeft}px round ${pillRadius}px)`;
+            dialogCard.style.opacity = '1';
+            dialogCard.style.visibility = 'visible';
 
-            if (schemeNum === 1) {
-                // ==========================================
-                // 方案 1：光圈视口揭示 (Clip-Path Aperture Reveal)
-                // 机制：卡片直接在目标中心以 1:1 高清呈现，文字从不挤压变形；
-                // 视口如电影镜头光圈般从按钮尺寸精准向全尺寸绽放展开。彻底杜绝拉伸和空壳。
-                // ==========================================
-                const insetTop = btnRect.top - targetTop;
-                const insetLeft = btnRect.left - targetLeft;
-                const insetRight = targetWidth - (insetLeft + btnRect.width);
-                const insetBottom = targetHeight - (insetTop + btnRect.height);
-                const pillRadius = Math.round(btnRect.height / 2);
+            dialogBody.style.transition = 'none';
+            dialogBody.style.opacity = '1';
+            dialogBody.style.transform = 'none';
 
-                dialogCard.style.left = `${targetLeft}px`;
-                dialogCard.style.top = `${targetTop}px`;
-                dialogCard.style.width = `${targetWidth}px`;
-                dialogCard.style.height = `${targetHeight}px`;
-                dialogCard.style.borderRadius = '28px';
-                dialogCard.style.background = '#FAF7F2';
-                dialogCard.style.boxShadow = '0 16px 40px -4px rgba(56, 26, 4, 0.16), 0 4px 12px -2px rgba(56, 26, 4, 0.08)';
-                dialogCard.style.clipPath = `inset(${insetTop}px ${insetRight}px ${insetBottom}px ${insetLeft}px round ${pillRadius}px)`;
-                dialogCard.style.opacity = '1';
-                dialogCard.style.visibility = 'visible';
+            // 独立阴影层初始化（与 clip-path 隔离，由 GPU 单独透明度合成）
+            dialogShadowLayer.style.transition = 'none';
+            dialogShadowLayer.style.left = `${targetLeft}px`;
+            dialogShadowLayer.style.top = `${targetTop}px`;
+            dialogShadowLayer.style.width = `${targetWidth}px`;
+            dialogShadowLayer.style.height = `${targetHeight}px`;
+            dialogShadowLayer.style.opacity = '0';
+            dialogShadowLayer.style.visibility = 'visible';
 
-                stage1Content.style.opacity = '0';
-                dialogBody.style.opacity = '1';
-                dialogBody.style.transform = 'translateY(0)';
+            // 强制重绘，提交硬件帧
+            void dialogCard.offsetWidth;
 
-                void dialogCard.offsetWidth;
-
-                requestAnimationFrame(() => {
-                    const DURATION = 360;
-                    dialogCard.style.transition = `clip-path ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1), box-shadow ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1)`;
-                    dialogCard.style.clipPath = 'inset(0px 0px 0px 0px round 28px)';
-                    dialogCard.classList.add('expanded');
-
-                    setTimeout(() => { isAnimating = false; }, DURATION + 20);
-                });
-
-            } else if (schemeNum === 2) {
-                // ==========================================
-                // 方案 2：双阶段内容交织 (Content Cross-Dissolve)
-                // 机制：首阶段（0~120ms）内部充盈迷你胶囊内容，全程无任何一帧是空壳；
-                // 飞行中途胶囊淡出，全量二维码内容平滑交织渐入。
-                // ==========================================
-                dialogCard.style.left = `${btnRect.left}px`;
-                dialogCard.style.top = `${btnRect.top}px`;
-                dialogCard.style.width = `${btnRect.width}px`;
-                dialogCard.style.height = `${btnRect.height}px`;
-                dialogCard.style.borderRadius = `${btnRect.height / 2}px`;
-                dialogCard.style.background = '#381a04';
-                dialogCard.style.boxShadow = '0 4px 12px rgba(56, 26, 4, 0.18)';
-                dialogCard.style.clipPath = 'none';
-                dialogCard.style.opacity = '1';
-                dialogCard.style.visibility = 'visible';
-
-                stage1Content.style.opacity = '1';
-                dialogBody.style.opacity = '0';
-                dialogBody.style.transform = 'translateY(14px)';
-
-                void dialogCard.offsetWidth;
-
-                requestAnimationFrame(() => {
-                    const DURATION = 380;
-                    dialogCard.style.transition = `
-                        left ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        top ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        width ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        height ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        border-radius ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        background-color ${Math.round(DURATION * 0.75)}ms ease 50ms,
-                        box-shadow ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1)
-                    `;
-                    stage1Content.style.transition = 'opacity 110ms ease';
-                    dialogBody.style.transition = `opacity 250ms ease 120ms, transform 250ms cubic-bezier(0.05, 0.7, 0.1, 1) 120ms`;
-
-                    dialogCard.style.left = `${targetLeft}px`;
-                    dialogCard.style.top = `${targetTop}px`;
-                    dialogCard.style.width = `${targetWidth}px`;
-                    dialogCard.style.height = `${targetHeight}px`;
-                    dialogCard.style.borderRadius = '28px';
-                    dialogCard.style.backgroundColor = '#FAF7F2';
-                    dialogCard.style.boxShadow = '0 16px 40px -4px rgba(56, 26, 4, 0.16), 0 4px 12px -2px rgba(56, 26, 4, 0.08)';
-
-                    stage1Content.style.opacity = '0';
-                    dialogBody.style.opacity = '1';
-                    dialogBody.style.transform = 'translateY(0)';
-                    dialogCard.classList.add('expanded');
-
-                    setTimeout(() => { isAnimating = false; }, DURATION + 20);
-                });
-
-            } else if (schemeNum === 3) {
-                // ==========================================
-                // 方案 3：卷轴分步展卷 (Staggered Axis Expansion)
-                // 机制：解耦长宽形变矛盾，阶段1（0~150ms）横向展至全宽条幅；
-                // 阶段2（140~380ms）纵向如卷轴向下展卷展开，消解对角斜拉感。
-                // ==========================================
-                dialogCard.style.left = `${btnRect.left}px`;
-                dialogCard.style.top = `${btnRect.top}px`;
-                dialogCard.style.width = `${btnRect.width}px`;
-                dialogCard.style.height = `${btnRect.height}px`;
-                dialogCard.style.borderRadius = `${btnRect.height / 2}px`;
-                dialogCard.style.background = '#FAF7F2';
-                dialogCard.style.boxShadow = '0 6px 16px rgba(56, 26, 4, 0.12)';
-                dialogCard.style.clipPath = 'none';
-                dialogCard.style.opacity = '1';
-                dialogCard.style.visibility = 'visible';
-
-                stage1Content.style.opacity = '0';
-                dialogBody.style.opacity = '0';
-                dialogBody.style.transform = 'translateY(-10px)';
-
-                void dialogCard.offsetWidth;
-
-                const DURATION_X = 160;
-                const DURATION_TOTAL = 380;
-                const bannerHeight = 72;
-
-                // 阶段 1：横向展宽并位移至居中
+            // 展开动效：540ms 优雅双驱滑翔绽放 (MD3 Emphasized Decelerate)
+            requestAnimationFrame(() => {
                 dialogCard.style.transition = `
-                    left ${DURATION_X}ms cubic-bezier(0.1, 0.9, 0.2, 1),
-                    top ${DURATION_X}ms cubic-bezier(0.1, 0.9, 0.2, 1),
-                    width ${DURATION_X}ms cubic-bezier(0.1, 0.9, 0.2, 1),
-                    height ${DURATION_X}ms cubic-bezier(0.1, 0.9, 0.2, 1),
-                    border-radius ${DURATION_X}ms ease
+                    transform ${DURATION_OPEN}ms ${EASING_OPEN},
+                    clip-path ${DURATION_OPEN}ms ${EASING_OPEN}
                 `;
-                dialogCard.style.left = `${targetLeft}px`;
-                dialogCard.style.top = `${targetTop}px`;
-                dialogCard.style.width = `${targetWidth}px`;
-                dialogCard.style.height = `${bannerHeight}px`;
-                dialogCard.style.borderRadius = '24px';
+                dialogCard.style.transform = 'translate3d(0, 0, 0)';
+                dialogCard.style.clipPath = 'inset(0px 0px 0px 0px round 28px)';
 
-                // 阶段 2：纵向顺滑展卷
+                // 阴影层 100% GPU 渐入，零栅格化重绘
+                dialogShadowLayer.style.transition = `opacity ${DURATION_OPEN}ms ${EASING_OPEN}`;
+                dialogShadowLayer.style.opacity = '1';
+
                 setTimeout(() => {
-                    dialogCard.style.transition = `
-                        height ${DURATION_TOTAL - DURATION_X + 20}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        border-radius ${DURATION_TOTAL - DURATION_X}ms ease,
-                        box-shadow ${DURATION_TOTAL - DURATION_X}ms ease
-                    `;
-                    dialogBody.style.transition = `opacity 220ms ease, transform 240ms cubic-bezier(0.05, 0.7, 0.1, 1)`;
-
-                    dialogCard.style.height = `${targetHeight}px`;
-                    dialogCard.style.borderRadius = '28px';
-                    dialogCard.style.boxShadow = '0 16px 40px -4px rgba(56, 26, 4, 0.16), 0 4px 12px -2px rgba(56, 26, 4, 0.08)';
-
-                    dialogBody.style.opacity = '1';
-                    dialogBody.style.transform = 'translateY(0)';
-                    dialogCard.classList.add('expanded');
-
-                    setTimeout(() => { isAnimating = false; }, DURATION_TOTAL - DURATION_X + 30);
-                }, DURATION_X - 20);
-
-            } else if (schemeNum === 4) {
-                // ==========================================
-                // 方案 4：微光流体孕育 (Liquid Glow Capsule)
-                // 机制：起始态为温润琥珀微光流体胶囊，飞至中心时如水滴破晓般
-                // 结晶舒展绽放为全量卡片，赋予动效有机的心理治愈生命质感。
-                // ==========================================
-                dialogCard.style.left = `${btnRect.left}px`;
-                dialogCard.style.top = `${btnRect.top}px`;
-                dialogCard.style.width = `${btnRect.width}px`;
-                dialogCard.style.height = `${btnRect.height}px`;
-                dialogCard.style.borderRadius = `${btnRect.height / 2}px`;
-                dialogCard.style.background = 'linear-gradient(135deg, #381a04 0%, #a33e00 100%)';
-                dialogCard.style.boxShadow = '0 0 32px rgba(230, 150, 75, 0.85), 0 8px 24px rgba(56, 26, 4, 0.4)';
-                dialogCard.style.clipPath = 'none';
-                dialogCard.style.opacity = '1';
-                dialogCard.style.visibility = 'visible';
-
-                stage1Content.style.opacity = '0';
-                dialogBody.style.opacity = '0';
-                dialogBody.style.transform = 'scale(0.92)';
-
-                void dialogCard.offsetWidth;
-
-                requestAnimationFrame(() => {
-                    const DURATION = 380;
-                    dialogCard.style.transition = `
-                        left ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        top ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        width ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        height ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        border-radius ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1),
-                        background ${Math.round(DURATION * 0.7)}ms ease 90ms,
-                        box-shadow ${DURATION}ms cubic-bezier(0.05, 0.7, 0.1, 1)
-                    `;
-                    dialogBody.style.transition = `opacity 240ms ease 130ms, transform 260ms cubic-bezier(0.1, 0.9, 0.2, 1) 130ms`;
-
-                    dialogCard.style.left = `${targetLeft}px`;
-                    dialogCard.style.top = `${targetTop}px`;
-                    dialogCard.style.width = `${targetWidth}px`;
-                    dialogCard.style.height = `${targetHeight}px`;
-                    dialogCard.style.borderRadius = '28px';
-                    dialogCard.style.background = '#FAF7F2';
-                    dialogCard.style.boxShadow = '0 16px 40px -4px rgba(56, 26, 4, 0.16), 0 4px 12px -2px rgba(56, 26, 4, 0.08)';
-
-                    dialogBody.style.opacity = '1';
-                    dialogBody.style.transform = 'scale(1)';
-                    dialogCard.classList.add('expanded');
-
-                    setTimeout(() => { isAnimating = false; }, DURATION + 20);
-                });
-            }
+                    // 动效平稳落定后，开启磨砂滤镜
+                    contactDialog.classList.add('frosted');
+                    isAnimating = false;
+                }, DURATION_OPEN + 20);
+            });
         }
 
         function closeDialog() {
             if (isAnimating || !contactDialog.classList.contains('open')) return;
             isAnimating = true;
 
-            const btnRect = lastTriggerBtn ? lastTriggerBtn.getBoundingClientRect() : {
-                left: window.innerWidth - 120, top: 20, width: 100, height: 38
-            };
-
+            // 立即移除全屏磨砂计算，确保收起 360ms 处于极速满帧模式
+            contactDialog.classList.remove('frosted');
             contactDialog.classList.remove('open');
-            dialogCard.classList.remove('expanded');
 
-            const DURATION_CLOSE = 280;
+            // 1. 内容层先行微隐（0~110ms，二维码不被硬剪切）
+            dialogBody.style.transition = 'opacity 110ms ease, transform 110ms ease';
+            dialogBody.style.opacity = '0';
+            dialogBody.style.transform = 'scale(0.96)';
 
-            if (activeScheme === 1) {
-                // 方案 1：光圈反向收敛
-                const targetLeft = parseFloat(dialogCard.style.left) || 0;
-                const targetTop = parseFloat(dialogCard.style.top) || 0;
-                const targetWidth = parseFloat(dialogCard.style.width) || 380;
-                const targetHeight = parseFloat(dialogCard.style.height) || 510;
-                const insetTop = btnRect.top - targetTop;
-                const insetLeft = btnRect.left - targetLeft;
-                const insetRight = targetWidth - (insetLeft + btnRect.width);
-                const insetBottom = targetHeight - (insetTop + btnRect.height);
+            // 2. 卡片外壳轻量向原按钮顺滑收束（0~360ms）
+            dialogCard.style.transition = `
+                transform ${DURATION_CLOSE}ms ${EASING_CLOSE},
+                opacity ${DURATION_CLOSE}ms ease
+            `;
+            dialogCard.style.transform = `translate3d(${lastTranslateX * 0.7}px, ${lastTranslateY * 0.7}px, 0) scale(0.4)`;
+            dialogCard.style.opacity = '0';
 
-                dialogCard.style.transition = `clip-path ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15), opacity ${DURATION_CLOSE}ms ease`;
-                dialogCard.style.clipPath = `inset(${insetTop}px ${insetRight}px ${insetBottom}px ${insetLeft}px round ${btnRect.height / 2}px)`;
-                dialogCard.style.opacity = '0';
+            dialogShadowLayer.style.transition = `opacity 260ms ease`;
+            dialogShadowLayer.style.opacity = '0';
 
-            } else if (activeScheme === 4) {
-                // 方案 4：微光流体凝聚收束
-                dialogBody.style.transition = 'opacity 90ms ease';
-                dialogBody.style.opacity = '0';
-
-                dialogCard.style.transition = `
-                    left ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    top ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    width ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    height ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    border-radius ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    background 180ms ease,
-                    box-shadow ${DURATION_CLOSE}ms ease,
-                    opacity ${DURATION_CLOSE}ms ease
-                `;
-                dialogCard.style.background = 'linear-gradient(135deg, #381a04 0%, #a33e00 100%)';
-                dialogCard.style.boxShadow = '0 0 24px rgba(230, 150, 75, 0.7)';
-                dialogCard.style.left = `${btnRect.left}px`;
-                dialogCard.style.top = `${btnRect.top}px`;
-                dialogCard.style.width = `${btnRect.width}px`;
-                dialogCard.style.height = `${btnRect.height}px`;
-                dialogCard.style.borderRadius = `${btnRect.height / 2}px`;
-                dialogCard.style.opacity = '0';
-
-            } else {
-                // 方案 2 & 3：平滑收敛回归
-                dialogBody.style.transition = 'opacity 90ms ease';
-                dialogBody.style.opacity = '0';
-
-                dialogCard.style.transition = `
-                    left ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    top ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    width ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    height ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    border-radius ${DURATION_CLOSE}ms cubic-bezier(0.3, 0, 0.8, 0.15),
-                    opacity ${DURATION_CLOSE}ms ease
-                `;
-                dialogCard.style.left = `${btnRect.left}px`;
-                dialogCard.style.top = `${btnRect.top}px`;
-                dialogCard.style.width = `${btnRect.width}px`;
-                dialogCard.style.height = `${btnRect.height}px`;
-                dialogCard.style.borderRadius = `${btnRect.height / 2}px`;
-                dialogCard.style.opacity = '0';
-            }
-
+            // 3. 彻底重置
             setTimeout(() => {
                 document.body.classList.remove('modal-open');
                 document.body.style.overflow = '';
                 dialogCard.style.transition = '';
                 dialogCard.style.visibility = 'hidden';
                 dialogCard.style.clipPath = '';
+                dialogCard.style.transform = '';
                 dialogCard.style.left = '';
                 dialogCard.style.top = '';
                 dialogCard.style.width = '';
                 dialogCard.style.height = '';
-                dialogCard.style.borderRadius = '';
-                dialogCard.style.background = '';
-                dialogCard.style.boxShadow = '';
+                dialogCard.style.opacity = '';
+
+                dialogShadowLayer.style.transition = '';
+                dialogShadowLayer.style.visibility = 'hidden';
+                dialogShadowLayer.style.opacity = '';
+
                 isAnimating = false;
             }, DURATION_CLOSE + 30);
         }
 
-        // 窗口尺寸变更时保持已打开弹窗居中
+        // 窗口尺寸变更响应
         window.addEventListener('resize', () => {
             if (contactDialog.classList.contains('open') && !isAnimating) {
                 const metrics = getTargetMetrics();
@@ -1440,20 +1102,19 @@
                 dialogCard.style.top = `${metrics.targetTop}px`;
                 dialogCard.style.width = `${metrics.targetWidth}px`;
                 dialogCard.style.height = `${metrics.targetHeight}px`;
+
+                dialogShadowLayer.style.left = `${metrics.targetLeft}px`;
+                dialogShadowLayer.style.top = `${metrics.targetTop}px`;
+                dialogShadowLayer.style.width = `${metrics.targetWidth}px`;
+                dialogShadowLayer.style.height = `${metrics.targetHeight}px`;
             }
         });
 
-        // 绑定四方案按钮点击事件
-        demoBtns.forEach((btn, idx) => {
-            if (btn) {
-                btn.addEventListener('click', () => {
-                    openScheme(idx + 1, btn);
-                });
-            }
-        });
-
+        // 统一事件绑定
+        contactBtn.addEventListener('click', openDialog);
         closeDialogBtn.addEventListener('click', closeDialog);
         if (confirmDialogBtn) confirmDialogBtn.addEventListener('click', closeDialog);
+
         contactDialog.addEventListener('click', (e) => {
             if (e.target === contactDialog) {
                 closeDialog();
@@ -1490,7 +1151,7 @@
             setTimeout(() => circle.remove(), 600);
         }
 
-        document.querySelectorAll('.demo-btn, .md3-contact-btn, .dialog-close-btn, .dialog-confirm-btn').forEach(btn => {
+        document.querySelectorAll('.md3-contact-btn, .dialog-close-btn, .dialog-confirm-btn').forEach(btn => {
             btn.addEventListener('pointerdown', createRipple);
         });
 
@@ -1514,3 +1175,4 @@
     </script>
 </body>
 </html>
+
