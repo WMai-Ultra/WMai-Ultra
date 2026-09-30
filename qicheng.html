@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>脐橙心理 | 贝校护航 · 家庭学术韧性 · 艺术疗愈</title>
     <style>
-        /* Google Material Design 3 (MD3) - Customized Tonal System with #D9CCA9 Background */
+        /* Google Material Design 3 (MD3) + Apple Liquid Glass Aesthetic */
         :root {
-            /* 1. 主背景：与门户主页完全一致的 #D9CCA9 */
+            /* 1. 主背景：与门户主页完全一致的 #D9CCA9 暖沙金 */
             --md-sys-color-surface: #D9CCA9;
 
-            /* 2. MD3 派生表面层级 */
+            /* 2. MD3 派生表面层级与半透液体玻璃基底 */
             --md-sys-color-surface-container-low: #E4D9B8;
             --md-sys-color-surface-container: #EEE4C6;
-            --md-sys-color-surface-container-high: #F3EBD3;
             --md-sys-color-outline-variant: #C2B48F;
+
+            /* 苹果液体玻璃参数 */
+            --liquid-glass-bg: rgba(238, 228, 198, 0.68);
+            --liquid-glass-bg-inner: rgba(244, 237, 218, 0.75);
+            --liquid-glass-bg-hover: rgba(246, 240, 222, 0.85);
+            --liquid-glass-border: rgba(194, 180, 143, 0.75);
+            --liquid-glass-highlight: rgba(255, 255, 255, 0.55);
 
             /* 3. 全局文字统一颜色（深焦栗色） */
             --md-sys-color-on-surface: #381a04;
@@ -32,8 +38,8 @@
             --md-shape-corner-full: 9999px;
             --md-shape-corner-xl: 28px;
             --md-shape-corner-m: 16px;
-            --md-elevation-1: 0px 2px 6px 1px rgba(56, 26, 4, 0.12), 0px 1px 3px 0px rgba(56, 26, 4, 0.16);
-            --md-elevation-2: 0px 4px 12px 2px rgba(56, 26, 4, 0.18), 0px 2px 4px 0px rgba(56, 26, 4, 0.22);
+            --md-elevation-1: 0px 4px 12px 0px rgba(56, 26, 4, 0.08), 0px 1px 3px 0px rgba(56, 26, 4, 0.1);
+            --md-elevation-2: 0px 12px 28px 2px rgba(56, 26, 4, 0.14), 0px 2px 6px 0px rgba(56, 26, 4, 0.12);
         }
 
         * {
@@ -52,6 +58,74 @@
             flex-direction: column;
             justify-content: space-between;
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 动效 3：背景治愈系慢呼吸光晕层 (Ambient Breathing Glow Layer) */
+        .ambient-glow-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(85px);
+            -webkit-filter: blur(85px);
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(230, 150, 75, 0.38) 0%, rgba(217, 204, 169, 0) 70%);
+            top: -100px;
+            right: -100px;
+            animation: orbFloat1 14s ease-in-out infinite alternate;
+        }
+
+        .orb-2 {
+            width: 560px;
+            height: 560px;
+            background: radial-gradient(circle, rgba(120, 180, 165, 0.35) 0%, rgba(217, 204, 169, 0) 70%);
+            bottom: -120px;
+            left: -120px;
+            animation: orbFloat2 18s ease-in-out infinite alternate;
+        }
+
+        .orb-3 {
+            width: 440px;
+            height: 440px;
+            background: radial-gradient(circle, rgba(195, 115, 55, 0.22) 0%, rgba(217, 204, 169, 0) 70%);
+            top: 40%;
+            left: 32%;
+            animation: orbFloat3 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbFloat1 {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.65; }
+            50% { transform: translate(-50px, 70px) scale(1.15); opacity: 0.95; }
+            100% { transform: translate(-90px, 30px) scale(0.92); opacity: 0.6; }
+        }
+
+        @keyframes orbFloat2 {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            50% { transform: translate(70px, -60px) scale(1.18); opacity: 0.9; }
+            100% { transform: translate(40px, -100px) scale(1.02); opacity: 0.65; }
+        }
+
+        @keyframes orbFloat3 {
+            0% { transform: translate(0, 0) scale(0.92); opacity: 0.45; }
+            50% { transform: translate(-40px, -40px) scale(1.22); opacity: 0.75; }
+            100% { transform: translate(50px, 30px) scale(1.05); opacity: 0.5; }
         }
 
         .container {
@@ -59,6 +133,51 @@
             margin: 0 auto;
             padding: 24px 20px 48px;
             width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 动效 1：页面初次加载层级渐入 (Staggered Load-in) */
+        @keyframes md3StaggerFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(28px) scale(0.98);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .anim-entry {
+            opacity: 0;
+            animation: md3StaggerFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            will-change: transform, opacity, filter;
+        }
+
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.16s; }
+        .delay-3 { animation-delay: 0.28s; }
+        .delay-4 { animation-delay: 0.40s; }
+        .delay-5 { animation-delay: 0.52s; }
+
+        /* 动效 5：手机端滚动视差与液体玻璃进场动效 (Scroll Reveal with Liquid Spring) */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(32px) scale(0.965);
+            filter: blur(6px);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
         }
 
         /* MD3 Top App Bar */
@@ -78,19 +197,24 @@
             height: 38px;
             padding: 0 18px;
             border-radius: var(--md-shape-corner-full);
-            background-color: var(--md-sys-color-surface-container-low);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid var(--liquid-glass-border);
+            box-shadow: inset 0 1px 1px var(--liquid-glass-highlight), var(--md-elevation-1);
             font-size: 13.5px;
             font-weight: 700;
             color: var(--md-sys-color-on-surface);
-            box-shadow: var(--md-elevation-1);
-            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            user-select: none;
         }
 
         .back-link:hover {
-            background-color: var(--md-sys-color-surface-container);
+            background: var(--liquid-glass-bg-hover);
             transform: translateY(-2px);
-            box-shadow: var(--md-elevation-2);
+            box-shadow: inset 0 1px 1.5px rgba(255,255,255,0.7), var(--md-elevation-2);
         }
 
         .header-right {
@@ -122,8 +246,11 @@
             letter-spacing: 0.4px;
             cursor: pointer;
             box-shadow: var(--md-elevation-1);
-            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: inherit;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
         }
 
         .md3-contact-btn:hover {
@@ -133,7 +260,7 @@
         }
 
         .md3-contact-btn:active {
-            transform: translateY(0);
+            transform: translateY(0) scale(0.98);
         }
 
         .md3-contact-btn svg {
@@ -141,6 +268,27 @@
             height: 17px;
             fill: currentColor;
             flex-shrink: 0;
+        }
+
+        /* 动效 4：Material Ripple 水波纹 */
+        .md3-ripple-wave {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.38);
+            transform: scale(0);
+            animation: rippleEffect 0.6s cubic-bezier(0.2, 0, 0, 1);
+            pointer-events: none;
+        }
+
+        .back-link .md3-ripple-wave {
+            background: rgba(56, 26, 4, 0.15);
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(3.5);
+                opacity: 0;
+            }
         }
 
         /* Hero */
@@ -158,6 +306,7 @@
             padding: 6px 14px;
             border-radius: var(--md-shape-corner-m);
             margin-bottom: 16px;
+            box-shadow: 0 2px 6px rgba(56, 26, 4, 0.15);
         }
 
         h1 {
@@ -177,15 +326,35 @@
             line-height: 1.65;
         }
 
-        /* MD3 Cards */
+        /* 苹果液体玻璃 (Liquid Glass) + MD3 大卡片 */
         .md3-card {
-            background-color: var(--md-sys-color-surface-container-low);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            border: 1.5px solid var(--liquid-glass-border);
             border-radius: var(--md-shape-corner-xl);
+            box-shadow: inset 0 1.5px 1.5px 0 var(--liquid-glass-highlight),
+                        inset 0 -1px 1px 0 rgba(56, 26, 4, 0.05),
+                        var(--md-elevation-1);
             padding: 32px 28px;
             margin-bottom: 32px;
-            box-shadow: var(--md-elevation-1);
             color: var(--md-sys-color-on-surface);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .md3-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 38%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+            border-top-left-radius: var(--md-shape-corner-xl);
+            border-top-right-radius: var(--md-shape-corner-xl);
         }
 
         .card-header {
@@ -213,12 +382,21 @@
             gap: 20px;
         }
 
+        /* 液体玻璃小卡片与团队专家块 */
         .inner-card {
-            background-color: var(--md-sys-color-surface-container);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
+            background: var(--liquid-glass-bg-inner);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid var(--liquid-glass-border);
             border-radius: var(--md-shape-corner-m);
             padding: 24px;
-            box-shadow: 0 1px 3px rgba(56, 26, 4, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.45), 0 2px 8px rgba(56, 26, 4, 0.06);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .inner-card:hover {
+            transform: translateY(-3px);
+            box-shadow: inset 0 1px 1.5px rgba(255,255,255,0.65), 0 8px 18px rgba(56, 26, 4, 0.1);
         }
 
         .inner-card h3 {
@@ -237,19 +415,21 @@
         }
 
         .highlight-box {
-            background: var(--md-sys-color-surface-container);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
+            background: var(--liquid-glass-bg-inner);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid var(--liquid-glass-border);
             padding: 18px 20px;
             border-radius: var(--md-shape-corner-m);
             margin-top: 20px;
-            box-shadow: 0 1px 3px rgba(56, 26, 4, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 2px 6px rgba(56, 26, 4, 0.06);
             font-size: 13.5px;
             font-weight: 600;
             color: var(--md-sys-color-on-surface);
             line-height: 1.7;
         }
 
-        /* 跨学科专家团队卡片 */
+        /* 跨学科专家团队卡片 (液体玻璃质感) */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -257,11 +437,19 @@
         }
 
         .team-item {
-            background-color: var(--md-sys-color-surface-container);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
+            background: var(--liquid-glass-bg-inner);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid var(--liquid-glass-border);
             border-radius: var(--md-shape-corner-m);
             padding: 22px;
-            box-shadow: 0 1px 3px rgba(56, 26, 4, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.45), 0 2px 8px rgba(56, 26, 4, 0.06);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .team-item:hover {
+            transform: translateY(-3px);
+            box-shadow: inset 0 1px 1.5px rgba(255,255,255,0.65), 0 8px 18px rgba(56, 26, 4, 0.1);
         }
 
         .team-item h4 {
@@ -287,11 +475,15 @@
 
         /* Footer */
         footer {
-            border-top: 1.5px solid var(--md-sys-color-outline-variant);
+            border-top: 1.5px solid var(--liquid-glass-border);
             padding: 28px 0 24px;
             text-align: center;
-            background-color: var(--md-sys-color-surface-container-low);
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             margin-top: auto;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-meta {
@@ -311,23 +503,23 @@
             color: var(--md-sys-color-on-surface);
         }
 
-        /* MD3 Dialog Modal */
+        /* 动效 4：MD3 物理弹性阻尼展开弹窗 (Spring Physics Modal) */
         .md3-dialog-scrim {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(56, 26, 4, 0.48);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background-color: rgba(56, 26, 4, 0.45);
+            backdrop-filter: blur(12px) saturate(130%);
+            -webkit-backdrop-filter: blur(12px) saturate(130%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.25s cubic-bezier(0.2, 0, 0, 1), visibility 0.25s;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
             padding: 20px;
         }
 
@@ -337,21 +529,27 @@
         }
 
         .md3-dialog {
-            background-color: var(--md-sys-color-surface-container);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
+            background: rgba(238, 228, 198, 0.88);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border: 1.5px solid var(--liquid-glass-border);
             border-radius: var(--md-shape-corner-xl);
-            box-shadow: 0 16px 40px rgba(56, 26, 4, 0.28);
+            box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.7),
+                        0 24px 60px rgba(56, 26, 4, 0.28);
             width: 100%;
             max-width: 380px;
             padding: 28px 24px;
-            transform: scale(0.92);
-            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+            transform: scale(0.84) translateY(24px);
+            opacity: 0;
+            transition: transform 0.45s cubic-bezier(0.34, 1.45, 0.64, 1),
+                        opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             text-align: center;
             position: relative;
         }
 
         .md3-dialog-scrim.open .md3-dialog {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+            opacity: 1;
         }
 
         .dialog-header {
@@ -379,10 +577,12 @@
             justify-content: center;
             color: var(--md-sys-color-on-surface);
             transition: background 0.2s;
+            position: relative;
+            overflow: hidden;
         }
 
         .dialog-close-btn:hover {
-            background-color: var(--md-sys-color-surface-container-low);
+            background-color: rgba(228, 217, 184, 0.6);
         }
 
         .dialog-subtitle {
@@ -397,14 +597,14 @@
 
         .qr-card {
             background: #ffffff;
-            border: 1.5px solid var(--md-sys-color-outline-variant);
+            border: 1.5px solid rgba(194, 180, 143, 0.5);
             border-radius: var(--md-shape-corner-m);
             padding: 16px;
             display: inline-flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 16px;
-            box-shadow: var(--md-elevation-1);
+            box-shadow: 0 4px 16px rgba(56, 26, 4, 0.1);
         }
 
         .qr-image {
@@ -444,8 +644,16 @@
 </head>
 <body>
 
+    <!-- 动效 3：背景治愈系慢呼吸光晕层 -->
+    <div class="ambient-glow-layer" aria-hidden="true">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
     <div class="container">
-        <header>
+        <!-- MD3 Top App Bar -->
+        <header class="anim-entry delay-1">
             <a href="./index.html" class="back-link">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                     <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
@@ -463,7 +671,7 @@
             </div>
         </header>
 
-        <section class="section-hero">
+        <section class="section-hero anim-entry delay-2">
             <span class="badge">CARE & CLINICAL WELLNESS</span>
             <h1>脐橙心理<br>橙心为你每一天</h1>
             <p class="hero-desc">
@@ -471,8 +679,8 @@
             </p>
         </section>
 
-        <!-- 贝校护航专属支持系统 -->
-        <section class="md3-card">
+        <!-- 贝校护航专属支持系统 (滚动液体进场) -->
+        <section class="md3-card anim-entry delay-3 scroll-reveal">
             <div class="card-header">
                 <h2>《贝校护航》国际学校家庭学术韧性支持系统</h2>
                 <p>针对深圳蛇口贝赛思（BASIS）、SIS等顶尖国际学校家庭的学术休克与适应瓶颈</p>
@@ -500,8 +708,8 @@
             </div>
         </section>
 
-        <!-- 跨学科专家智库 -->
-        <section class="md3-card">
+        <!-- 跨学科专家智库 (滚动液体进场) -->
+        <section class="md3-card scroll-reveal">
             <div class="card-header">
                 <h2>权威跨学科专家团队</h2>
                 <p>医学心理专家、博导教授、科技高管与资深调解团队跨界护航</p>
@@ -577,6 +785,7 @@
     </div>
 
     <script>
+        // 弹窗交互
         const contactBtn = document.getElementById('contactBtn');
         const contactDialog = document.getElementById('contactDialog');
         const closeDialogBtn = document.getElementById('closeDialogBtn');
@@ -605,6 +814,52 @@
                 closeDialog();
             }
         });
+
+        // 动效 4：Google MD3 涟漪效果 (Material Ripple)
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+            const rect = button.getBoundingClientRect();
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            const clientX = event.clientX || (event.touches && event.touches[0].clientX) || (rect.left + radius);
+            const clientY = event.clientY || (event.touches && event.touches[0].clientY) || (rect.top + radius);
+            circle.style.left = `${clientX - rect.left - radius}px`;
+            circle.style.top = `${clientY - rect.top - radius}px`;
+            circle.classList.add("md3-ripple-wave");
+
+            const existing = button.getElementsByClassName("md3-ripple-wave")[0];
+            if (existing) {
+                existing.remove();
+            }
+
+            button.appendChild(circle);
+            setTimeout(() => circle.remove(), 600);
+        }
+
+        document.querySelectorAll('.md3-contact-btn, .back-link, .dialog-close-btn').forEach(btn => {
+            btn.addEventListener('pointerdown', createRipple);
+        });
+
+        // 动效 5：苹果液体运动手机端/滚动观察器 (Scroll Reveal)
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -20px 0px'
+            });
+            revealElements.forEach(el => observer.observe(el));
+        } else {
+            revealElements.forEach(el => el.classList.add('visible'));
+        }
     </script>
 </body>
 </html>
