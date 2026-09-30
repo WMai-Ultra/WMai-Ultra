@@ -477,17 +477,39 @@
             opacity: 0.95;
         }
 
-        /* Footer */
+        /* 动效 5：苹果液体玻璃 (Liquid Glass) 悬浮圆角卡片 Footer */
         footer {
-            border-top: 1.5px solid var(--liquid-glass-border);
-            padding: 28px 0 24px;
+            max-width: 1000px;
+            width: calc(100% - 40px);
+            margin: 0 auto 36px;
+            padding: 28px 24px;
             text-align: center;
             background: var(--liquid-glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            margin-top: auto;
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            border: 1.5px solid var(--liquid-glass-border);
+            border-radius: var(--md-shape-corner-xl);
+            box-shadow: inset 0 1.5px 1.5px 0 var(--liquid-glass-highlight),
+                        inset 0 -1px 1px 0 rgba(56, 26, 4, 0.05),
+                        var(--md-elevation-1);
             position: relative;
             z-index: 1;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+            border-top-left-radius: var(--md-shape-corner-xl);
+            border-top-right-radius: var(--md-shape-corner-xl);
+            opacity: 0.8;
         }
 
         .footer-meta {
@@ -499,12 +521,17 @@
             color: var(--md-sys-color-on-surface);
             margin-bottom: 8px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
 
         .footer-copyright {
             font-size: 12.5px;
             font-weight: 600;
             color: var(--md-sys-color-on-surface);
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
         }
 
         /* 动效 4：MD3 物理弹性阻尼展开弹窗 (Spring Physics Modal) */
@@ -643,6 +670,17 @@
                 font-size: 12.5px;
                 height: 34px;
             }
+            footer {
+                padding: 22px 16px;
+                margin-bottom: 24px;
+            }
+            .footer-meta {
+                gap: 6px 12px;
+                font-size: 12.5px;
+            }
+            .footer-copyright {
+                font-size: 11.5px;
+            }
         }
     </style>
 </head>
@@ -754,14 +792,12 @@
     </div>
 
     <!-- 底部区域 -->
-    <footer>
-        <div class="container" style="padding-top: 0; padding-bottom: 0;">
-            <div class="footer-meta">
-                <span>中心地址：深圳市南山区蛇口美年广场（四海站）</span>
-                <span>学术领衔 · 媒体共识 · 专业解忧</span>
-            </div>
-            <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
+    <footer class="scroll-reveal">
+        <div class="footer-meta">
+            <span>中心地址：深圳市南山区蛇口美年广场（四海站）</span>
+            <span>学术领衔 · 媒体共识 · 专业解忧</span>
         </div>
+        <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
     </footer>
 
     <!-- MD3 Dialog 弹窗 -->
