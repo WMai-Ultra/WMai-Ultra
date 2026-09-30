@@ -580,32 +580,9 @@
             pointer-events: auto;
         }
 
-        /* MD3 容器形变起始态：按钮幽灵镜像 (精准1:1匹配原按钮) */
+        /* 保持原按钮不动，隐藏弹窗内无须使用的幽灵镜像 */
         .dialog-morph-start {
-            position: absolute;
-            inset: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 13.5px;
-            font-weight: 700;
-            letter-spacing: 0.4px;
-            color: #D9CCA9;
-            background-color: #381a04;
-            border-radius: inherit;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.14s ease;
-            z-index: 5;
-            white-space: nowrap;
-        }
-
-        .dialog-morph-start svg {
-            width: 17px;
-            height: 17px;
-            fill: currentColor;
-            flex-shrink: 0;
+            display: none;
         }
 
         /* MD3 标准右上角关闭图标按钮 (Icon Button - 36x36dp, 圆形) */
@@ -977,13 +954,12 @@
 
     <script>
         // Google MD3 容器形变弹窗标准 (Material Motion - Container Transform)
-        // 方案 2：真·实体克隆外壳物理形变 (True Ghost Clone Morph)
+        // 核心准则：保持触发源按钮绝对不动、绝不隐藏，弹窗直接从按钮原位优雅展开绽放
         const contactBtn = document.getElementById('contactBtn');
         const contactDialog = document.getElementById('contactDialog');
         const dialogCard = document.getElementById('dialogCard');
         const closeDialogBtn = document.getElementById('closeDialogBtn');
         const confirmDialogBtn = document.getElementById('confirmDialogBtn');
-        const dialogStartContent = document.getElementById('dialogStartContent');
 
         let isAnimating = false;
 
@@ -1013,31 +989,25 @@
 
         function openDialog() {
             if (isAnimating) return;
+            if (contactDialog.classList.contains('open')) {
+                closeDialog();
+                return;
+            }
             isAnimating = true;
 
             const btnRect = contactBtn.getBoundingClientRect();
             const { targetWidth, targetHeight, targetLeft, targetTop } = getDialogTargetMetrics();
 
-            // 1. 起始态：克隆外壳精准1:1叠放在按钮原位
+            // 1. 起始态：弹窗卡片定位于按钮原位，初始透明，原按钮绝不隐藏、绝不触碰！
             dialogCard.style.transition = 'none';
             dialogCard.style.left = `${btnRect.left}px`;
             dialogCard.style.top = `${btnRect.top}px`;
             dialogCard.style.width = `${btnRect.width}px`;
             dialogCard.style.height = `${btnRect.height}px`;
             dialogCard.style.borderRadius = `${btnRect.height / 2}px`;
-            dialogCard.style.backgroundColor = '#381a04';
-            dialogCard.style.border = '1.5px solid var(--md-sys-color-outline-variant)';
-            dialogCard.style.boxShadow = 'var(--md-elevation-1)';
-            dialogCard.style.opacity = '1';
+            dialogCard.style.opacity = '0';
             dialogCard.style.visibility = 'visible';
             dialogCard.classList.remove('expanded');
-
-            // 按钮内部图标与文字幽灵层呈现
-            dialogStartContent.style.transition = 'none';
-            dialogStartContent.style.opacity = '1';
-
-            // 关键：无缝隐藏原按钮（外壳完全重合，像素级零闪现）
-            contactBtn.style.opacity = '0';
 
             // 打开背景蒙层与锁定滚动
             contactDialog.classList.add('open');
@@ -1046,9 +1016,9 @@
             // 强制重绘，确保起始帧被浏览器渲染流水线采纳
             void dialogCard.offsetWidth;
 
-            // 2. 动效展开：进入 MD3 Emphasized Decelerate (580ms)
+            // 2. 动效展开：从按钮位置向屏幕中心丝滑舒展 (MD3 Emphasized Decelerate: 540ms)
             requestAnimationFrame(() => {
-                const DURATION_OPEN = 0.58; // 580ms 舒缓丝滑加长动画
+                const DURATION_OPEN = 0.54; // 540ms 优雅从容舒展
 
                 dialogCard.style.transition = `
                     left ${DURATION_OPEN}s cubic-bezier(0.05, 0.7, 0.1, 1),
@@ -1056,8 +1026,7 @@
                     width ${DURATION_OPEN}s cubic-bezier(0.05, 0.7, 0.1, 1),
                     height ${DURATION_OPEN}s cubic-bezier(0.05, 0.7, 0.1, 1),
                     border-radius ${DURATION_OPEN}s cubic-bezier(0.05, 0.7, 0.1, 1),
-                    background-color 0.32s cubic-bezier(0.2, 0, 0, 1),
-                    border-color 0.38s ease,
+                    opacity 0.22s ease,
                     box-shadow ${DURATION_OPEN}s cubic-bezier(0.05, 0.7, 0.1, 1)
                 `;
                 dialogCard.style.left = `${targetLeft}px`;
@@ -1065,15 +1034,9 @@
                 dialogCard.style.width = `${targetWidth}px`;
                 dialogCard.style.height = `${targetHeight}px`;
                 dialogCard.style.borderRadius = '28px';
-                dialogCard.style.backgroundColor = '#FAF7F2';
-                dialogCard.style.borderColor = 'rgba(56, 26, 4, 0.08)';
-                dialogCard.style.boxShadow = '0 16px 40px -4px rgba(56, 26, 4, 0.16), 0 4px 12px -2px rgba(56, 26, 4, 0.08)';
+                dialogCard.style.opacity = '1';
 
-                // 按钮图标文本极速褪去 (前 140ms)
-                dialogStartContent.style.transition = 'opacity 0.14s ease';
-                dialogStartContent.style.opacity = '0';
-
-                // 核心内容容器优雅渐入 (160ms ~ 580ms 完美收尾同步)
+                // 核心内容容器优雅渐入 (140ms ~ 540ms 与外壳边缘精准同步到位)
                 dialogCard.classList.add('expanded');
 
                 setTimeout(() => {
@@ -1087,62 +1050,40 @@
             isAnimating = true;
 
             const btnRect = contactBtn.getBoundingClientRect();
-            const DURATION_CLOSE = 0.46; // 460ms 舒缓平滑收缩
+            const DURATION_CLOSE = 0.42; // 420ms 舒缓平滑收缩归位
 
-            // 1. 弹窗内部复杂内容率先淡出 (0~150ms)，防止收缩挤压
+            // 1. 弹窗内部复杂内容率先淡出 (0~140ms)，防止挤压
             dialogCard.classList.remove('expanded');
 
-            // 2. 按钮幽灵层在回缩至后半程渐入 (180ms 后出现)
-            dialogStartContent.style.transition = 'opacity 0.22s ease 0.18s';
-            dialogStartContent.style.opacity = '1';
-
-            // 3. 蒙层同步淡出
+            // 2. 蒙层同步淡出
             contactDialog.classList.remove('open');
 
-            // 4. 外壳物理形变收缩回归按钮原位 (MD3 Emphasized Accelerate: 460ms)
+            // 3. 卡片物理收缩回归按钮原位并淡出 (MD3 Emphasized Accelerate: 420ms)
             dialogCard.style.transition = `
                 left ${DURATION_CLOSE}s cubic-bezier(0.3, 0, 0.8, 0.15),
                 top ${DURATION_CLOSE}s cubic-bezier(0.3, 0, 0.8, 0.15),
                 width ${DURATION_CLOSE}s cubic-bezier(0.3, 0, 0.8, 0.15),
                 height ${DURATION_CLOSE}s cubic-bezier(0.3, 0, 0.8, 0.15),
                 border-radius ${DURATION_CLOSE}s cubic-bezier(0.3, 0, 0.8, 0.15),
-                background-color 0.32s ease,
-                border-color 0.36s ease,
-                box-shadow ${DURATION_CLOSE}s ease
+                opacity 0.35s ease
             `;
             dialogCard.style.left = `${btnRect.left}px`;
             dialogCard.style.top = `${btnRect.top}px`;
             dialogCard.style.width = `${btnRect.width}px`;
             dialogCard.style.height = `${btnRect.height}px`;
             dialogCard.style.borderRadius = `${btnRect.height / 2}px`;
-            dialogCard.style.backgroundColor = '#381a04';
-            dialogCard.style.borderColor = 'var(--md-sys-color-outline-variant)';
-            dialogCard.style.boxShadow = 'var(--md-elevation-1)';
+            dialogCard.style.opacity = '0';
 
-            // 5. 核心零闪烁机制：在卡片完全贴合前 120ms，底层的真实按钮平滑渐入显现
-            setTimeout(() => {
-                contactBtn.style.transition = 'opacity 0.12s ease';
-                contactBtn.style.opacity = '1';
-            }, Math.round(DURATION_CLOSE * 1000 - 120));
-
-            // 6. 动效结束彻底重置
+            // 4. 动效结束彻底重置
             setTimeout(() => {
                 document.body.style.overflow = '';
                 dialogCard.style.transition = '';
                 dialogCard.style.visibility = 'hidden';
-                dialogCard.style.opacity = '0';
                 dialogCard.style.left = '';
                 dialogCard.style.top = '';
                 dialogCard.style.width = '';
                 dialogCard.style.height = '';
                 dialogCard.style.borderRadius = '';
-                dialogCard.style.backgroundColor = '';
-                dialogCard.style.borderColor = '';
-                dialogCard.style.boxShadow = '';
-                dialogStartContent.style.transition = '';
-                dialogStartContent.style.opacity = '0';
-                contactBtn.style.transition = '';
-                contactBtn.style.opacity = '';
                 isAnimating = false;
             }, Math.round(DURATION_CLOSE * 1000 + 30));
         }
