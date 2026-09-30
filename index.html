@@ -85,52 +85,53 @@
             pointer-events: none;
         }
 
-        /* 暖橙温润光晕（代表活力与赋能） */
+        /* 暖橙温润光晕（代表活力与赋能 - 透明度1.5倍、速度1.3倍） */
         .orb-1 {
             width: 520px;
             height: 520px;
-            background: radial-gradient(circle, rgba(230, 150, 75, 0.38) 0%, rgba(217, 204, 169, 0) 70%);
+            background: radial-gradient(circle, rgba(230, 150, 75, 0.57) 0%, rgba(217, 204, 169, 0) 70%);
             top: -100px;
             right: -100px;
-            animation: orbFloat1 14s ease-in-out infinite alternate;
+            animation: orbFloat1 10.8s ease-in-out infinite alternate;
         }
 
-        /* 鼠尾草清绿光晕（代表心理疗愈与平静） */
+        /* 鼠尾草清绿光晕（代表心理疗愈与平静 - 透明度1.5倍、速度1.3倍） */
         .orb-2 {
             width: 560px;
             height: 560px;
-            background: radial-gradient(circle, rgba(120, 180, 165, 0.35) 0%, rgba(217, 204, 169, 0) 70%);
+            background: radial-gradient(circle, rgba(120, 180, 165, 0.53) 0%, rgba(217, 204, 169, 0) 70%);
             bottom: -120px;
             left: -120px;
-            animation: orbFloat2 18s ease-in-out infinite alternate;
+            animation: orbFloat2 13.8s ease-in-out infinite alternate;
         }
 
-        /* 琥珀焦糖光晕（缓和脉动呼吸） */
+        /* 琥珀焦糖光晕（缓和脉动呼吸 - 透明度1.5倍、速度1.3倍） */
         .orb-3 {
             width: 440px;
             height: 440px;
-            background: radial-gradient(circle, rgba(195, 115, 55, 0.22) 0%, rgba(217, 204, 169, 0) 70%);
+            background: radial-gradient(circle, rgba(195, 115, 55, 0.33) 0%, rgba(217, 204, 169, 0) 70%);
             top: 40%;
             left: 32%;
-            animation: orbFloat3 20s ease-in-out infinite alternate;
+            animation: orbFloat3 15.4s ease-in-out infinite alternate;
         }
 
+        /* 位移增至1.5倍 */
         @keyframes orbFloat1 {
             0% { transform: translate(0, 0) scale(1); opacity: 0.65; }
-            50% { transform: translate(-50px, 70px) scale(1.15); opacity: 0.95; }
-            100% { transform: translate(-90px, 30px) scale(0.92); opacity: 0.6; }
+            50% { transform: translate(-75px, 105px) scale(1.15); opacity: 0.95; }
+            100% { transform: translate(-135px, 45px) scale(0.92); opacity: 0.6; }
         }
 
         @keyframes orbFloat2 {
             0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-            50% { transform: translate(70px, -60px) scale(1.18); opacity: 0.9; }
-            100% { transform: translate(40px, -100px) scale(1.02); opacity: 0.65; }
+            50% { transform: translate(105px, -90px) scale(1.18); opacity: 0.9; }
+            100% { transform: translate(60px, -150px) scale(1.02); opacity: 0.65; }
         }
 
         @keyframes orbFloat3 {
             0% { transform: translate(0, 0) scale(0.92); opacity: 0.45; }
-            50% { transform: translate(-40px, -40px) scale(1.22); opacity: 0.75; }
-            100% { transform: translate(50px, 30px) scale(1.05); opacity: 0.5; }
+            50% { transform: translate(-60px, -60px) scale(1.22); opacity: 0.75; }
+            100% { transform: translate(75px, 45px) scale(1.05); opacity: 0.5; }
         }
 
         .container {
