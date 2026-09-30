@@ -590,6 +590,11 @@
             pointer-events: none;
             border-top-left-radius: inherit;
             border-top-right-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.2s;
+        }
+
+        .md3-dialog.revealed::before {
             opacity: 0.9;
         }
 
@@ -601,10 +606,26 @@
             margin-bottom: 8px;
         }
 
+        .dialog-title-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--md-sys-color-on-surface);
+            transition: color 0.45s ease;
+        }
+
+        .dialog-title-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
         .dialog-title {
             font-size: 20px;
             font-weight: 800;
-            color: var(--md-sys-color-on-surface);
+            color: inherit;
+            margin: 0;
         }
 
         .dialog-close-btn {
@@ -618,13 +639,39 @@
             align-items: center;
             justify-content: center;
             color: var(--md-sys-color-on-surface);
-            transition: background 0.2s;
+            opacity: 0;
+            transform: scale(0.75);
+            transition: opacity 0.15s ease, transform 0.15s ease, background 0.2s;
             position: relative;
             overflow: hidden;
         }
 
+        .md3-dialog.revealed .dialog-close-btn {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.35s ease 0.28s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.28s, background 0.2s;
+        }
+
         .dialog-close-btn:hover {
             background-color: rgba(228, 217, 184, 0.6);
+        }
+
+        /* 方案一：实体外壳内二维码破茧浮现 */
+        .dialog-body-reveal {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(14px) scale(0.96);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .md3-dialog.revealed .dialog-body-reveal {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s,
+                        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
         }
 
         .dialog-subtitle {
@@ -820,32 +867,39 @@
         <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
     </footer>
 
-    <!-- MD3 按钮实体容器形变弹窗 (Container Transform) -->
+    <!-- MD3 按钮实体双层物理形变弹窗 (方案一：Shared Element Morph) -->
     <div class="md3-dialog-scrim" id="contactDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
         <div class="md3-dialog" id="dialogCard">
             <div class="dialog-header">
-                <h3 class="dialog-title" id="dialogTitle">联系我们</h3>
+                <div class="dialog-title-wrap">
+                    <svg class="dialog-title-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                    </svg>
+                    <h3 class="dialog-title" id="dialogTitle">联系我们</h3>
+                </div>
                 <button class="dialog-close-btn" id="closeDialogBtn" aria-label="关闭">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
                     </svg>
                 </button>
             </div>
-            <p class="dialog-subtitle">添加专属顾问微信 · 咨询家庭成长与心理健康服务</p>
-            <div class="qr-card">
-                <img src="./contact-qr.jpg" alt="微信联系二维码" class="qr-image" />
+            <div class="dialog-body-reveal" id="dialogBodyReveal">
+                <p class="dialog-subtitle">添加专属顾问微信 · 咨询家庭成长与心理健康服务</p>
+                <div class="qr-card">
+                    <img src="./contact-qr.jpg" alt="微信联系二维码" class="qr-image" />
+                </div>
+                <p class="dialog-hint">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                    </svg>
+                    <span>微信扫一扫或长按识别二维码</span>
+                </p>
             </div>
-            <p class="dialog-hint">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-                <span>微信扫一扫或长按识别二维码</span>
-            </p>
         </div>
     </div>
 
     <script>
-        // MD3 按钮实体容器形变弹窗交互 (Container Transform Morph - 120FPS GPU)
+        // 方案一：MD3 按钮实体双层物理蜕变 (Shared Element Morph - 120FPS GPU)
         const contactBtn = document.getElementById('contactBtn');
         const contactDialog = document.getElementById('contactDialog');
         const dialogCard = document.getElementById('dialogCard');
@@ -858,6 +912,7 @@
             isAnimating = true;
 
             const btnRect = contactBtn.getBoundingClientRect();
+            const dialogTitleWrap = dialogCard.querySelector('.dialog-title-wrap');
 
             // 1. 确保弹窗可见以计算其在屏幕正中央的目标几何位置
             contactDialog.style.visibility = 'visible';
@@ -865,6 +920,7 @@
             dialogCard.style.transition = 'none';
             dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
             dialogCard.style.borderRadius = '';
+            dialogCard.classList.remove('revealed');
 
             const dialogRect = dialogCard.getBoundingClientRect();
             const dialogCenterX = dialogRect.left + dialogRect.width / 2;
@@ -875,35 +931,46 @@
             const deltaX = btnCenterX - dialogCenterX;
             const deltaY = btnCenterY - dialogCenterY;
             const scale = Math.max(0.18, btnRect.width / dialogRect.width);
-
-            // 按钮胶囊真实视觉半径是按钮高度的一半；严格等比换算为卡片缩放前的起始圆角，杜绝 9999px 导致的椭圆压迫
             const startRadius = Math.round((btnRect.height / 2) / scale);
 
-            // 2. 将弹窗立即定位到按钮实体的起点 (尺寸、圆角、位置完全吻合按钮)
+            // 方案一：实体从按钮原位起飞，初始背景设为深焦栗色、文字设为暖金，100%实体不空虚
             dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
             dialogCard.style.borderRadius = `${startRadius}px`;
-            dialogCard.style.opacity = '0.3';
+            dialogCard.style.backgroundColor = '#381a04';
+            dialogCard.style.borderColor = 'var(--md-sys-color-outline-variant)';
+            dialogCard.style.opacity = '1';
+            if (dialogTitleWrap) dialogTitleWrap.style.color = '#D9CCA9';
 
+            // 隐藏原位置按钮，形成实体被直接抽离飞出的连续感
+            contactBtn.style.visibility = 'hidden';
             document.body.style.overflow = 'hidden';
 
             // 强制重绘，确保起点被浏览器捕捉
             void dialogCard.offsetWidth;
 
-            // 3. 触发极速流畅的 GPU 硬件加速飞跃展开 (120FPS)
+            // 2. 触发极速流畅的 GPU 硬件加速飞跃展开 (120FPS)
             contactDialog.style.visibility = '';
             contactDialog.style.opacity = '';
             contactDialog.classList.add('open');
 
             // 动画时间加长一倍 (0.72s)，弹出位移与四边缘圆角收尾时间严格毫秒级同步 (均为 0.72s cubic-bezier(0.16, 1, 0.3, 1))
             requestAnimationFrame(() => {
-                dialogCard.style.transition = 'transform 0.72s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.72s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.48s ease';
+                dialogCard.style.transition = 'transform 0.72s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.72s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.58s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.58s ease';
                 dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
                 dialogCard.style.borderRadius = '28px';
-                dialogCard.style.opacity = '1';
+                dialogCard.style.backgroundColor = 'rgba(238, 228, 198, 0.95)';
+                dialogCard.style.borderColor = 'var(--liquid-glass-border)';
+                if (dialogTitleWrap) dialogTitleWrap.style.color = 'var(--md-sys-color-on-surface)';
+
+                // 实体展开中段破茧揭晓二维码与关闭按钮
+                dialogCard.classList.add('revealed');
 
                 setTimeout(() => {
                     dialogCard.style.transition = '';
                     dialogCard.style.borderRadius = '';
+                    dialogCard.style.backgroundColor = '';
+                    dialogCard.style.borderColor = '';
+                    if (dialogTitleWrap) dialogTitleWrap.style.color = '';
                     isAnimating = false;
                 }, 750);
             });
@@ -915,6 +982,7 @@
 
             const btnRect = contactBtn.getBoundingClientRect();
             const dialogRect = dialogCard.getBoundingClientRect();
+            const dialogTitleWrap = dialogCard.querySelector('.dialog-title-wrap');
             const dialogCenterX = dialogRect.left + dialogRect.width / 2;
             const dialogCenterY = dialogRect.top + dialogRect.height / 2;
             const btnCenterX = btnRect.left + btnRect.width / 2;
@@ -925,19 +993,29 @@
             const scale = Math.max(0.18, btnRect.width / dialogRect.width);
             const targetRadius = Math.round((btnRect.height / 2) / scale);
 
-            // 逆向收缩回按钮位置：动画时间加长一倍 (0.56s)，收缩位移与边缘圆角严格同步收尾
-            dialogCard.style.transition = 'transform 0.56s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.56s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.44s ease';
+            // 二维码与关闭按钮率先柔和隐去，外壳逆向收缩回深色小胶囊
+            dialogCard.classList.remove('revealed');
+
+            // 逆向收缩回按钮位置：加长一倍时间 (0.56s)，收缩位移与边缘圆角严格同步收尾
+            dialogCard.style.transition = 'transform 0.56s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.56s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.48s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.48s ease, opacity 0.56s cubic-bezier(0.16, 1, 0.3, 1)';
             dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
             dialogCard.style.borderRadius = `${targetRadius}px`;
-            dialogCard.style.opacity = '0';
+            dialogCard.style.backgroundColor = '#381a04';
+            dialogCard.style.borderColor = 'var(--md-sys-color-outline-variant)';
+            if (dialogTitleWrap) dialogTitleWrap.style.color = '#D9CCA9';
+
             contactDialog.classList.remove('open');
 
             setTimeout(() => {
+                contactBtn.style.visibility = '';
                 document.body.style.overflow = '';
                 dialogCard.style.transition = '';
                 dialogCard.style.transform = '';
                 dialogCard.style.borderRadius = '';
+                dialogCard.style.backgroundColor = '';
+                dialogCard.style.borderColor = '';
                 dialogCard.style.opacity = '';
+                if (dialogTitleWrap) dialogTitleWrap.style.color = '';
                 isAnimating = false;
             }, 580);
         }
