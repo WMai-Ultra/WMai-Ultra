@@ -538,23 +538,30 @@
             width: 100vw;
             height: 100vh;
             background-color: rgba(29, 27, 22, 0.52);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.54s cubic-bezier(0.05, 0.7, 0.1, 1), visibility 0.54s;
             box-sizing: border-box;
-            will-change: opacity;
+            will-change: opacity, backdrop-filter;
+            pointer-events: none;
+            transition: opacity 360ms cubic-bezier(0.3, 0, 0.8, 0.15),
+                        backdrop-filter 360ms cubic-bezier(0.3, 0, 0.8, 0.15),
+                        -webkit-backdrop-filter 360ms cubic-bezier(0.3, 0, 0.8, 0.15),
+                        visibility 360ms;
         }
 
         .md3-dialog-scrim.open {
             opacity: 1;
             visibility: visible;
-        }
-
-        /* 动效落定后再开启磨砂玻璃，杜绝动画中全屏高斯卷积抢占 GPU 填色率 */
-        .md3-dialog-scrim.open.frosted {
+            pointer-events: auto;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            transition: opacity 540ms cubic-bezier(0.05, 0.7, 0.1, 1),
+                        backdrop-filter 540ms cubic-bezier(0.05, 0.7, 0.1, 1),
+                        -webkit-backdrop-filter 540ms cubic-bezier(0.05, 0.7, 0.1, 1),
+                        visibility 540ms;
         }
 
         /* 独立硬件加速阴影层：彻底解耦 clip-path，避免每一帧重新栅格化高斯模糊 */
@@ -978,8 +985,6 @@
             // 1. 暂停背景全屏三层慢呼吸光晕，瞬间解放 80% GPU 算力
             document.body.classList.add('modal-open');
             document.body.style.overflow = 'hidden';
-            contactDialog.classList.add('open');
-            contactDialog.classList.remove('frosted');
 
             const btnRect = contactBtn.getBoundingClientRect();
             const { targetWidth, targetHeight, targetLeft, targetTop } = getTargetMetrics();
@@ -1027,8 +1032,10 @@
             // 强制重绘，提交硬件帧
             void dialogCard.offsetWidth;
 
-            // 展开动效：540ms 优雅双驱滑翔绽放 (MD3 Emphasized Decelerate)
+            // 展开动效：540ms 优雅双驱滑翔绽放与背景高斯模糊平滑过渡同步启动
             requestAnimationFrame(() => {
+                contactDialog.classList.add('open');
+
                 dialogCard.style.transition = `
                     transform ${DURATION_OPEN}ms ${EASING_OPEN},
                     clip-path ${DURATION_OPEN}ms ${EASING_OPEN}
@@ -1041,8 +1048,6 @@
                 dialogShadowLayer.style.opacity = '1';
 
                 setTimeout(() => {
-                    // 动效平稳落定后，开启磨砂滤镜
-                    contactDialog.classList.add('frosted');
                     isAnimating = false;
                 }, DURATION_OPEN + 20);
             });
@@ -1052,8 +1057,7 @@
             if (isAnimating || !contactDialog.classList.contains('open')) return;
             isAnimating = true;
 
-            // 立即移除全屏磨砂计算，确保收起 360ms 处于极速满帧模式
-            contactDialog.classList.remove('frosted');
+            // 触发遮罩与背景高斯模糊平滑渐隐过渡 (360ms MD3 Emphasized Accelerate)
             contactDialog.classList.remove('open');
 
             // 1. 内容层先行微隐（0~110ms，二维码不被硬剪切）
