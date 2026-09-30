@@ -554,7 +554,7 @@
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
+            transition: opacity 0.56s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.56s;
             padding: 20px;
             box-sizing: border-box;
         }
@@ -867,6 +867,7 @@
             contactDialog.style.opacity = '0';
             dialogCard.style.transition = 'none';
             dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
+            dialogCard.style.borderRadius = '';
 
             const dialogRect = dialogCard.getBoundingClientRect();
             const dialogCenterX = dialogRect.left + dialogRect.width / 2;
@@ -878,9 +879,12 @@
             const deltaY = btnCenterY - dialogCenterY;
             const scale = Math.max(0.18, btnRect.width / dialogRect.width);
 
-            // 2. 将弹窗立即定位到按钮实体的起点 (同尺寸、同圆角、同位置)
+            // 按钮胶囊真实视觉半径是按钮高度的一半；严格等比换算为卡片缩放前的起始圆角，杜绝 9999px 导致的椭圆压迫
+            const startRadius = Math.round((btnRect.height / 2) / scale);
+
+            // 2. 将弹窗立即定位到按钮实体的起点 (尺寸、圆角、位置完全吻合按钮)
             dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
-            dialogCard.style.borderRadius = '9999px';
+            dialogCard.style.borderRadius = `${startRadius}px`;
             dialogCard.style.opacity = '0.3';
 
             document.body.style.overflow = 'hidden';
@@ -893,15 +897,18 @@
             contactDialog.style.opacity = '';
             contactDialog.classList.add('open');
 
+            // 动画时间加长一倍 (0.72s)，弹出位移与四边缘圆角收尾时间严格毫秒级同步 (均为 0.72s cubic-bezier(0.16, 1, 0.3, 1))
             requestAnimationFrame(() => {
-                dialogCard.style.transition = 'transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.36s ease, opacity 0.24s ease';
+                dialogCard.style.transition = 'transform 0.72s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.72s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.48s ease';
                 dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
-                dialogCard.style.borderRadius = 'var(--md-shape-corner-xl)';
+                dialogCard.style.borderRadius = '28px';
                 dialogCard.style.opacity = '1';
 
                 setTimeout(() => {
+                    dialogCard.style.transition = '';
+                    dialogCard.style.borderRadius = '';
                     isAnimating = false;
-                }, 370);
+                }, 750);
             });
         }
 
@@ -919,11 +926,12 @@
             const deltaX = btnCenterX - dialogCenterX;
             const deltaY = btnCenterY - dialogCenterY;
             const scale = Math.max(0.18, btnRect.width / dialogRect.width);
+            const targetRadius = Math.round((btnRect.height / 2) / scale);
 
-            // 逆向收缩回按钮位置
-            dialogCard.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.28s ease, opacity 0.22s ease';
+            // 逆向收缩回按钮位置：动画时间加长一倍 (0.56s)，收缩位移与边缘圆角严格同步收尾
+            dialogCard.style.transition = 'transform 0.56s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.56s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.44s ease';
             dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
-            dialogCard.style.borderRadius = '9999px';
+            dialogCard.style.borderRadius = `${targetRadius}px`;
             dialogCard.style.opacity = '0';
             contactDialog.classList.remove('open');
 
@@ -934,7 +942,7 @@
                 dialogCard.style.borderRadius = '';
                 dialogCard.style.opacity = '';
                 isAnimating = false;
-            }, 300);
+            }, 580);
         }
 
         contactBtn.addEventListener('click', openDialog);
