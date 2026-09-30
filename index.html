@@ -138,11 +138,11 @@
             z-index: 1;
         }
 
-        /* 动效 1：页面初次加载层级渐入 (5倍过渡时间，细腻电影级平滑浮现) */
+        /* 动效 1：页面初次加载层级渐入 (优雅平滑浮现) */
         @keyframes md3StaggerFadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(32px) scale(0.975);
+                transform: translateY(30px) scale(0.978);
                 filter: blur(8px);
             }
             100% {
@@ -154,15 +154,15 @@
 
         .anim-entry {
             opacity: 0;
-            animation: md3StaggerFadeIn 4.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: md3StaggerFadeIn 2.1s cubic-bezier(0.16, 1, 0.3, 1) both;
             will-change: transform, opacity, filter;
         }
 
-        .delay-1 { animation-delay: 0.25s; }
-        .delay-2 { animation-delay: 0.9s; }
-        .delay-3 { animation-delay: 1.6s; }
-        .delay-4 { animation-delay: 2.3s; }
-        .delay-5 { animation-delay: 3.0s; }
+        .delay-1 { animation-delay: 0.12s; }
+        .delay-2 { animation-delay: 0.45s; }
+        .delay-3 { animation-delay: 0.8s; }
+        .delay-4 { animation-delay: 1.15s; }
+        .delay-5 { animation-delay: 1.5s; }
 
         /* MD3 Top App Bar */
         header {
