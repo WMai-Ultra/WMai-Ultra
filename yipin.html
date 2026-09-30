@@ -538,114 +538,51 @@
             z-index: 2;
         }
 
-        /* 动效 4：方案四 全屏流体水滴浸润与实体形变弹窗 (Liquid Ripple & Entity Morph) */
-        .liquid-ripple-wave {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1001;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.75);
-            box-shadow: 0 0 45px rgba(230, 150, 75, 0.6), inset 0 0 25px rgba(255, 255, 255, 0.45);
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-            left: var(--ripple-x, 85vw);
-            top: var(--ripple-y, 50px);
-            width: 20px;
-            height: 20px;
-        }
-
-        .liquid-ripple-wave.animate {
-            animation: liquidWaveSpread 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes liquidWaveSpread {
-            0% {
-                opacity: 0.95;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            40% {
-                opacity: 0.7;
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(130);
-            }
-        }
-
-        /* 水滴涟漪浸润背景幕布 */
+        /* 动效 4：MD3 按钮实体容器形变弹窗 (Container Transform Morph - 120FPS GPU) */
         .md3-dialog-scrim {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at var(--ripple-x, 85vw) var(--ripple-y, 50px), rgba(217, 204, 169, 0.42) 0%, rgba(56, 26, 4, 0.58) 100%);
-            backdrop-filter: blur(20px) saturate(140%);
-            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            background-color: rgba(56, 26, 4, 0.48);
+            backdrop-filter: blur(12px) saturate(130%);
+            -webkit-backdrop-filter: blur(12px) saturate(130%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            clip-path: circle(0px at var(--ripple-x, 85vw) var(--ripple-y, 50px));
-            transition: clip-path 0.58s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                        visibility 0.58s;
-            cursor: pointer;
+            transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .md3-dialog-scrim.open {
             opacity: 1;
             visibility: visible;
-            clip-path: circle(170vmax at var(--ripple-x, 85vw) var(--ripple-y, 50px));
         }
 
-        /* 实体扩大形变卡片 (Morphing Dialog Card) */
         .md3-dialog {
-            position: fixed;
-            z-index: 1002;
-            background-color: var(--md-badge-bg);
-            color: var(--md-sys-color-on-surface);
+            background: rgba(238, 228, 198, 0.95);
             backdrop-filter: blur(28px) saturate(160%);
             -webkit-backdrop-filter: blur(28px) saturate(160%);
-            border: 1.5px solid var(--md-sys-color-outline-variant);
-            border-radius: var(--md-shape-corner-full);
-            box-shadow: var(--md-elevation-1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            visibility: hidden;
-            box-sizing: border-box;
-            /* 弹性物理插值 */
-            transition: top 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-                        left 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-                        width 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-                        height 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-radius 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-                        background-color 0.42s ease,
-                        border-color 0.42s ease,
-                        box-shadow 0.48s ease,
-                        opacity 0.25s ease;
-            will-change: top, left, width, height, border-radius, opacity;
-        }
-
-        .md3-dialog.morph-active {
-            visibility: visible;
-            pointer-events: auto;
-            opacity: 1;
-        }
-
-        .md3-dialog.morph-expanded {
-            background-color: rgba(238, 228, 198, 0.92);
-            border-color: var(--liquid-glass-border);
+            border: 1.5px solid var(--liquid-glass-border);
             border-radius: var(--md-shape-corner-xl);
             box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.75),
                         0 24px 60px rgba(56, 26, 4, 0.28);
+            width: 100%;
+            max-width: 380px;
+            padding: 28px 24px;
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            will-change: transform, opacity;
+            transform-origin: center center;
         }
 
-        /* 顶部镜面高光面 (展开后显现) */
+        /* 顶部镜面高光面 */
         .md3-dialog::before {
             content: '';
             position: absolute;
@@ -653,66 +590,11 @@
             left: 0;
             right: 0;
             height: 38%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 100%);
             pointer-events: none;
             border-top-left-radius: inherit;
             border-top-right-radius: inherit;
-            opacity: 0;
-            transition: opacity 0.4s ease 0.15s;
-        }
-
-        .md3-dialog.morph-expanded::before {
             opacity: 0.9;
-        }
-
-        /* 按钮替身内容 (形变起飞时淡出) */
-        .dialog-button-ghost {
-            position: absolute;
-            inset: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: var(--md-badge-text);
-            font-size: 13.5px;
-            font-weight: 700;
-            letter-spacing: 0.4px;
-            pointer-events: none;
-            white-space: nowrap;
-            transition: opacity 0.12s ease;
-            z-index: 2;
-        }
-
-        .md3-dialog.morph-expanded .dialog-button-ghost {
-            opacity: 0;
-        }
-
-        /* 展开后主体内容 (水面结晶凝聚浮现) */
-        .dialog-content-body {
-            width: 100%;
-            height: 100%;
-            padding: 28px 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            box-sizing: border-box;
-            opacity: 0;
-            transform: scale(0.92);
-            filter: blur(8px);
-            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.12s,
-                        transform 0.42s cubic-bezier(0.34, 1.25, 0.64, 1) 0.12s,
-                        filter 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
-            pointer-events: none;
-            position: relative;
-            z-index: 3;
-        }
-
-        .md3-dialog.morph-expanded .dialog-content-body {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
-            pointer-events: auto;
         }
 
         .dialog-header {
@@ -800,10 +682,7 @@
                 font-size: 12.5px;
                 height: 34px;
             }
-            .dialog-button-ghost {
-                font-size: 12.5px;
-            }
-            .dialog-content-body {
+            .md3-dialog {
                 padding: 22px 18px;
             }
             .qr-image {
@@ -944,19 +823,9 @@
         <p class="footer-copyright">© 2026 一品九型 · 脐橙心理. All Rights Reserved.</p>
     </footer>
 
-    <!-- 动效 4：方案四 全屏流体水滴浸润与实体形变弹窗 -->
-    <div class="liquid-ripple-wave" id="liquidWave" aria-hidden="true"></div>
-    <div class="md3-dialog-scrim" id="contactDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"></div>
-    <div class="md3-dialog" id="morphDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
-        <!-- 按钮初始态替身 (形变起飞时无缝平滑淡出) -->
-        <div class="dialog-button-ghost" id="dialogBtnGhost">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
-                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-            </svg>
-            <span>联系我们</span>
-        </div>
-        <!-- 弹窗主体内容 (形变过程中如水面凝聚结晶浮现) -->
-        <div class="dialog-content-body" id="dialogContentBody">
+    <!-- MD3 按钮实体容器形变弹窗 (Container Transform) -->
+    <div class="md3-dialog-scrim" id="contactDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <div class="md3-dialog" id="dialogCard">
             <div class="dialog-header">
                 <h3 class="dialog-title" id="dialogTitle">联系我们</h3>
                 <button class="dialog-close-btn" id="closeDialogBtn" aria-label="关闭">
@@ -979,94 +848,60 @@
     </div>
 
     <script>
-        // 方案四：全屏流体水滴浸润与按钮实体形变交互 (Liquid Ripple & Entity Morph)
+        // MD3 按钮实体容器形变弹窗交互 (Container Transform Morph - 120FPS GPU)
         const contactBtn = document.getElementById('contactBtn');
         const contactDialog = document.getElementById('contactDialog');
-        const morphDialog = document.getElementById('morphDialog');
+        const dialogCard = document.getElementById('dialogCard');
         const closeDialogBtn = document.getElementById('closeDialogBtn');
-        const liquidWave = document.getElementById('liquidWave');
 
         let isAnimating = false;
-
-        function getTargetDialogRect() {
-            const screenW = window.innerWidth;
-            const screenH = window.innerHeight;
-            const targetW = Math.min(380, screenW - 40);
-
-            // 预先将弹窗放到离屏位置测量展开后的真实高度
-            const prevTransition = morphDialog.style.transition;
-            morphDialog.style.transition = 'none';
-            morphDialog.style.visibility = 'hidden';
-            morphDialog.style.display = 'flex';
-            morphDialog.style.width = `${targetW}px`;
-            morphDialog.style.height = 'auto';
-            morphDialog.classList.add('morph-expanded');
-            
-            const targetH = morphDialog.offsetHeight;
-
-            morphDialog.classList.remove('morph-expanded');
-            morphDialog.style.display = '';
-            morphDialog.style.transition = prevTransition;
-
-            const targetL = (screenW - targetW) / 2;
-            const targetT = Math.max(16, (screenH - targetH) / 2);
-
-            return { top: targetT, left: targetL, width: targetW, height: targetH };
-        }
 
         function openDialog() {
             if (isAnimating) return;
             isAnimating = true;
 
             const btnRect = contactBtn.getBoundingClientRect();
-            const rippleX = btnRect.left + btnRect.width / 2;
-            const rippleY = btnRect.top + btnRect.height / 2;
 
-            // 设置全屏水滴涟漪的圆心坐标
-            document.documentElement.style.setProperty('--ripple-x', `${rippleX}px`);
-            document.documentElement.style.setProperty('--ripple-y', `${rippleY}px`);
+            // 1. 确保弹窗可见以计算其在屏幕正中央的目标几何位置
+            contactDialog.style.visibility = 'visible';
+            contactDialog.style.opacity = '0';
+            dialogCard.style.transition = 'none';
+            dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
 
-            // 1. 触发水滴涟漪波纹扩散
-            liquidWave.classList.remove('animate');
-            void liquidWave.offsetWidth;
-            liquidWave.classList.add('animate');
+            const dialogRect = dialogCard.getBoundingClientRect();
+            const dialogCenterX = dialogRect.left + dialogRect.width / 2;
+            const dialogCenterY = dialogRect.top + dialogRect.height / 2;
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
 
-            // 2. 测量目标弹窗尺寸与居中位置
-            const target = getTargetDialogRect();
+            const deltaX = btnCenterX - dialogCenterX;
+            const deltaY = btnCenterY - dialogCenterY;
+            const scale = Math.max(0.18, btnRect.width / dialogRect.width);
 
-            // 3. 将 morphDialog 定位并初始化为当前按钮实体的绝对外观与位置
-            morphDialog.style.transition = 'none';
-            morphDialog.style.top = `${btnRect.top}px`;
-            morphDialog.style.left = `${btnRect.left}px`;
-            morphDialog.style.width = `${btnRect.width}px`;
-            morphDialog.style.height = `${btnRect.height}px`;
-            morphDialog.classList.add('morph-active');
-            morphDialog.classList.remove('morph-expanded');
+            // 2. 将弹窗立即定位到按钮实体的起点 (同尺寸、同圆角、同位置)
+            dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
+            dialogCard.style.borderRadius = '9999px';
+            dialogCard.style.opacity = '0.3';
 
-            // 隐藏原位置按钮，形成实体被抽离扩大的连续感
-            contactBtn.style.visibility = 'hidden';
-
-            // 锁定底层页面滚动
             document.body.style.overflow = 'hidden';
 
-            // 强制重绘，应用初始位置
-            void morphDialog.offsetWidth;
+            // 强制重绘，确保起点被浏览器捕捉
+            void dialogCard.offsetWidth;
 
-            // 4. 开启平滑过渡，向中心飞跃并展开为二维码面板
+            // 3. 触发极速流畅的 GPU 硬件加速飞跃展开 (120FPS)
+            contactDialog.style.visibility = '';
+            contactDialog.style.opacity = '';
+            contactDialog.classList.add('open');
+
             requestAnimationFrame(() => {
-                morphDialog.style.transition = '';
-                contactDialog.classList.add('open');
-                requestAnimationFrame(() => {
-                    morphDialog.style.top = `${target.top}px`;
-                    morphDialog.style.left = `${target.left}px`;
-                    morphDialog.style.width = `${target.width}px`;
-                    morphDialog.style.height = `${target.height}px`;
-                    morphDialog.classList.add('morph-expanded');
+                dialogCard.style.transition = 'transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.36s ease, opacity 0.24s ease';
+                dialogCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
+                dialogCard.style.borderRadius = 'var(--md-shape-corner-xl)';
+                dialogCard.style.opacity = '1';
 
-                    setTimeout(() => {
-                        isAnimating = false;
-                    }, 520);
-                });
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 370);
             });
         }
 
@@ -1075,43 +910,44 @@
             isAnimating = true;
 
             const btnRect = contactBtn.getBoundingClientRect();
+            const dialogRect = dialogCard.getBoundingClientRect();
+            const dialogCenterX = dialogRect.left + dialogRect.width / 2;
+            const dialogCenterY = dialogRect.top + dialogRect.height / 2;
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
 
-            // 1. 开始逆向收缩形变：卡片内容淡出，卡片收缩回右上角按钮位置
-            morphDialog.classList.remove('morph-expanded');
-            morphDialog.style.top = `${btnRect.top}px`;
-            morphDialog.style.left = `${btnRect.left}px`;
-            morphDialog.style.width = `${btnRect.width}px`;
-            morphDialog.style.height = `${btnRect.height}px`;
+            const deltaX = btnCenterX - dialogCenterX;
+            const deltaY = btnCenterY - dialogCenterY;
+            const scale = Math.max(0.18, btnRect.width / dialogRect.width);
 
-            // 2. 幕布水滴涟漪收起
+            // 逆向收缩回按钮位置
+            dialogCard.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.28s ease, opacity 0.22s ease';
+            dialogCard.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scale})`;
+            dialogCard.style.borderRadius = '9999px';
+            dialogCard.style.opacity = '0';
             contactDialog.classList.remove('open');
 
             setTimeout(() => {
-                morphDialog.classList.remove('morph-active');
-                contactBtn.style.visibility = '';
                 document.body.style.overflow = '';
+                dialogCard.style.transition = '';
+                dialogCard.style.transform = '';
+                dialogCard.style.borderRadius = '';
+                dialogCard.style.opacity = '';
                 isAnimating = false;
-            }, 500);
+            }, 300);
         }
 
         contactBtn.addEventListener('click', openDialog);
         closeDialogBtn.addEventListener('click', closeDialog);
-        contactDialog.addEventListener('click', closeDialog);
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && contactDialog.classList.contains('open')) {
+        contactDialog.addEventListener('click', (e) => {
+            if (e.target === contactDialog) {
                 closeDialog();
             }
         });
 
-        window.addEventListener('resize', () => {
-            if (contactDialog.classList.contains('open') && !isAnimating) {
-                const target = getTargetDialogRect();
-                morphDialog.style.transition = 'none';
-                morphDialog.style.top = `${target.top}px`;
-                morphDialog.style.left = `${target.left}px`;
-                morphDialog.style.width = `${target.width}px`;
-                morphDialog.style.height = `${target.height}px`;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactDialog.classList.contains('open')) {
+                closeDialog();
             }
         });
 
