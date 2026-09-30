@@ -270,23 +270,32 @@
             font-weight: 700;
             letter-spacing: 0.4px;
             cursor: pointer;
-            box-shadow: var(--md-elevation-1);
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: none; /* 去除平时外溢的硬阴影 */
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: inherit;
             text-decoration: none;
             position: relative;
             overflow: hidden;
             user-select: none;
+            outline: none; /* 彻底清除浏览器点击聚焦原生黑框 */
+            -webkit-tap-highlight-color: transparent; /* 清除移动端点击半透明硬色块 */
         }
 
         .md3-contact-btn:hover {
             background-color: #4a2408;
             transform: translateY(-2px);
-            box-shadow: var(--md-elevation-2);
+            box-shadow: 0 3px 10px rgba(56, 26, 4, 0.08); /* 悬浮超柔极微漫反射，绝无深色硬底 */
         }
 
+        .md3-contact-btn:focus,
+        .md3-contact-btn:focus-visible {
+            outline: none; /* 确保无任何黑色或深色外描边 */
+        }
+
+        /* 方案 3：内敛微质感，按下时外侧零投影，内部产生精致微内凹内阴影 */
         .md3-contact-btn:active {
-            transform: translateY(0) scale(0.98);
+            transform: translateY(0) scale(0.97);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.42);
         }
 
         .md3-contact-btn svg {
