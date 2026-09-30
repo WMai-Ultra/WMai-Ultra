@@ -81,55 +81,104 @@
         .glow-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(85px);
-            -webkit-filter: blur(85px);
-            will-change: transform, opacity;
+            filter: blur(65px);
+            -webkit-filter: blur(65px);
+            will-change: transform, opacity, filter;
             pointer-events: none;
         }
 
+        /* 暖橙温润光晕（保留原位：top:-100px, right:-100px | 速度提速2.5倍至4.3s） */
         .orb-1 {
             width: 520px;
             height: 520px;
-            background: radial-gradient(circle, rgba(230, 150, 75, 0.38) 0%, rgba(217, 204, 169, 0) 70%);
+            background: radial-gradient(circle, rgba(230, 150, 75, 0.57) 0%, rgba(217, 204, 169, 0) 70%);
             top: -100px;
             right: -100px;
-            animation: orbFloat1 14s ease-in-out infinite alternate;
+            animation: orbFloat1 4.3s ease-in-out infinite alternate;
         }
 
+        /* 鼠尾草清绿光晕（保留原位：bottom:-120px, left:-120px | 速度提速2.5倍至5.5s） */
         .orb-2 {
             width: 560px;
             height: 560px;
-            background: radial-gradient(circle, rgba(120, 180, 165, 0.35) 0%, rgba(217, 204, 169, 0) 70%);
+            background: radial-gradient(circle, rgba(120, 180, 165, 0.53) 0%, rgba(217, 204, 169, 0) 70%);
             bottom: -120px;
             left: -120px;
-            animation: orbFloat2 18s ease-in-out infinite alternate;
+            animation: orbFloat2 5.5s ease-in-out infinite alternate;
         }
 
+        /* 琥珀焦糖光晕（保留原位：top:40%, left:32% | 速度提速2.5倍至6.0s） */
         .orb-3 {
             width: 440px;
             height: 440px;
-            background: radial-gradient(circle, rgba(195, 115, 55, 0.22) 0%, rgba(217, 204, 169, 0) 70%);
+            background: radial-gradient(circle, rgba(195, 115, 55, 0.33) 0%, rgba(217, 204, 169, 0) 70%);
             top: 40%;
             left: 32%;
-            animation: orbFloat3 20s ease-in-out infinite alternate;
+            animation: orbFloat3 6.0s ease-in-out infinite alternate;
         }
 
+        /* 位移扩大翻倍 + 模糊度在 50px~80px 之间浮动呼吸循环 */
         @keyframes orbFloat1 {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.65; }
-            50% { transform: translate(-50px, 70px) scale(1.15); opacity: 0.95; }
-            100% { transform: translate(-90px, 30px) scale(0.92); opacity: 0.6; }
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.65;
+                filter: blur(50px);
+                -webkit-filter: blur(50px);
+            }
+            50% {
+                transform: translate(-150px, 210px) scale(1.18);
+                opacity: 0.95;
+                filter: blur(80px);
+                -webkit-filter: blur(80px);
+            }
+            100% {
+                transform: translate(-270px, 90px) scale(0.92);
+                opacity: 0.6;
+                filter: blur(55px);
+                -webkit-filter: blur(55px);
+            }
         }
 
         @keyframes orbFloat2 {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-            50% { transform: translate(70px, -60px) scale(1.18); opacity: 0.9; }
-            100% { transform: translate(40px, -100px) scale(1.02); opacity: 0.65; }
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+                filter: blur(75px);
+                -webkit-filter: blur(75px);
+            }
+            50% {
+                transform: translate(210px, -180px) scale(1.2);
+                opacity: 0.9;
+                filter: blur(50px);
+                -webkit-filter: blur(50px);
+            }
+            100% {
+                transform: translate(120px, -300px) scale(1.02);
+                opacity: 0.65;
+                filter: blur(80px);
+                -webkit-filter: blur(80px);
+            }
         }
 
         @keyframes orbFloat3 {
-            0% { transform: translate(0, 0) scale(0.92); opacity: 0.45; }
-            50% { transform: translate(-40px, -40px) scale(1.22); opacity: 0.75; }
-            100% { transform: translate(50px, 30px) scale(1.05); opacity: 0.5; }
+            0% {
+                transform: translate(0, 0) scale(0.92);
+                opacity: 0.45;
+                filter: blur(55px);
+                -webkit-filter: blur(55px);
+            }
+            50% {
+                transform: translate(-120px, -120px) scale(1.24);
+                opacity: 0.75;
+                filter: blur(80px);
+                -webkit-filter: blur(80px);
+            }
+            100% {
+                transform: translate(150px, 90px) scale(1.05);
+                opacity: 0.5;
+                filter: blur(50px);
+                -webkit-filter: blur(50px);
+            }
         }
 
         .container {
@@ -249,22 +298,31 @@
             font-weight: 700;
             letter-spacing: 0.4px;
             cursor: pointer;
-            box-shadow: var(--md-elevation-1);
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: none; /* 去除平时外溢的硬阴影 */
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: inherit;
             position: relative;
             overflow: hidden;
             user-select: none;
+            outline: none; /* 彻底清除浏览器点击聚焦原生黑框 */
+            -webkit-tap-highlight-color: transparent; /* 清除移动端点击半透明硬色块 */
         }
 
         .md3-contact-btn:hover {
             background-color: #4a2408;
             transform: translateY(-2px);
-            box-shadow: var(--md-elevation-2);
+            box-shadow: 0 3px 10px rgba(56, 26, 4, 0.08); /* 悬浮超柔极微漫反射，绝无深色硬底 */
         }
 
+        .md3-contact-btn:focus,
+        .md3-contact-btn:focus-visible {
+            outline: none; /* 确保无任何黑色或深色外描边 */
+        }
+
+        /* 方案 3：内敛微质感，按下时外侧零投影，内部产生精致微内凹内阴影 */
         .md3-contact-btn:active {
-            transform: translateY(0) scale(0.98);
+            transform: translateY(0) scale(0.97);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.42);
         }
 
         .md3-contact-btn svg {
